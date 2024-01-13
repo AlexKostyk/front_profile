@@ -28,20 +28,20 @@
                         <input type="file" id="file-input" style="display: none"/>
                         <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
                         <p class="card-text upload-text">Click here or drag file to upload</p>
-                        <p class="card-text upload-text">.docx, .txt, .pdf</p>
+                        <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
                     </div>
 
                     <div id="progress-container" style="display: none;">
                         <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
                         <div class="name-file-bar-container">
-                            <p class="card-text" id="upload_file_name">none</p>
+                            <p class="card-text" id="upload_file_name"></p>
                             <progress class="uploading-progress-bar-file" max=100 value=0></progress>
                         </div>
                         <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
                     </div>
 
                     <div class="load-text-container" id="load-text-container" style="display: none;">
-                        <textarea class="text-input card-text" id="text-input" name="text-input" placeholder="Start writing here"></textarea>
+                        <textarea class="text-input card-text" id="text-input" name="text-input" oninput="checkTextarea()" placeholder="Start writing here"></textarea>
                     </div>
                 </div>
 
@@ -57,24 +57,27 @@
                     <div class="request-limit-container">
 
                         <div class="limit-bar-container">
-                            <p class="small-limit-text">0 OF 4 USED</p>
-                            <progress class="limit-bar" value="0" max="100"></progress>
+                            <div class="limit-text-bar-container">
+                                <p class="small-limit-text" id="request-limit-text"></p>
+                                <progress class="limit-bar" id="request-limit-bar"></progress>
+                            </div>
+                            <p id="limit-warning-text" class="card-text"></p>
                         </div>
 
                         <div class="limit-other-container">
                             <div class="plan-container">
                                 <p class="small-limit-text">Current plan</p>
-                                <p class="card-text limit-text">none</p>
+                                <p class="card-text limit-text" id="limit-plan-text"></p>
                             </div>
 
                             <div class="perday-container">
                                 <p class="small-limit-text">Requests limit</p>
-                                <p class="card-text limit-text">none</p>
+                                <p class="card-text limit-text" id="limit-perday-text"></p>
                             </div>
 
                             <div class="date-container">
                                 <p class="small-limit-text">Expiration date</p>
-                                <p class="card-text limit-text">none</p>
+                                <p class="card-text limit-text" id="limit-date-text"></p>
                             </div>
                         </div>
 
@@ -82,7 +85,7 @@
                 </div>
             </div>
 
-            <button class="summarize-btn link-small">Summarize Contract</button>
+            <button class="link-small" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
         </div>
     </div>
 </body>

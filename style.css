@@ -120,10 +120,9 @@ hr {
 
 /* Стиль при наведении курсора */
 .boards-btn:hover {
-    background-color: transparent;
-
-    color: var(--secondary-text-and-elements-color);
-    border-color: var(--secondary-text-and-elements-color);
+    background-color: var(--additional-accent-color);
+    color: var(--border-backgroung-color);
+    border: none;
 }
 
 /* Стиль при нажатии кнопки */
@@ -134,7 +133,7 @@ hr {
 }
 
 /* Стиль для summarize кнопки */
-.summarize-btn {
+#summarize-btn {
     width: 180px;
     height: 35px;
     padding: 10px, 44px, 10px, 44px;
@@ -146,6 +145,25 @@ hr {
     border: none;
 
     cursor: pointer;
+
+    background-color: var(--main-border-btn-color);
+    color: var(--border-backgroung-color);
+}
+
+#summarize-btn:hover{
+    background-color: var(--additional-accent-color);
+    color: var(--main-border-btn-color);
+    border: none;
+}
+
+#summarize-btn:active{
+    background-color: var(--additional-accent-color);
+    color: var(--main-border-btn-color);
+    border: none;
+}
+
+#summarize-btn:disabled {
+    cursor: default;
 
     background-color: var(--thin-line-color);
     color: var(--dark-gray-text-color);
@@ -170,11 +188,17 @@ hr {
 }
 
 /* request-limit-container */
-.request-limit-container{
+.request-limit-container {
     margin-top: 32px;
 }
 
 .limit-bar-container {
+    display: flex;
+    align-items: end;
+    gap: 24px;
+}
+
+.limit-text-bar-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -189,9 +213,13 @@ hr {
     height: 10px;
     border-radius: 8px;
     overflow: hidden;
-    transition: width 0.3s ease;
 }
 
+#limit-warning-text {
+    color: var(--error-text-color);
+}
+
+/* обычное состояние шкалы лимитов */
 /* background: */
 .limit-bar::-webkit-progress-bar {background-color: var(--basic-back); width: 100%;}
 .limit-bar {background-color: var(--basic-back);}
@@ -200,6 +228,11 @@ hr {
 .limit-bar::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 8px;}
 .limit-bar::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 8px;}
 .limit-bar {color: var(--main-accent-color); border-radius: 8px;}
+
+/* максимальное количество лимитов в шкале лимитов */
+.limit-bar-is-max::-webkit-progress-value {background-color: var(--error-text-color) !important; border-radius: 8px;}
+.limit-bar-is-max::-moz-progress-bar {background-color: var(--error-text-color) !important; border-radius: 8px;}
+.limit-bar-is-max {color: var(--error-text-color); border-radius: 8px;}
 
 .limit-other-container{
     display: flex;
@@ -320,3 +353,4 @@ textarea::-webkit-scrollbar-track {
 .name-file-bar-container {
     color: var(--secondary-text-and-elements-color);
 }
+
