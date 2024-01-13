@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content">
+        <!-- Сайдбар -->
+        <div class="sidebar"></div>
+
+        <div class="summarize">
+            <h1 class="summarize-heading">Summarize Contract</h1>
+            <div class="boards">
+                <div class="upload-contract-board">
+
+                    <div class="upload-top">
+                        <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
+                        <button class="btn-text-instead boards-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
+                    </div>
+
+                    <hr>
+
+                    <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
+                        <input type="file" id="file-input" style="display: none"/>
+                        <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
+                        <p class="card-text upload-text">Click here or drag file to upload</p>
+                        <p class="card-text upload-text">.docx, .txt, .pdf</p>
+                    </div>
+
+                    <div id="progress-container" style="display: none;">
+                        <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
+                        <div class="name-file-bar-container">
+                            <p class="card-text" id="upload_file_name">none</p>
+                            <progress class="uploading-progress-bar-file" max=100 value=0></progress>
+                        </div>
+                        <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
+                    </div>
+
+                    <div class="load-text-container" id="load-text-container" style="display: none;">
+                        <textarea class="text-input card-text" id="text-input" name="text-input" placeholder="Start writing here"></textarea>
+                    </div>
+                </div>
+
+                <div class="requests-limit-board">
+
+                    <div class="limit-top">
+                        <h2 class="requests-limit-heading card-header">Requests Limit</h2>
+                        <button class="btn-requests-limit boards-btn link-small">Upgrade my Plan</button>
+                    </div>
+
+                    <hr>
+                    
+                    <div class="request-limit-container">
+
+                        <div class="limit-bar-container">
+                            <p class="small-limit-text">0 OF 4 USED</p>
+                            <progress class="limit-bar" value="0" max="100"></progress>
+                        </div>
+
+                        <div class="limit-other-container">
+                            <div class="plan-container">
+                                <p class="small-limit-text">Current plan</p>
+                                <p class="card-text limit-text">none</p>
+                            </div>
+
+                            <div class="perday-container">
+                                <p class="small-limit-text">Requests limit</p>
+                                <p class="card-text limit-text">none</p>
+                            </div>
+
+                            <div class="date-container">
+                                <p class="small-limit-text">Expiration date</p>
+                                <p class="card-text limit-text">none</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <button class="summarize-btn link-small">Summarize Contract</button>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

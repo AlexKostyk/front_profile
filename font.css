@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+/* Настройка шрифтов для текста */
+h1 {
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 34px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+h2 {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+h3 {
+    font-family: Cabin;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 54px;
+    letter-spacing: -0.03em;
+    text-align: left;
+}
+
+.accent-text {
+    font-family: Cabin;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    letter-spacing: 0.01em;
+    text-align: left;
+}
+
+.subtitle {
+    font-family: Inter;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: -0.03em;
+    text-align: left;
+}
+
+body {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.link-small {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.card-text {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.small-limit-text {
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+}

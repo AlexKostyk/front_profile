@@ -1,0 +1,322 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4c; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue - unused */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопки summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--basic-main-text-color);
+}
+
+.content {
+    display: flex;
+}
+
+.sidebar {
+    min-width: 232px;
+    min-height: 720px;
+    padding: 24px 24px 32px 24px;
+    gap: 97px;
+    background-color: var(--border-backgroung-color);
+}
+
+.summarize {
+    flex: 1;
+}
+
+.summarize-heading {
+    margin-top: 32px;
+    margin-left: 24px;
+}
+
+.boards {
+    margin-top: 38px;
+    display: flex;
+    gap: 16px;
+}
+
+.upload-contract-board {
+    width: 572px;
+    height: 245px;
+    padding: 16px 24px 53px 24px;
+    border-radius: 8px;
+    gap: 32px;
+    background-color: var(--border-backgroung-color);
+    margin-left: 24px;
+}
+
+.requests-limit-board {
+    width: 572px;
+    height: 245px;
+    padding: 16px 24px 53px 24px;
+    border-radius: 8px;
+    gap: 32px;
+    background-color: var(--border-backgroung-color);
+}
+
+hr {
+    margin-top: 16px;
+    border: 1px solid var(--hr-scrol-color)
+}
+
+.upload-contract-heading,
+.requests-limit-heading {
+    align-self: center;
+    height: fit-content;
+}
+
+.limit-top,
+.upload-top {
+    display: flex;
+}
+
+.btn-requests-limit,
+.btn-text-instead {
+    margin-left: auto;
+}
+
+/* Стиль кнопок на бордах */
+.boards-btn{
+    width: 180px;
+    height: 35px;
+    padding: 10px, 44px, 10px, 44px;
+    border-radius: 8px;
+    border: 1px;
+    gap: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--main-border-btn-color);
+    background-color: transparent;
+    color: var(--main-border-btn-color);
+}
+
+/* Стиль при наведении курсора */
+.boards-btn:hover {
+    background-color: transparent;
+
+    color: var(--secondary-text-and-elements-color);
+    border-color: var(--secondary-text-and-elements-color);
+}
+
+/* Стиль при нажатии кнопки */
+.boards-btn:active {
+    background-color: var(--additional-accent-color);
+    color: var(--border-backgroung-color);
+    border: none;
+}
+
+/* Стиль для summarize кнопки */
+.summarize-btn {
+    width: 180px;
+    height: 35px;
+    padding: 10px, 44px, 10px, 44px;
+    border-radius: 8px;
+    gap: 10px;
+
+    margin-top: 24px;
+    margin-left: 514px;
+    border: none;
+
+    cursor: pointer;
+
+    background-color: var(--thin-line-color);
+    color: var(--dark-gray-text-color);
+}
+
+/* load-contract-container */
+.load-contract-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 32px;
+    height: 124px;
+}
+  
+.upload-icon {
+    align-items: center;
+}
+
+.upload-text {
+    align-items: center;
+    color: var(--secondary-text-and-elements-color);
+}
+
+/* request-limit-container */
+.request-limit-container{
+    margin-top: 32px;
+}
+
+.limit-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.small-limit-text {
+    color: var(--secondary-text-and-elements-color);
+}
+
+.limit-bar {
+    width: 238px;
+    height: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+/* background: */
+.limit-bar::-webkit-progress-bar {background-color: var(--basic-back); width: 100%;}
+.limit-bar {background-color: var(--basic-back);}
+
+/* value: */
+.limit-bar::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 8px;}
+.limit-bar::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 8px;}
+.limit-bar {color: var(--main-accent-color); border-radius: 8px;}
+
+.limit-other-container{
+    display: flex;
+    width: 525px;
+    height: 38px;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+.plan-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.perday-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Режим для ввода текста */
+.text-input {
+    margin-top: 8px;
+    width: 100%;
+    height: 146px;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    outline: none;
+    resize: none;
+}
+
+/* Исчезновение при фокусе */
+:focus::-webkit-input-placeholder {color: transparent;}
+:focus::-moz-placeholder          {color: transparent;}
+:focus:-moz-placeholder           {color: transparent;}
+:focus:-ms-input-placeholder      {color: transparent;}
+
+textarea::-webkit-scrollbar {
+    width: 4px;
+    height: 146px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: var(--additional-accent-color);
+    border-radius: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: var(--hr-scrol-color);
+    border-radius: 8px;
+}
+
+/* Стиль при закидывании файла в DropBox*/
+.drop-box {
+    background-color: #808587;
+    border-color: #272727;
+}
+
+#progress-container{
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 40px;
+}
+
+.uploading-progress-bar-file {
+    width: 192px;
+    height: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.ready-progress-bar-file {
+    width: 192px;
+    height: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+/* upload file bar in progress */
+
+/* background: */
+.uploading-progress-bar-file::-webkit-progress-bar {background-color: var(--basic-back); width: 100%;}
+.uploading-progress-bar-file {background-color: var(--basic-back);}
+
+/* value: */
+.uploading-progress-bar-file::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 4px;}
+.uploading-progress-bar-file::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 4px;}
+.uploading-progress-bar-file {color: var(--main-accent-color); border-radius: 4px;}
+
+/* ready uplod file */
+
+/* background: */
+.ready-progress-bar-file::-webkit-progress-bar {background-color: var(--basic-back); width: 100%;}
+.ready-progress-bar-file {background-color: var(--basic-back);}
+
+/* value: */
+.ready-progress-bar-file::-webkit-progress-value {background-color: var(--main-border-btn-color) !important; border-radius: 4px;}
+.ready-progress-bar-file::-moz-progress-bar {background-color: var(--main-border-btn-color) !important; border-radius: 4px;}
+.ready-progress-bar-file {color: var(--main-border-btn-color); border-radius: 4px;}
+
+.name-file-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.name-file-bar-container {
+    color: var(--secondary-text-and-elements-color);
+}
