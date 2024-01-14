@@ -16,6 +16,7 @@ let limit_date_text = document.getElementById('limit-date-text');
 
 let text_contract_flag = 0;
 let close_progress_bar_file_flag = 0;
+let subscription_ended_flag = 0;
 
 // счётчик лимитов запросов
 let request_limit_counter = 0;
@@ -32,6 +33,8 @@ let date_text = "01.02.2024";
 document.addEventListener('DOMContentLoaded', function() {
     getRequestLimit();
     getLimitData();
+
+    if(subscription_ended_flag) subscriptionEnded();
 });
 
 function setTextContract() {
@@ -49,7 +52,7 @@ function setTextContract() {
         text_contract_flag = 0;
     }
     else {
-        btn.innerHTML = 'Upload contract instead';
+        btn.innerHTML = 'Upload file instead';
         text_input.value = '';
         upload_contract_heading.innerHTML = 'Paste contract text';
         text_element.style.display = 'flex';
@@ -105,21 +108,9 @@ function checkAndUploadFile(file){
 function upoadFiles(file){
         console.log("Dropped file:", file.name);
 
-        // загрузка файла на сервер с использованием Fetch API
-        const formData = new FormData();
-        formData.append('file', file);
+        let formData = new FormData();
 
-        // fetch('url_обработчика', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('File uploaded successfully:', data);
-        // })
-        // .catch(error => {
-        //     console.error('Error uploading file:', error);
-        // });
+        formData.append('file', file);
 }
 
 function changeProgressBarFile(){
@@ -135,8 +126,10 @@ function changeProgressBarFile(){
             clearInterval(interval);
             progress_bar_file.classList.add('ready-progress-bar-file');
             progress_file_img.src='./imgs/ready-file.png';
-
-            summarize_btn.disabled = false;
+            
+            if(request_limit_counter < max_request_limit_counter){
+                summarize_btn.disabled = false;
+            }
         }
         if (close_progress_bar_file_flag){
             clearInterval(interval);
@@ -177,7 +170,8 @@ function checkFileType(file){
 }
 
 function checkTextarea(){
-    if (text_input.value.trim() !== '') {
+    if (text_input.value.trim() !== '' && request_limit_counter < max_request_limit_counter) {
+        console.log(request_limit_counter);
         summarize_btn.disabled = false;
     } else {
         summarize_btn.disabled = true;
@@ -218,6 +212,7 @@ function updateRequestLimit(){
         if (request_limit_counter>=max_request_limit_counter){
             limit_bar.classList.add('limit-bar-is-max');
             limit_warning_text.innerHTML = 'Your request limit is exceeded';
+            summarize_btn.disabled = true;
         }
         else {
             limit_bar.classList.remove('limit-bar-is-max');
@@ -227,7 +222,7 @@ function updateRequestLimit(){
 }
 
 function getLimitData() {
-    // сервер даёт нам значения plan_text, perday_text, date_text здесь
+    // сервер даёт нам значения plan_text, perday_text, date_text здесь, также здесь определяется subscription_ended_flag
     updateLimitData();
 }
 
@@ -235,4 +230,13 @@ function updateLimitData() {
     limit_plan_text.innerHTML = plan_text;
     limit_perday_text.innerHTML = perday_text;
     limit_date_text.innerHTML = date_text;
+}
+
+function subscriptionEnded() {
+    let upload_contract_board = document.getElementById('upload-contract-board');
+    let plan_expired_border = document.getElementById('plan-expired-border');
+
+    upload_contract_board.style.display = 'none';
+    plan_expired_border.style.display = 'flex';
+    summarize_btn.style.display = 'none';
 }

@@ -15,37 +15,45 @@
         <div class="summarize">
             <h1 class="summarize-heading">Summarize Contract</h1>
             <div class="boards">
-                <div class="upload-contract-board">
-
-                    <div class="upload-top">
-                        <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
-                        <button class="btn-text-instead boards-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
-                    </div>
-
-                    <hr>
-
-                    <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
-                        <input type="file" id="file-input" style="display: none"/>
-                        <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
-                        <p class="card-text upload-text">Click here or drag file to upload</p>
-                        <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
-                    </div>
-
-                    <div id="progress-container" style="display: none;">
-                        <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
-                        <div class="name-file-bar-container">
-                            <p class="card-text" id="upload_file_name"></p>
-                            <progress class="uploading-progress-bar-file" max=100 value=0></progress>
+                    <div class="board" id="upload-contract-board">
+                        <div class="upload-top">
+                            <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
+                            <button class="btn-text-instead boards-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
                         </div>
-                        <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
+
+                        <hr>
+
+                        <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
+                            <form>
+                                <input type="file" id="file-input" style="display: none"/>
+                            </form>
+                            <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
+                            <p class="card-text upload-text">Click here or drag file to upload</p>
+                            <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
+                        </div>
+
+                        <div id="progress-container" style="display: none;">
+                            <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
+                            <div class="name-file-bar-container">
+                                <p class="card-text" id="upload_file_name"></p>
+                                <progress class="uploading-progress-bar-file" max=100 value=0></progress>
+                            </div>
+                            <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
+                        </div>
+
+                        <form class="load-text-container" id="load-text-container" style="display: none;">
+                            <textarea class="text-input card-text" id="text-input" name="text-input" oninput="checkTextarea()" placeholder="Start writing here"></textarea>
+                        </form>
                     </div>
 
-                    <div class="load-text-container" id="load-text-container" style="display: none;">
-                        <textarea class="text-input card-text" id="text-input" name="text-input" oninput="checkTextarea()" placeholder="Start writing here"></textarea>
+                    <div class="board" id="plan-expired-border" style="display: none;">
+                        <img id="acute-icon" src="./imgs/acute.png" alt="Acute icon">
+                        <p class="card-text">Your subscription is expired.</p>
+                        <p class="card-text">Please renew it to continue summarizing.</p>
+                        <button class="link-small action-btn" id="expired-btn">Renew Subscription</button>
                     </div>
-                </div>
 
-                <div class="requests-limit-board">
+                <div class="board" id="requests-limit-board">
 
                     <div class="limit-top">
                         <h2 class="requests-limit-heading card-header">Requests Limit</h2>
@@ -85,7 +93,9 @@
                 </div>
             </div>
 
-            <button class="link-small" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
+            <button class="link-small action-btn" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
+
+            <button class="action-btn" style="margin-top: 100px; margin-left: 514px;" onclick="subscriptionEnded()">Subscription ended</button>
         </div>
     </div>
 </body>
