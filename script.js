@@ -8,6 +8,8 @@ let progress_file_img = document.getElementById('file-icon');
 let file_extensions = document.getElementById('file-extensions');
 let summarize_btn = document.getElementById('summarize-btn');
 let text_input = document.getElementById('text-input');
+let limit_bar = document.getElementById('request-limit-bar');
+let limit_text = document.getElementById('request-limit-text');
 let limit_warning_text = document.getElementById('limit-warning-text');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
@@ -193,10 +195,8 @@ function getRequestLimit(){
 
 function updateRequestLimit(){
     if (request_limit_counter<=max_request_limit_counter){
-        let limit_text = document.getElementById('request-limit-text');
         limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
 
-        let limit_bar = document.getElementById('request-limit-bar');
         limit_bar.max = max_request_limit_counter;
 
         if (request_limit_counter>0){
@@ -239,4 +239,8 @@ function subscriptionEnded() {
     upload_contract_board.style.display = 'none';
     plan_expired_border.style.display = 'flex';
     summarize_btn.style.display = 'none';
+    limit_warning_text.innerHTML = 'Your subscription is expired';
+    limit_text.innerHTML = '0 DAYS LEFT';
+    limit_bar.classList.add('limit-bar-is-max');
+    limit_bar.value=max_request_limit_counter;
 }
