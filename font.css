@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin:wght@500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Настройка шрифтов для текста */
 h1 {
@@ -79,6 +79,35 @@ body {
     font-size: 10px;
     font-weight: 500;
     line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.bold-title {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 0.02em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+#text-back-summarize {
+    font-family: Cabin;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
     letter-spacing: 0em;
     text-align: left;
 }

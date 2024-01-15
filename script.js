@@ -1,16 +1,22 @@
 let drop_box = document.getElementById('load-contract-container');
 let file_input = document.getElementById('file-input');
 let contract_element = document.getElementById('load-contract-container');
+let upload_contract_heading = document.getElementById('upload-contract-heading');
 let close_file = document.getElementById('close-file-icon');
 let progress_file = document.getElementById('progress-container');
 let progress_bar_file = document.getElementsByClassName('uploading-progress-bar-file')[0];
 let progress_file_img = document.getElementById('file-icon');
 let file_extensions = document.getElementById('file-extensions');
 let summarize_btn = document.getElementById('summarize-btn');
+let text_element = document.getElementById('load-text-container');
 let text_input = document.getElementById('text-input');
+let switch_text_contract_btn = document.getElementById('btn-text-contract');
 let limit_bar = document.getElementById('request-limit-bar');
 let limit_text = document.getElementById('request-limit-text');
 let limit_warning_text = document.getElementById('limit-warning-text');
+let summarize_container = document.getElementById('summarize-container');
+let loader_container = document.getElementById('loader-container');
+let response_container = document.getElementById('response-container');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
@@ -31,6 +37,10 @@ let plan_text = "Light Subscription";
 let perday_text = "4 per day";
 let date_text = "01.02.2024";
 
+// наименование файла
+let curr_file_name = '';
+let curr_file_extension = '';
+
 
 document.addEventListener('DOMContentLoaded', function() {
     getRequestLimit();
@@ -40,25 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setTextContract() {
-    let btn = document.getElementById('btn-text-contract');
-    let text_element = document.getElementById('load-text-container');
-    let upload_contract_heading = document.getElementById('upload-contract-heading');
-
     if (text_contract_flag){
-        btn.innerHTML = 'Paste text instead';
-        upload_contract_heading.innerHTML = 'Upload contract';
-        text_element.style.display = 'none';
-        contract_element.style.display = 'flex';
-        summarize_btn.disabled = true;
-
-        text_contract_flag = 0;
+        backToStartDisplay();
     }
     else {
-        btn.innerHTML = 'Upload file instead';
-        text_input.value = '';
+        switch_text_contract_btn.innerHTML = 'Upload file instead';
         upload_contract_heading.innerHTML = 'Paste contract text';
         text_element.style.display = 'flex';
         contract_element.style.display = 'none';
+        // скрытие введённого текста
+        text_input.value = '';
         // скрытие прогресс бара и возвращение его в исходное состояние
         recoveryProgressBarFile();
 
@@ -141,8 +142,16 @@ function changeProgressBarFile(){
 }
 
 function changeNameFile(file){
-    let file_name = document.getElementById('upload_file_name');
-    file_name.innerHTML = file.name;
+    let file_name = document.getElementById('upload-file-name');
+    let file_expansion = document.getElementById('upload-file-expansion');
+
+    // Получаем имя без расширения
+    curr_file_name = file.name.split('.').slice(0, -1).join('.') + '.';
+    file_name.innerHTML = curr_file_name;
+
+    // Получаем расширение файла
+    curr_file_extension = file.name.split('.').pop();
+    file_expansion.innerHTML = curr_file_extension;
 }
 
 close_file.addEventListener('click', () => {
@@ -173,7 +182,6 @@ function checkFileType(file){
 
 function checkTextarea(){
     if (text_input.value.trim() !== '' && request_limit_counter < max_request_limit_counter) {
-        console.log(request_limit_counter);
         summarize_btn.disabled = false;
     } else {
         summarize_btn.disabled = true;
@@ -183,8 +191,15 @@ function checkTextarea(){
 // функция срабатывающая при нажатии на кнопку summarize
 function summarize(){
     // alert("Данные уходят в бэк");
-    request_limit_counter++;
-    updateRequestLimit();
+    activateLoader();
+
+    // когда получен ответ от сервера
+    setTimeout(function() { // имитируем задержку ответа сервера
+        request_limit_counter++;
+        updateRequestLimit();
+
+        activateResponseDisplay();
+    }, 100);
 }
 
 // функция для получения количества запросов у пользователя
@@ -243,4 +258,36 @@ function subscriptionEnded() {
     limit_text.innerHTML = '0 DAYS LEFT';
     limit_bar.classList.add('limit-bar-is-max');
     limit_bar.value=max_request_limit_counter;
+}
+
+function activateLoader() {
+    summarize_container.style.display = 'none';
+    loader_container.style.display ='flex';
+}
+
+function activateResponseDisplay() {
+    loader_container.style.display ='none';
+    response_container.style.display ='flex';
+}
+
+function backToSummarize() {
+    response_container.style.display ='none';
+
+    activateSummarizeDisplay();
+}
+
+function activateSummarizeDisplay() {
+    summarize_container.style.display = 'flex'; 
+    backToStartDisplay();
+}
+
+function backToStartDisplay(){
+    recoveryProgressBarFile();
+    switch_text_contract_btn.innerHTML = 'Paste text instead';
+    upload_contract_heading.innerHTML = 'Upload contract';
+    text_element.style.display = 'none';
+    contract_element.style.display = 'flex';
+    summarize_btn.disabled = true;
+
+    text_contract_flag = 0;
 }

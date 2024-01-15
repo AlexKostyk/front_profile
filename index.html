@@ -12,13 +12,14 @@
         <!-- Сайдбар -->
         <div class="sidebar"></div>
 
-        <div class="summarize">
+        <!-- Основное окно загрузки файла -->
+        <div id="summarize-container">
             <h1 class="summarize-heading">Summarize Contract</h1>
             <div class="boards">
                     <div class="board" id="upload-contract-board">
                         <div class="upload-top">
                             <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
-                            <button class="btn-text-instead boards-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
+                            <button class="btn-text-instead secondary-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
                         </div>
 
                         <hr>
@@ -35,7 +36,10 @@
                         <div id="progress-container" style="display: none;">
                             <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
                             <div class="name-file-bar-container">
-                                <p class="card-text" id="upload_file_name"></p>
+                                <div id="name-expansion-container">
+                                    <p class="card-text" id="upload-file-name"></p>
+                                    <p class="card-text" id="upload-file-expansion"></p>
+                                </div>
                                 <progress class="uploading-progress-bar-file" max=100 value=0></progress>
                             </div>
                             <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
@@ -57,7 +61,7 @@
 
                     <div class="limit-top">
                         <h2 class="requests-limit-heading card-header">Requests Limit</h2>
-                        <button class="btn-requests-limit boards-btn link-small">Upgrade my Plan</button>
+                        <button class="btn-requests-limit secondary-btn link-small">Upgrade my Plan</button>
                     </div>
 
                     <hr>
@@ -94,10 +98,156 @@
             </div>
 
             <button class="link-small action-btn" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
-
-            <button class="action-btn" style="margin-top: 100px; margin-left: 514px;" onclick="subscriptionEnded()">Subscription ended</button>
         </div>
+
+        <!-- Loader -->
+        <div id="loader-container" style="display: none;">
+            <img id="load-icon" src="./imgs/load.png" alt="Load icon">
+            <p class="load-text">We are summarizing your contract.</p>
+            <p class="load-text"> Please wait, it takes less than a minute.</p>
+        </div>
+
+        <!-- Response -->
+        <div id="response-container" style="display: none;">
+            <div id="response-header">
+                <div id="link-back-summarize">
+                    <img id="img-back-summarize" src="./imgs/arrow_back_ios.png" alt="Back icon">
+                    <p id="text-back-summarize" onclick="backToSummarize()">Back to Summarize</p>
+                </div>
+                <h1>Contract Summary</h1>
+            </div>
+
+            <div id="response-boards-container">
+                <div id="content-boards-container">
+                    <!-- GENERAL -->
+                    <div class="board" id="general-board">
+                        <div class="response-tag">
+                            <p class="title">general</p>
+                        </div>
+
+                        <div id="general-dates">
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-effective-date-title">effective date</p>
+                                <p class="card-text" id="general-effective-date-text">17.01.2019</p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-date-title">date</p>
+                                <p class="card-text" id="general-date-text">17.01.2019</p>
+                            </div>                            
+                        </div>
+
+                        <div class="response-text-block">
+                            <p class="bold-title" id="general-type-title">contract type</p>
+                            <p class="card-text" id="general-type-text">Commercial Space Lease Agreement</p>
+                        </div>
+
+                        <div class="response-text-block">
+                            <p class="bold-title" id="general-terms-title">terms</p>
+                            <p class="card-text" id="general-terms-text">Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually</p>
+                        </div>
+
+                        <div class="response-text-block">
+                            <p class="bold-title" id="general-financial-terms-title">financial terms</p>
+                            <p class="card-text" id="general-financial-terms-text">Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions</p>
+                        </div>
+
+                        <div class="response-text-block">
+                            <p class="bold-title" id="general-penalties-title">penalties</p>
+                            <p class="card-text" id="general-penalties-text">0.1% delay penalty for each day of delay in payment</p>
+                        </div>
+                    </div>
+
+                    <div id="parties-boards-container">
+                        <!-- FIRST PARTY -->
+                        <div class="board" id="first-party-board">
+                            <div class="response-tag">
+                                <p class="title">first party</p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="first-party-name-title">name</p>
+                                <p class="card-text" id="first-party-name-text">Gnnpowder Kinnisvara Oii</p>
+                            </div>
+
+                            <hr class="first-parties-line">
+                            
+                            <div class="response-point-text-block">
+                                <p class="bold-title" id="first-party-rights-title">rights</p>
+                                <ul class="card-text point-list" id="first-party-rights-text">
+                                    <li>Use of the leased commercial</li>
+                                    <li>Receiving rent payments</li>
+                                </ul>
+                            </div>
+
+                            <hr class="second-parties-line">
+
+                            <div class="response-point-text-block">
+                                <p class="bold-title" id="first-party-responsibilities-title">responsibilities</p>
+                                <ul class="card-text point-list" id="first-party-responsibilities-text">
+                                    <li>Providing the leased premises</li>
+                                    <li>Provision of additional services (heating, water, electricity, technical security)</li>
+                                    <li>Handling other services based on Tenant's wishes</li>
+                                    <li>Maintenance of the building and facilities</li>
+                                    <li>Provision of security services</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- SECOND PARTY -->
+                        <div class="board" id="second-party-board">
+                            <div class="response-tag">
+                                <p class="title">second party</p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="second-party-name-title">name</p>
+                                <p class="card-text" id="second-party-name-text">Asia Drinks D&R OÜ</p>
+                            </div>
+
+                            <hr class="first-parties-line">
+
+                            <div class="response-point-text-block">
+                                <p class="bold-title" id="second-party-rights-title">rights</p>
+                                <ul class="card-text point-list" id="second-party-rights-text">
+                                    <li>Use of the leased commercial premises</li>
+                                    <li>Notification to terminate the contract prematurely (subject to conditions)</li>
+                                </ul>
+                            </div>
+
+                            <hr class="second-parties-line">
+
+                            <div class="response-point-text-block">
+                                <p class="bold-title" id="second-party-responsibilities-title">responsibilities</p>
+                                <ul class="card-text point-list" id="second-party-responsibilities-text">
+                                    <li>Paying rent, Additional Services, and General Services fees</li>
+                                    <li>Complying with rules and procedures</li>
+                                    <li>Handling waste and packaging waste obligations</li>
+                                    <li>Returning the premises in the original condition at the end of the contract</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Side Panel -->
+                <div id="response-side-panel">
+
+                </div>
+            </div>
+            <!-- Response btns -->
+            <div id="response-btns">
+                <div class="secondary-btn link-small">Copy to clipboard</div>
+                <div class="link-small action-btn">Download PDF</div>
+            </div>
+        </div>
+
     </div>
+    <!-- Отладочная панель -->
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px;">
+        <button class="secondary-btn link-small" onclick="subscriptionEnded()">Subscription ended</button>
+    </footer>
 </body>
 <script src="script.js"></script>
 </html>
