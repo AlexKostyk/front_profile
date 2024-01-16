@@ -36,7 +36,7 @@
                         <div id="progress-container" style="display: none;">
                             <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
                             <div class="name-file-bar-container">
-                                <div id="name-expansion-container">
+                                <div class="name-expansion-container">
                                     <p class="card-text" id="upload-file-name"></p>
                                     <p class="card-text" id="upload-file-expansion"></p>
                                 </div>
@@ -172,7 +172,7 @@
 
                             <hr class="first-parties-line">
                             
-                            <div class="response-point-text-block">
+                            <div class="response-point-text-block" id="first-parties-rights-divider">
                                 <p class="bold-title" id="first-party-rights-title">rights</p>
                                 <ul class="card-text point-list" id="first-party-rights-text">
                                     <li>Use of the leased commercial</li>
@@ -182,7 +182,7 @@
 
                             <hr class="second-parties-line">
 
-                            <div class="response-point-text-block">
+                            <div class="response-point-text-block" id="first-parties-responsibilities-divider">
                                 <p class="bold-title" id="first-party-responsibilities-title">responsibilities</p>
                                 <ul class="card-text point-list" id="first-party-responsibilities-text">
                                     <li>Providing the leased premises</li>
@@ -207,7 +207,7 @@
 
                             <hr class="first-parties-line">
 
-                            <div class="response-point-text-block">
+                            <div class="response-point-text-block" id="second-parties-rights-divider">
                                 <p class="bold-title" id="second-party-rights-title">rights</p>
                                 <ul class="card-text point-list" id="second-party-rights-text">
                                     <li>Use of the leased commercial premises</li>
@@ -217,7 +217,7 @@
 
                             <hr class="second-parties-line">
 
-                            <div class="response-point-text-block">
+                            <div class="response-point-text-block" id="second-parties-responsibilities-divider">
                                 <p class="bold-title" id="second-party-responsibilities-title">responsibilities</p>
                                 <ul class="card-text point-list" id="second-party-responsibilities-text">
                                     <li>Paying rent, Additional Services, and General Services fees</li>
@@ -233,13 +233,66 @@
 
                 <!-- Side Panel -->
                 <div id="response-side-panel">
+                    <div id="response-contract-details-container">
 
+                        <h2 id="response-contract-details-header">Contract Details</h2>
+
+                        <div id="response-name-file-container">
+                            <div id="response-name-icon-file">
+                                <img class="small-file-icon" id="small-file-icon" src="./imgs/small-file.png" alt="Small file icon">
+                                <div class="name-expansion-container">
+                                    <p class="card-text" id="response-file-name"></p>
+                                    <p class="card-text" id="response-file-expansion"></p>
+                                </div>
+                            </div>
+                            <img id="response-close-file-icon" src="./imgs/close.png" onclick="backToSummarize()" alt="Close icon">
+                        </div>
+
+                        <div id="pages-processed-container">
+                            <p class="title response-side-panel-title">pages processed</p>
+                            <p class="card-text">45/45</p>
+                        </div>
+
+                        <button class="link-small action-btn" id="another-contract-btn" onclick="backToSummarize()">Another contract</button>
+                    </div>
+
+                    <hr id="response-side-panel-hr">
+
+                    <div id="response-requests-limit-container">
+                        <h2 id="response-requests-limit-header">Requests Limit</h2>
+
+                        <div id="response-limit-text-bar-container">
+                            <p class="small-limit-text" id="response-limit-text"></p>
+                            <progress class="limit-bar" id="response-limit-bar"></progress>
+                        </div>
+                        
+                        <div class="response-limit-data-container">
+                            <p class="title response-side-panel-title">current plan</p>
+                            <p class="card-text" id="response-limit-plan-text"></p>
+                        </div>
+
+                        <div class="response-limit-data-container">
+                            <p class="title response-side-panel-title">requests limit</p>
+                            <p class="card-text" id="response-limit-perday-text"></p>
+                        </div>
+
+                        <div class="response-limit-data-container">
+                            <p class="title response-side-panel-title">expiration date</p>
+                            <p class="card-text" id="response-limit-date-text"></p>
+                        </div>
+
+                        <button class="link-small action-btn" id="response-upgrade-plan-btn">Upgrade Plan</button>
+                    </div>
                 </div>
             </div>
             <!-- Response btns -->
             <div id="response-btns">
-                <div class="secondary-btn link-small">Copy to clipboard</div>
-                <div class="link-small action-btn">Download PDF</div>
+                <button class="secondary-btn link-small">Copy to clipboard</button>
+                <button class="link-small action-btn" id="download-file-btn" onclick="downloadResponseFile()">Download PDF</button>
+                <div id="file-downloaded-container" style="display: none;">
+                    <img id="check-downloaded-icon" src="./imgs/check.png" alt="Check icon">
+                    <p class="link-small" id="file-downloaded-text">File has been downloaded</p>
+                </div>
             </div>
         </div>
 
@@ -247,6 +300,7 @@
     <!-- Отладочная панель -->
     <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px;">
         <button class="secondary-btn link-small" onclick="subscriptionEnded()">Subscription ended</button>
+        <button class="secondary-btn link-small" onclick="summarize()">Go to response</button>
     </footer>
 </body>
 <script src="script.js"></script>

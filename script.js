@@ -13,14 +13,22 @@ let text_input = document.getElementById('text-input');
 let switch_text_contract_btn = document.getElementById('btn-text-contract');
 let limit_bar = document.getElementById('request-limit-bar');
 let limit_text = document.getElementById('request-limit-text');
+let response_limit_bar = document.getElementById('response-limit-bar');
+let response_limit_text = document.getElementById('response-limit-text');
 let limit_warning_text = document.getElementById('limit-warning-text');
 let summarize_container = document.getElementById('summarize-container');
 let loader_container = document.getElementById('loader-container');
 let response_container = document.getElementById('response-container');
+let file_downloaded_container = document.getElementById('file-downloaded-container');
+let download_file_btn = document.getElementById('download-file-btn');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
 let limit_date_text = document.getElementById('limit-date-text');
+
+let response_limit_plan_text = document.getElementById('response-limit-plan-text');
+let response_limit_perday_text = document.getElementById('response-limit-perday-text');
+let response_limit_date_text = document.getElementById('response-limit-date-text');
 
 let text_contract_flag = 0;
 let close_progress_bar_file_flag = 0;
@@ -36,10 +44,6 @@ let request_limit_value = 0; // для внутренней логики
 let plan_text = "Light Subscription";
 let perday_text = "4 per day";
 let date_text = "01.02.2024";
-
-// наименование файла
-let curr_file_name = '';
-let curr_file_extension = '';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -142,16 +146,23 @@ function changeProgressBarFile(){
 }
 
 function changeNameFile(file){
-    let file_name = document.getElementById('upload-file-name');
-    let file_expansion = document.getElementById('upload-file-expansion');
+    let file_name_upoad = document.getElementById('upload-file-name');
+    let file_expansion_upoad = document.getElementById('upload-file-expansion');
+    let file_name_response = document.getElementById('response-file-name');
+    let file_expansion_response = document.getElementById('response-file-expansion');
+
+    let curr_file_name = '';
+    let curr_file_extension = '';
 
     // Получаем имя без расширения
     curr_file_name = file.name.split('.').slice(0, -1).join('.') + '.';
-    file_name.innerHTML = curr_file_name;
+    file_name_upoad.innerHTML = curr_file_name;
+    file_name_response.innerHTML = curr_file_name;
 
     // Получаем расширение файла
     curr_file_extension = file.name.split('.').pop();
-    file_expansion.innerHTML = curr_file_extension;
+    file_expansion_upoad.innerHTML = curr_file_extension;
+    file_expansion_response.innerHTML = curr_file_extension;
 }
 
 close_file.addEventListener('click', () => {
@@ -195,11 +206,13 @@ function summarize(){
 
     // когда получен ответ от сервера
     setTimeout(function() { // имитируем задержку ответа сервера
+        activateResponseDisplay();
+
+        alignmentDividers();
+
         request_limit_counter++;
         updateRequestLimit();
-
-        activateResponseDisplay();
-    }, 100);
+    }, 2000);
 }
 
 // функция для получения количества запросов у пользователя
@@ -211,13 +224,16 @@ function getRequestLimit(){
 function updateRequestLimit(){
     if (request_limit_counter<=max_request_limit_counter){
         limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
+        response_limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
 
         limit_bar.max = max_request_limit_counter;
+        response_limit_bar.max = max_request_limit_counter;
 
         if (request_limit_counter>0){
             const interval = setInterval(() => {
                 request_limit_value += 0.05;
                 limit_bar.value = request_limit_value;
+                response_limit_bar.value = request_limit_value;
                 if (request_limit_value >= request_limit_counter) {
                     clearInterval(interval);
                 }
@@ -226,11 +242,13 @@ function updateRequestLimit(){
 
         if (request_limit_counter>=max_request_limit_counter){
             limit_bar.classList.add('limit-bar-is-max');
+            response_limit_bar.classList.add('limit-bar-is-max');
             limit_warning_text.innerHTML = 'Your request limit is exceeded';
             summarize_btn.disabled = true;
         }
         else {
             limit_bar.classList.remove('limit-bar-is-max');
+            response_limit_bar.classList.remove('limit-bar-is-max');
             limit_warning_text.innerHTML = '';
         }
     }
@@ -245,6 +263,10 @@ function updateLimitData() {
     limit_plan_text.innerHTML = plan_text;
     limit_perday_text.innerHTML = perday_text;
     limit_date_text.innerHTML = date_text;
+
+    response_limit_plan_text.innerHTML = plan_text;
+    response_limit_perday_text.innerHTML = perday_text;
+    response_limit_date_text.innerHTML = date_text;
 }
 
 function subscriptionEnded() {
@@ -255,9 +277,14 @@ function subscriptionEnded() {
     plan_expired_border.style.display = 'flex';
     summarize_btn.style.display = 'none';
     limit_warning_text.innerHTML = 'Your subscription is expired';
+
     limit_text.innerHTML = '0 DAYS LEFT';
     limit_bar.classList.add('limit-bar-is-max');
     limit_bar.value=max_request_limit_counter;
+
+    response_limit_text.innerHTML = '0 DAYS LEFT';
+    response_limit_bar.classList.add('limit-bar-is-max');
+    response_limit_bar.value=max_request_limit_counter;
 }
 
 function activateLoader() {
@@ -267,7 +294,11 @@ function activateLoader() {
 
 function activateResponseDisplay() {
     loader_container.style.display ='none';
+    file_downloaded_container.style.display = 'none';
+    
+    // обновление кнопки Download PDF
     response_container.style.display ='flex';
+    download_file_btn.style.display = 'block';
 }
 
 function backToSummarize() {
@@ -281,7 +312,7 @@ function activateSummarizeDisplay() {
     backToStartDisplay();
 }
 
-function backToStartDisplay(){
+function backToStartDisplay() {
     recoveryProgressBarFile();
     switch_text_contract_btn.innerHTML = 'Paste text instead';
     upload_contract_heading.innerHTML = 'Upload contract';
@@ -290,4 +321,38 @@ function backToStartDisplay(){
     summarize_btn.disabled = true;
 
     text_contract_flag = 0;
+}
+
+function alignmentDividers() {
+    let first_rights_divider = document.getElementById('first-parties-rights-divider');
+    let first_responsibilities_divider = document.getElementById('first-parties-responsibilities-divider');
+
+    let second_rights_divider = document.getElementById('second-parties-rights-divider');
+    let second_responsibilities_divider = document.getElementById('second-parties-responsibilities-divider');
+
+    if (first_rights_divider.clientHeight > second_rights_divider.clientHeight) {
+        second_rights_divider.style.height = first_rights_divider.clientHeight + 'px';
+    }
+
+    if (first_responsibilities_divider.clientHeight > second_responsibilities_divider.clientHeight) {
+        second_responsibilities_divider.style.height = first_responsibilities_divider.clientHeight + 'px';
+    }
+
+    if (second_rights_divider.clientHeight > first_rights_divider.clientHeight) {
+        first_rights_divider.style.height = second_rights_divider.clientHeight + 'px';
+    }
+
+    if (second_responsibilities_divider.clientHeight > first_responsibilities_divider.clientHeight) {
+        first_responsibilities_divider.style.height = second_responsibilities_divider.clientHeight + 'px';
+    }
+}
+
+function downloadResponseFile() { 
+    download_file_btn.style.display = 'none';
+    file_downloaded_container.style.display = 'flex';
+
+    setTimeout(function() {
+        file_downloaded_container.style.display = 'none';
+        download_file_btn.style.display = 'block';
+    }, 3000);
 }

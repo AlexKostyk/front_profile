@@ -13,6 +13,7 @@
     --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
     --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
     --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
 
     /* System */
     --neon-elements-hover-or-click-color: #94ef00; /* neon green */
@@ -363,7 +364,7 @@ textarea::-webkit-scrollbar-track {
     color: var(--secondary-text-and-elements-color);
 }
 
-#name-expansion-container {
+.name-expansion-container {
     display: flex;
 }
 
@@ -482,20 +483,14 @@ textarea::-webkit-scrollbar-track {
     position: relative;
 }
 
-#response-side-panel {
-    width: 270px;
-    height: 690px;
-    padding: 32px, 16px, 73px, 16px;
-    border-radius: 8px;
-    border: 1px solid var(--basic-background-color);
-    gap: 40px;
-}
+
 
 #response-btns {
     display: flex;
     margin-top: 24px;
     margin-left: 24px;
     gap: 16px;
+    align-items: center;
 }
 
 
@@ -546,3 +541,96 @@ textarea::-webkit-scrollbar-track {
 .second-parties-line {
     width: 376px;
 }
+
+#response-side-panel {
+    width: 270px;
+    height: 690px;
+    border-radius: 8px;
+    border: 1px solid var(--basic-background-color);
+    padding: 32px 16px;
+}
+
+#response-contract-details-header {
+    display: flex;
+    justify-content: center;
+}
+
+#response-name-file-container {
+    display: flex;
+    align-items: center;
+}
+
+#response-contract-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#response-file-name {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#response-name-icon-file {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+#response-name-icon-file {
+    width: 220px;
+}
+
+#pages-processed-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.response-side-panel-title {
+    color: var(--secondary-text-and-elements-color);
+}
+
+#another-contract-btn,
+#response-upgrade-plan-btn {
+    width: 238px;
+}
+
+#response-side-panel-hr {
+    margin: 40px 0;
+}
+
+#response-requests-limit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#response-requests-limit-header {
+    display: flex;
+    justify-content: center;
+}
+
+#response-limit-text-bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.response-limit-data-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#file-downloaded-container {
+    display: flex;
+    align-items: center;
+}
+
+#file-downloaded-text {
+    color: var(--downloaded-text-color);
+}
+
