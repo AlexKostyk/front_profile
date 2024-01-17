@@ -375,6 +375,10 @@ textarea::-webkit-scrollbar-track {
     text-overflow: ellipsis;
 }
 
+#close-file-icon {
+    cursor: pointer;
+}
+
 #plan-expired-border {
     display: flex;
     flex-direction: column;
@@ -434,12 +438,15 @@ textarea::-webkit-scrollbar-track {
 
 #link-back-summarize {
     display: flex;
+}
 
+#img-back-summarize {
     cursor: pointer;
 }
 
 #text-back-summarize {
     color: var(--secondary-text-and-elements-color);
+    cursor: pointer;
 }
 
 #response-boards-container {

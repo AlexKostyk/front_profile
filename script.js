@@ -30,20 +30,64 @@ let response_limit_plan_text = document.getElementById('response-limit-plan-text
 let response_limit_perday_text = document.getElementById('response-limit-perday-text');
 let response_limit_date_text = document.getElementById('response-limit-date-text');
 
-let text_contract_flag = 0;
-let close_progress_bar_file_flag = 0;
-let subscription_ended_flag = 0;
+// GENERAL
+let general_effective_date = document.getElementById('general-effective-date-text');
+let general_date = document.getElementById('general-date-text');
+let general_type = document.getElementById('general-type-text');
+let general_terms = document.getElementById('general-terms-text');
+let general_financial_terms = document.getElementById('general-financial-terms-text');
+let general_penalties = document.getElementById('general-penalties-text');
 
-// счётчик лимитов запросов
-let request_limit_counter = 0;
-let max_request_limit_counter = 4;
+// FIRST PARTY
+let first_party_name = document.getElementById('first-party-name-text');
+let first_party_rights = document.getElementById('first-party-rights-text');
+let first_party_responsibilities = document.getElementById('first-party-responsibilities-text');
+
+// SECOND PARTY
+let second_party_name = document.getElementById('second-party-name-text');
+let second_party_rights = document.getElementById('second-party-rights-text');
+let second_party_responsibilities = document.getElementById('second-party-responsibilities-text');
+
+// флаги
+let text_contract_flag = 0; // переключение между вводом текста (1) и загрузкой фала (0)
+let close_progress_bar_file_flag = 0; // флаг для удаления загруженного файла
+let subscription_ended_flag = 0; // флаг для обозначения окончания подписки
 
 let request_limit_value = 0; // для внутренней логики
 
+// файл загруженный пользователем
+let user_file;
+
+// ---- Данные получаемые с сервера ----
+
+// счётчик лимитов запросов
+let request_limit_counter;
+let max_request_limit_counter;
+
 // данные для лимитов
-let plan_text = "Light Subscription";
-let perday_text = "4 per day";
-let date_text = "01.02.2024";
+let plan_text;
+let perday_text;
+let date_text;
+
+// ---- Response data ----
+// GENERAL
+let general_effective_date_text;
+let general_date_text;
+let general_type_text;
+let general_terms_text;
+let general_financial_terms_text;
+let general_penalties_text;
+
+// FIRST PARTY
+let first_party_name_text;
+let first_party_rights_text;
+let first_party_responsibilities_text;
+
+// SECOND PARTY
+let second_party_name_text;
+let second_party_rights_text;
+let second_party_responsibilities_text;
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -52,6 +96,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(subscription_ended_flag) subscriptionEnded();
 });
+
+// функция для получения информации о подписке у пользователя
+function getLimitData() {
+    // сервер даёт нам значения plan_text, perday_text, date_text здесь, также здесь определяется subscription_ended_flag
+    plan_text = "Light Subscription";
+    perday_text = "4 per day";
+    date_text = "01.02.2024";
+
+    updateLimitData();
+}
+
+// функция для получения количества запросов у пользователя
+function getRequestLimit(){
+    // сервер даёт нам значения request_limit_counter и max_request_limit_counter здесь
+    request_limit_counter = 0;
+    max_request_limit_counter = 4;
+
+    updateRequestLimit();
+}
 
 function setTextContract() {
     if (text_contract_flag){
@@ -89,6 +152,7 @@ const onDrop = (e) => {
     e.stopPropagation();
 
     const files = e.dataTransfer.files;
+    user_file = files[0];
     
     checkAndUploadFile(files[0]);
 
@@ -165,10 +229,10 @@ function changeNameFile(file){
     file_expansion_response.innerHTML = curr_file_extension;
 }
 
-close_file.addEventListener('click', () => {
+function closeUploadFile() {
     recoveryProgressBarFile();
     contract_element.style.display = 'flex';
-});
+}
 
 function recoveryProgressBarFile(){
     close_progress_bar_file_flag = 1;
@@ -204,6 +268,9 @@ function summarize(){
     // alert("Данные уходят в бэк");
     activateLoader();
 
+    // сервер даёт нам значения полей response здесь
+    getResponseData();
+
     // когда получен ответ от сервера
     setTimeout(function() { // имитируем задержку ответа сервера
         activateResponseDisplay();
@@ -215,10 +282,47 @@ function summarize(){
     }, 2000);
 }
 
-// функция для получения количества запросов у пользователя
-function getRequestLimit(){
-    // сервер даёт нам значения request_limit_counter и max_request_limit_counter здесь
-    updateRequestLimit();
+function getResponseData() {
+    // GENERAL
+    general_effective_date_text = "17.01.2019";
+    general_date_text = "17.01.2019";
+    general_type_text = "Commercial Space Lease Agreement";
+    general_terms_text = "Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually";
+    general_financial_terms_text = "Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions";
+    general_penalties_text = "0.1% delay penalty for each day of delay in payment";
+
+    // FIRST PARTY
+    first_party_name_text = "Gnnpowder Kinnisvara Oii";
+    first_party_rights_text = "<li>Use of the leased commercial</li><li>Receiving rent payments</li>";
+    first_party_responsibilities_text = "<li>Providing the leased premises</li><li>Provision of additional services (heating, water, electricity, technical security)</li><li>Handling other services based on Tenant's wishes</li><li>Maintenance of the building and facilities</li><li>Provision of security services</li>";
+
+    // SECOND PARTY
+    second_party_name_text = "Asia Drinks D&R OÜ";
+    second_party_rights_text = "<li>Use of the leased commercial premises</li><li>Notification to terminate the contract prematurely (subject to conditions)</li>";
+    second_party_responsibilities_text = "<li>Paying rent, Additional Services, and General Services fees</li><li>Complying with rules and procedures</li><li>Handling waste and packaging waste obligations</li><li>Returning the premises in the original condition at the end of the contract</li>";
+
+    updateResponseData();
+}
+
+function updateResponseData() {
+    // GENERAL
+    general_effective_date.innerText = general_effective_date_text;
+    general_date.innerText = general_date_text;
+    general_type.innerText = general_type_text;
+    general_terms.innerText = general_terms_text;
+    general_financial_terms.innerText = general_financial_terms_text;
+    general_penalties.innerText = general_penalties_text;
+
+    // FIRST PARTY
+    first_party_name.innerText = first_party_name_text;
+    first_party_rights.innerHTML = first_party_rights_text;
+    first_party_responsibilities.innerHTML = first_party_responsibilities_text;
+
+    // SECOND PARTY
+    second_party_name.innerText = second_party_name_text;
+    second_party_rights.innerHTML = second_party_rights_text;
+    second_party_responsibilities.innerHTML = second_party_responsibilities_text;
+
 }
 
 function updateRequestLimit(){
@@ -252,11 +356,6 @@ function updateRequestLimit(){
             limit_warning_text.innerHTML = '';
         }
     }
-}
-
-function getLimitData() {
-    // сервер даёт нам значения plan_text, perday_text, date_text здесь, также здесь определяется subscription_ended_flag
-    updateLimitData();
 }
 
 function updateLimitData() {
@@ -351,8 +450,64 @@ function downloadResponseFile() {
     download_file_btn.style.display = 'none';
     file_downloaded_container.style.display = 'flex';
 
+    // // Создаем объект Blob с содержимым файла
+    // const blob = new Blob([user_file], { type: user_file.type });
+
+    // // Создаем элемент <a> для скачивания файла
+    // const a = document.createElement('a');
+    // a.href = URL.createObjectURL(blob);
+    // a.download = user_file.name;
+
+    // // Добавляем элемент <a> в документ и эмулируем клик для начала загрузки
+    // document.body.appendChild(a);
+    // a.click();
+
+    // // Удаляем элемент <a> после завершения скачивания
+    // document.body.removeChild(a);
+
     setTimeout(function() {
         file_downloaded_container.style.display = 'none';
         download_file_btn.style.display = 'block';
     }, 3000);
+}
+
+function copyTextToClipboard() {
+    let text = makeTextToClipboard();
+
+    let textArea = document.createElement('textarea');
+    textArea.value = text;
+  
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        let successful = document.execCommand('copy');
+        let msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function makeTextToClipboard() {
+    // GENERAL
+    let text = 'GENERAL\nEffective date:\n'+general_effective_date_text+'\nDate:\n'+general_date_text+'\nContract type:\n'+general_type_text+'\nTerms:\n'+general_terms_text+
+    '\nFinancial terms:\n'+general_financial_terms_text+'\nPenalties:\n'+general_penalties_text;
+
+    // FIRST PARTY
+    text += '\n\nFIRST PARTY\nName:\n'+first_party_name_text+'\nRights:\n'+first_party_rights_text.replace(/<li>/g, '- ').replace(/<\/li>/g, '\n')+'Responsibilities:\n'+
+    first_party_responsibilities_text.replace(/<li>/g, '- ').replace(/<\/li>/g, '\n');
+
+    // SECOND PARTY
+    text += '\nSECOND PARTY\nName:\n'+second_party_name_text+'\nRights:\n'+second_party_rights_text.replace(/<li>/g, '- ').replace(/<\/li>/g, '\n')+'Responsibilities:\n'+
+    second_party_responsibilities_text.replace(/<li>/g, '- ').replace(/<\/li>/g, '\n');
+
+    return text;
 }

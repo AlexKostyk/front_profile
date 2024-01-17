@@ -42,7 +42,7 @@
                                 </div>
                                 <progress class="uploading-progress-bar-file" max=100 value=0></progress>
                             </div>
-                            <img id="close-file-icon" src="./imgs/close.png" alt="Close icon">
+                            <img id="close-file-icon" src="./imgs/close.png" alt="Close icon" onclick="closeUploadFile()">
                         </div>
 
                         <form class="load-text-container" id="load-text-container" style="display: none;">
@@ -111,7 +111,7 @@
         <div id="response-container" style="display: none;">
             <div id="response-header">
                 <div id="link-back-summarize">
-                    <img id="img-back-summarize" src="./imgs/arrow_back_ios.png" alt="Back icon">
+                    <img id="img-back-summarize" src="./imgs/arrow_back_ios.png" alt="Back icon" onclick="backToSummarize()">
                     <p id="text-back-summarize" onclick="backToSummarize()">Back to Summarize</p>
                 </div>
                 <h1>Contract Summary</h1>
@@ -128,33 +128,33 @@
                         <div id="general-dates">
                             <div class="response-text-block">
                                 <p class="bold-title" id="general-effective-date-title">effective date</p>
-                                <p class="card-text" id="general-effective-date-text">17.01.2019</p>
+                                <p class="card-text" id="general-effective-date-text"></p>
                             </div>
 
                             <div class="response-text-block">
                                 <p class="bold-title" id="general-date-title">date</p>
-                                <p class="card-text" id="general-date-text">17.01.2019</p>
+                                <p class="card-text" id="general-date-text"></p>
                             </div>                            
                         </div>
 
                         <div class="response-text-block">
                             <p class="bold-title" id="general-type-title">contract type</p>
-                            <p class="card-text" id="general-type-text">Commercial Space Lease Agreement</p>
+                            <p class="card-text" id="general-type-text"></p>
                         </div>
 
                         <div class="response-text-block">
                             <p class="bold-title" id="general-terms-title">terms</p>
-                            <p class="card-text" id="general-terms-text">Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually</p>
+                            <p class="card-text" id="general-terms-text"></p>
                         </div>
 
                         <div class="response-text-block">
                             <p class="bold-title" id="general-financial-terms-title">financial terms</p>
-                            <p class="card-text" id="general-financial-terms-text">Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions</p>
+                            <p class="card-text" id="general-financial-terms-text"></p>
                         </div>
 
                         <div class="response-text-block">
                             <p class="bold-title" id="general-penalties-title">penalties</p>
-                            <p class="card-text" id="general-penalties-text">0.1% delay penalty for each day of delay in payment</p>
+                            <p class="card-text" id="general-penalties-text"></p>
                         </div>
                     </div>
 
@@ -167,30 +167,21 @@
 
                             <div class="response-text-block">
                                 <p class="bold-title" id="first-party-name-title">name</p>
-                                <p class="card-text" id="first-party-name-text">Gnnpowder Kinnisvara Oii</p>
+                                <p class="card-text" id="first-party-name-text"></p>
                             </div>
 
                             <hr class="first-parties-line">
                             
                             <div class="response-point-text-block" id="first-parties-rights-divider">
                                 <p class="bold-title" id="first-party-rights-title">rights</p>
-                                <ul class="card-text point-list" id="first-party-rights-text">
-                                    <li>Use of the leased commercial</li>
-                                    <li>Receiving rent payments</li>
-                                </ul>
+                                <ul class="card-text point-list" id="first-party-rights-text"></ul>
                             </div>
 
                             <hr class="second-parties-line">
 
                             <div class="response-point-text-block" id="first-parties-responsibilities-divider">
                                 <p class="bold-title" id="first-party-responsibilities-title">responsibilities</p>
-                                <ul class="card-text point-list" id="first-party-responsibilities-text">
-                                    <li>Providing the leased premises</li>
-                                    <li>Provision of additional services (heating, water, electricity, technical security)</li>
-                                    <li>Handling other services based on Tenant's wishes</li>
-                                    <li>Maintenance of the building and facilities</li>
-                                    <li>Provision of security services</li>
-                                </ul>
+                                <ul class="card-text point-list" id="first-party-responsibilities-text"></ul>
                             </div>
                         </div>
 
@@ -202,29 +193,21 @@
 
                             <div class="response-text-block">
                                 <p class="bold-title" id="second-party-name-title">name</p>
-                                <p class="card-text" id="second-party-name-text">Asia Drinks D&R OÜ</p>
+                                <p class="card-text" id="second-party-name-text"></p>
                             </div>
 
                             <hr class="first-parties-line">
 
                             <div class="response-point-text-block" id="second-parties-rights-divider">
                                 <p class="bold-title" id="second-party-rights-title">rights</p>
-                                <ul class="card-text point-list" id="second-party-rights-text">
-                                    <li>Use of the leased commercial premises</li>
-                                    <li>Notification to terminate the contract prematurely (subject to conditions)</li>
-                                </ul>
+                                <ul class="card-text point-list" id="second-party-rights-text"></ul>
                             </div>
 
                             <hr class="second-parties-line">
 
                             <div class="response-point-text-block" id="second-parties-responsibilities-divider">
                                 <p class="bold-title" id="second-party-responsibilities-title">responsibilities</p>
-                                <ul class="card-text point-list" id="second-party-responsibilities-text">
-                                    <li>Paying rent, Additional Services, and General Services fees</li>
-                                    <li>Complying with rules and procedures</li>
-                                    <li>Handling waste and packaging waste obligations</li>
-                                    <li>Returning the premises in the original condition at the end of the contract</li>
-                                </ul>
+                                <ul class="card-text point-list" id="second-party-responsibilities-text"></ul>
                             </div>
                         </div>
 
@@ -245,7 +228,7 @@
                                     <p class="card-text" id="response-file-expansion"></p>
                                 </div>
                             </div>
-                            <img id="response-close-file-icon" src="./imgs/close.png" onclick="backToSummarize()" alt="Close icon">
+                            <img id="close-file-icon" src="./imgs/close.png" onclick="backToSummarize()" alt="Close icon">
                         </div>
 
                         <div id="pages-processed-container">
@@ -287,7 +270,8 @@
             </div>
             <!-- Response btns -->
             <div id="response-btns">
-                <button class="secondary-btn link-small">Copy to clipboard</button>
+                <button class="secondary-btn link-small" onclick="copyTextToClipboard()">Copy to clipboard</button>
+
                 <button class="link-small action-btn" id="download-file-btn" onclick="downloadResponseFile()">Download PDF</button>
                 <div id="file-downloaded-container" style="display: none;">
                     <img id="check-downloaded-icon" src="./imgs/check.png" alt="Check icon">
