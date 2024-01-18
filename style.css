@@ -108,14 +108,10 @@ body {
     flex-direction: column;
 }
 
-#community-menu-point {
-    margin-bottom: 10px;
-}
 
 #community-menu-ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -123,6 +119,7 @@ body {
 
 #community-menu-ul li {
     margin-left: 62px;
+    margin-top: 10px;
 }
 
 #community-menu-ul a {
@@ -524,6 +521,8 @@ textarea::-webkit-scrollbar-track {
     flex-direction: column;
     align-items: center;
 
+    width: 572px;
+    height: 245px;
     gap: 0;
     padding: 0;
     margin-left: 24px;

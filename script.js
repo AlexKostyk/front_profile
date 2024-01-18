@@ -22,6 +22,7 @@ let response_container = document.getElementById('response-container');
 let file_downloaded_container = document.getElementById('file-downloaded-container');
 let download_file_btn = document.getElementById('download-file-btn');
 let community_menu_ul = document.getElementById('community-menu-ul');
+let user_email = document.getElementById('user-email');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
@@ -591,7 +592,7 @@ function dropDownMenu() {
     let ul_height = 0;
 
     for (let _ of community_menu_ul.children) ul_height += 27;
-    community_menu_ul.style.height = ul_height - 10 + 'px';
+    community_menu_ul.style.height = ul_height + 'px';
 
     function clickHandler() {
         community_menu_ul.style.height = '0px';
@@ -601,17 +602,23 @@ function dropDownMenu() {
     document.addEventListener('click', clickHandler);
 }
 
-function activateEmailMenu() {
-    let email_menu = document.getElementById('email-menu');
+function activateEmailMenu() {  
+   let email_menu = document.getElementById("email-menu");
 
-    email_menu.style.display = 'block';
-
-    function clickHandler() {
-        email_menu.style.display = 'none';
-        document.removeEventListener('click', clickHandler);
-    }
-
-    setTimeout(function() {
-        document.addEventListener('click', clickHandler);
-    }, 10);
+   email_menu.style.display = "block";
+ 
+   // обработчик события для скрытия меню при клике на любое место в документе
+   function hideEmailMenu(event) {
+     // Проверяем, был ли клик вне элемента "user-email" и "email-menu"
+        if (
+            event.target.id !== "user-email" &&
+            event.target.id !== "email-menu"
+        ) {
+            email_menu.style.display = "none";
+            // Удаляем обработчик события после первого клика вне меню
+            document.removeEventListener("click", hideEmailMenu);
+        }
+   }
+ 
+   document.addEventListener("click", hideEmailMenu);
 }
