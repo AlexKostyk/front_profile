@@ -21,6 +21,7 @@ let loader_container = document.getElementById('loader-container');
 let response_container = document.getElementById('response-container');
 let file_downloaded_container = document.getElementById('file-downloaded-container');
 let download_file_btn = document.getElementById('download-file-btn');
+let community_menu_ul = document.getElementById('community-menu-ul');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
@@ -53,10 +54,21 @@ let text_contract_flag = 0; // переключение между вводом 
 let close_progress_bar_file_flag = 0; // флаг для удаления загруженного файла
 let subscription_ended_flag = 0; // флаг для обозначения окончания подписки
 
-let request_limit_value = 0; // для внутренней логики
+// для внутренней логики
+let request_limit_value = 0;
+let curr_menu_pont = 0;
 
 // файл загруженный пользователем
 let user_file;
+
+// Ссылки на внешние ресурсы из comunity
+let linksArray = [
+    { title: 'Instagram', url: 'https://example.com/link1' },
+    { title: 'GitHub', url: 'https://example.com/link2' },
+    { title: 'X/Twitter', url: 'https://example.com/link3' },
+    { title: 'Telegram', url: 'https://example.com/link4' },
+    { title: 'Medium', url: 'https://example.com/link5' }
+];
 
 // ---- Данные получаемые с сервера ----
 
@@ -94,6 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
     getRequestLimit();
     getLimitData();
 
+    updateComunityLinks();
+
     if(subscription_ended_flag) subscriptionEnded();
 });
 
@@ -114,6 +128,21 @@ function getRequestLimit(){
     max_request_limit_counter = 4;
 
     updateRequestLimit();
+}
+
+function updateComunityLinks() {
+    linksArray.forEach(function(link) {
+
+        let listItem = document.createElement('li');
+      
+        let linkElement = document.createElement('a');
+        linkElement.href = link.url;
+        linkElement.textContent = link.title;
+      
+        listItem.appendChild(linkElement);
+      
+        community_menu_ul.appendChild(listItem);
+    });
 }
 
 function setTextContract() {
@@ -472,6 +501,8 @@ function downloadResponseFile() {
 }
 
 function copyTextToClipboard() {
+    let copy_btn = document.getElementById('copy-btn');
+
     let text = makeTextToClipboard();
 
     let textArea = document.createElement('textarea');
@@ -494,6 +525,11 @@ function copyTextToClipboard() {
     }
 
     document.body.removeChild(textArea);
+
+    copy_btn.disabled = true;
+    setTimeout(function() {
+        copy_btn.disabled = false;
+    }, 5000);
 }
 
 function makeTextToClipboard() {
@@ -510,4 +546,72 @@ function makeTextToClipboard() {
     second_party_responsibilities_text.replace(/<li>/g, '- ').replace(/<\/li>/g, '\n');
 
     return text;
+}
+
+function switchMenuPoint(point){
+    let menu_point = document.getElementsByClassName('menu-point');
+    let active_rectangle = document.getElementsByClassName('active-rectangle');
+    let menu_icon = document.getElementsByClassName('menu-icon');
+    
+    menu_point[curr_menu_pont].classList.remove('active-menu-point');
+    menu_point[point].classList.add('active-menu-point');
+
+    active_rectangle[curr_menu_pont].style.display = "none";
+    active_rectangle[point].style.display = "flex";
+
+    menu_icon[curr_menu_pont].src = "./imgs/menu-icons/menu"+curr_menu_pont+".png";
+    menu_icon[point].src = "./imgs/menu-icons/active-menu"+point+".png";
+    
+    setTimeout(function() { // задержка нужня для подгрузки иконки другого цвета в пункт меню
+        switch (point) {
+            case 0:
+                window.location.href = "index.html";
+                break;
+            case 1:
+                window.location.href = "history.html";
+                break;
+            case 2:
+                window.location.href = "payment.html";
+                break;
+            case 3:
+                window.location.href = "my_plan.html";
+                break;
+            case 4:
+                dropDownMenu();
+                break;
+            default:
+                window.location.href = "index.html";
+        }
+    }, 100);
+
+    curr_menu_pont = point;
+}
+
+function dropDownMenu() {
+    let ul_height = 0;
+
+    for (let _ of community_menu_ul.children) ul_height += 27;
+    community_menu_ul.style.height = ul_height - 10 + 'px';
+
+    function clickHandler() {
+        community_menu_ul.style.height = '0px';
+        document.removeEventListener('click', clickHandler);
+    }
+
+    document.addEventListener('click', clickHandler);
+}
+
+function activateEmailMenu() {
+    let email_menu = document.getElementById('email-menu');
+
+    email_menu.style.display = 'block';
+
+    function clickHandler() {
+        email_menu.style.display = 'none';
+        document.removeEventListener('click', clickHandler);
+    }
+
+    setTimeout(function() {
+        document.addEventListener('click', clickHandler);
+    }, 10);
 }

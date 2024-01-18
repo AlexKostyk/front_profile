@@ -65,6 +65,15 @@ body {
     text-align: center;
 }
 
+.link-large {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
 .card-text {
     font-family: Inter;
     font-size: 14px;
@@ -109,5 +118,23 @@ body {
     font-weight: 600;
     line-height: 16px;
     letter-spacing: 0em;
+    text-align: left;
+}
+
+.small-menu-text {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.email_menu_text {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.02em;
     text-align: left;
 }
