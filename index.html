@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Summarize</title>
 
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
@@ -188,7 +188,17 @@
         <div id="loader-container" style="display: none;">
             <img id="load-icon" src="./imgs/load.png" alt="Load icon">
             <p class="load-text">We are summarizing your contract.</p>
-            <p class="load-text"> Please wait, it takes less than a minute.</p>
+            <p class="load-text">Please wait, it takes less than a minute.</p>
+        </div>
+
+        <!-- Loader Error -->
+        <div id="error-container" style="display: none;">
+            <img id="error-icon" src="./imgs/error.png" alt="Error icon">
+            <div class="error-text">
+                <p>Something went wrong.</p>
+                <p>Please reload the page to continue the summarizing.</p>
+            </div>
+            <button class="link-small action-btn" id="reload-btn">Reload</button>
         </div>
 
         <!-- Response -->
@@ -369,6 +379,7 @@
     <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px;">
         <button class="secondary-btn link-small" onclick="subscriptionEnded()">Subscription ended</button>
         <button class="secondary-btn link-small" onclick="summarize()">Go to response</button>
+        <button class="secondary-btn link-small" onclick="loaderError()">Show loader error</button>
     </footer>
 </body>
 <script src="script.js"></script>

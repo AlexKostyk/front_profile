@@ -21,8 +21,6 @@ let loader_container = document.getElementById('loader-container');
 let response_container = document.getElementById('response-container');
 let file_downloaded_container = document.getElementById('file-downloaded-container');
 let download_file_btn = document.getElementById('download-file-btn');
-let community_menu_ul = document.getElementById('community-menu-ul');
-let user_email = document.getElementById('user-email');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
@@ -62,15 +60,6 @@ let curr_menu_pont = 0;
 // файл загруженный пользователем
 let user_file;
 
-// Ссылки на внешние ресурсы из comunity
-let linksArray = [
-    { title: 'Instagram', url: 'https://example.com/link1' },
-    { title: 'GitHub', url: 'https://example.com/link2' },
-    { title: 'X/Twitter', url: 'https://example.com/link3' },
-    { title: 'Telegram', url: 'https://example.com/link4' },
-    { title: 'Medium', url: 'https://example.com/link5' }
-];
-
 // ---- Данные получаемые с сервера ----
 
 // счётчик лимитов запросов
@@ -107,8 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
     getRequestLimit();
     getLimitData();
 
-    updateComunityLinks();
-
     if(subscription_ended_flag) subscriptionEnded();
 });
 
@@ -129,21 +116,6 @@ function getRequestLimit(){
     max_request_limit_counter = 4;
 
     updateRequestLimit();
-}
-
-function updateComunityLinks() {
-    linksArray.forEach(function(link) {
-
-        let listItem = document.createElement('li');
-      
-        let linkElement = document.createElement('a');
-        linkElement.href = link.url;
-        linkElement.textContent = link.title;
-      
-        listItem.appendChild(linkElement);
-      
-        community_menu_ul.appendChild(listItem);
-    });
 }
 
 function setTextContract() {
@@ -549,76 +521,8 @@ function makeTextToClipboard() {
     return text;
 }
 
-function switchMenuPoint(point){
-    let menu_point = document.getElementsByClassName('menu-point');
-    let active_rectangle = document.getElementsByClassName('active-rectangle');
-    let menu_icon = document.getElementsByClassName('menu-icon');
-    
-    menu_point[curr_menu_pont].classList.remove('active-menu-point');
-    menu_point[point].classList.add('active-menu-point');
-
-    active_rectangle[curr_menu_pont].style.display = "none";
-    active_rectangle[point].style.display = "flex";
-
-    menu_icon[curr_menu_pont].src = "./imgs/menu-icons/menu"+curr_menu_pont+".png";
-    menu_icon[point].src = "./imgs/menu-icons/active-menu"+point+".png";
-    
-    setTimeout(function() { // задержка нужня для подгрузки иконки другого цвета в пункт меню
-        switch (point) {
-            case 0:
-                window.location.href = "index.html";
-                break;
-            case 1:
-                window.location.href = "history.html";
-                break;
-            case 2:
-                window.location.href = "payment.html";
-                break;
-            case 3:
-                window.location.href = "my_plan.html";
-                break;
-            case 4:
-                dropDownMenu();
-                break;
-            default:
-                window.location.href = "index.html";
-        }
-    }, 100);
-
-    curr_menu_pont = point;
-}
-
-function dropDownMenu() {
-    let ul_height = 0;
-
-    for (let _ of community_menu_ul.children) ul_height += 27;
-    community_menu_ul.style.height = ul_height + 'px';
-
-    function clickHandler() {
-        community_menu_ul.style.height = '0px';
-        document.removeEventListener('click', clickHandler);
-    }
-
-    document.addEventListener('click', clickHandler);
-}
-
-function activateEmailMenu() {  
-   let email_menu = document.getElementById("email-menu");
-
-   email_menu.style.display = "block";
- 
-   // обработчик события для скрытия меню при клике на любое место в документе
-   function hideEmailMenu(event) {
-     // Проверяем, был ли клик вне элемента "user-email" и "email-menu"
-        if (
-            event.target.id !== "user-email" &&
-            event.target.id !== "email-menu"
-        ) {
-            email_menu.style.display = "none";
-            // Удаляем обработчик события после первого клика вне меню
-            document.removeEventListener("click", hideEmailMenu);
-        }
-   }
- 
-   document.addEventListener("click", hideEmailMenu);
+function loaderError() {
+    let error_container = document.getElementById("error-container");
+    summarize_container.style.display = 'none';
+    error_container.style.display = 'flex';
 }

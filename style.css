@@ -562,6 +562,23 @@ textarea::-webkit-scrollbar-track {
     color: var(--dark-gray-text-color);
 }
 
+#error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    margin: 194px auto;
+}
+
+.error-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: var(--dark-gray-text-color);
+}
+
 #response-container {
     display: flex;
     flex-direction: column;
