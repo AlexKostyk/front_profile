@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
     /* ---- Colors ---- */
 
@@ -46,7 +48,7 @@ body {
 }
 
 #table-container {
-    margin-left: 16px;
+    margin-left: 24px;
 }
 
 #sorting-container {
@@ -100,4 +102,117 @@ body {
     left: 14px; /* Позиция изображения слева */
     top: 50%;
     transform: translateY(-50%);
+}
+
+#search-input::placeholder {
+    color: var(--secondary-text-and-elements-color);
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+#history_table {
+    margin-top: 32px;
+    border-collapse: collapse; 
+    cursor: pointer; 
+}
+
+#table-header th {
+    padding-bottom: 10px;
+}
+
+#history_table td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+#requestDate-header {
+    width: 188px;
+}
+
+#side1-header {
+    width: 265px;
+}
+
+#side2-header {
+    width: 265px;
+}
+
+#contractType-header {
+    width: 254px;
+}
+
+#tag-header {
+    width: 146px;
+}
+
+#actions-header {
+    width: 58px;
+}
+
+#history_table th:nth-child(1), #history_table td:nth-child(1) {
+    max-width: 188px;
+}
+
+#history_table th:nth-child(2), #history_table td:nth-child(2) {
+    max-width: 265px;
+}
+
+#history_table th:nth-child(3), #history_table td:nth-child(3) {
+    max-width: 265px;
+}
+
+#history_table th:nth-child(4), #history_table td:nth-child(4) {
+    max-width: 254px;
+}
+
+#history_table th:nth-child(5), #history_table td:nth-child(5) {
+    max-width: 146px;
+}
+
+#history_table th:nth-child(6), #history_table td:nth-child(6) {
+    max-width: 58px;
+}
+
+#history_table tbody td {
+    padding: 16px 10px 16px 0;
+}
+
+#history_table tbody tr {
+    border-bottom: 1px solid var(--hr-scrol-color);
+}
+
+.sort span::after {
+    content: url("./imgs/sort.png"); /* Путь к вашему изображению */
+    margin-left: 8px; /* Расстояние между словом и изображением */
+    vertical-align: middle;
+}
+
+.sort-top span::after {
+    content: url("./imgs/active-sort-top.png"); /* Путь к вашему изображению */
+    margin-left: 8px; /* Расстояние между словом и изображением */
+    vertical-align: middle;
+}
+
+.sort-bottom span::after {
+    content: url("./imgs/active-sort-bottom.png"); /* Путь к вашему изображению */
+    margin-left: 8px; /* Расстояние между словом и изображением */
+    vertical-align: middle;
+}
+
+#empty-history-container {
+    position: absolute;
+    top: 118px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 118px;
 }

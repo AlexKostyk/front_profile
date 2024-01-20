@@ -134,10 +134,43 @@
                         <input type="text" id="search-input" class="card-text" placeholder="Search">
                     </div>
                 </div>
+
+                <!-- Таблица -->
+                <table id="history_table">
+                    <thead>
+                        <tr id="table-headers" class="bold-title">
+                            <th id="requestDate-header" class="table-header sort sort-top" onclick="sortTable('requestDate')"><span>Request date</span></th>
+                            <th id="side1-header" class="table-header sort" onclick="sortTable('side1')"><span>Side 1</span></th>
+                            <th id="side2-header" class="table-header sort" onclick="sortTable('side2')"><span>Side 2</span></th>
+                            <th id="contractType-header" class="table-header sort" onclick="sortTable('contractType')"><span>Contract</span></th>
+                            <th id="tag-header" class="table-header sort" onclick="sortTable('tag')"><span>Tag</span></th>
+                            <th id="actions-header"><span>Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="card-text" id="table-body">
+                        <!-- Напонение таблицы -->
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Если история пустая -->
+            <div id="empty-history-container" style="display: none;">
+                <img id="empty-history-icon" src="./imgs/history-empty.png" alt="Empty history icon">
+                <div class="error-text">
+                    <p>There is nothing here yet!</p>
+                    <p>But since you start summarizing contracts they will appear in the History.</p>
+                </div>
+                <button class="link-small action-btn" id="empty-history-summ-contr-btn">Summarize contract</button>
             </div>
         </div>
     </div>
+    <!-- Отладочная панель -->
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px;">
+        <button class="secondary-btn link-small" onclick="showEmptyHistory()">Empty history</button>
+    </footer>
 </body>
+
 <script src="history.js"></script>
 <script src="menu.js"></script>
 </html>
