@@ -254,3 +254,34 @@ body {
     background-color: var(--border-backgroung-color);
     border-bottom: none;
 }
+
+.info-title {
+    display: flex;
+    align-items: end;
+    margin-bottom: 12px;
+}
+
+.info-hr {
+    width: 888px; 
+    margin: 0 0 3px 3px;
+}
+
+.info-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.info-point {
+    display: flex;
+    align-items: center;
+    text-wrap:wrap;
+    gap: 148px;
+}
+
+.info-point-title {
+    min-width: 117px;
+    color: var(--secondary-text-and-elements-color);
+}
+

@@ -59,11 +59,10 @@ function fillTable(data) {
     data.forEach(item => {
         let row = document.createElement('tr');
 
+        let wrapImage;
+
         // Добавляем класс "expandable-row" к строке для обозначения, что она раскрываема
         row.classList.add('expandable-row');
-
-        // Добавляем слушатель событий click к строке
-        row.addEventListener('click', () => toggleInfo(row, item));
 
 
         for (const key in item) {
@@ -74,7 +73,7 @@ function fillTable(data) {
                     cell.style.paddingLeft = '8px';
                     cell.style.borderTopLeftRadius = '8px';
                 } else if (key === 'actions') {
-                    addActions(cell);
+                    wrapImage = addActions(cell);
                     cell.style.borderTopRightRadius = '8px';
                 } else {
                     cell.textContent = item[key];
@@ -83,6 +82,9 @@ function fillTable(data) {
                 row.appendChild(cell);
             }
         }
+
+        // Добавляем слушатель событий click к строке
+        row.addEventListener('click', () => toggleInfo(row, item, wrapImage));
 
         tableBody.appendChild(row);
 
@@ -117,6 +119,8 @@ function addActions(cell) {
     flexContainer.appendChild(dotsImage);
 
     cell.appendChild(flexContainer);
+
+    return wrapImage;
 }
 
 function sortTable(column) {
@@ -228,7 +232,7 @@ function showEmptyHistory() {
 }
 
 // Функция для отображения или скрытия полного описания
-function toggleInfo(row, item) {
+function toggleInfo(row, item, wrapImage) {
     if (row.classList.contains('processing')) {
         // Если у строки установлен временный класс 'processing', то нажатие блокируется
         return;
@@ -250,7 +254,7 @@ function toggleInfo(row, item) {
 
     // Создаем div для отображения полного описания
     let infoDiv = document.createElement('div');
-    infoDiv.innerHTML = createInfoMarkup(item.info);
+    infoDiv.innerHTML = createInfoMarkup(item);
     infoContainer.innerHTML = ''; // Очищаем содержимое перед добавлением нового
     infoContainer.appendChild(infoDiv);
 
@@ -261,12 +265,14 @@ function toggleInfo(row, item) {
     if (infoRow.classList.contains('expanded')) {
         // Если открыто, закрываем
         infoContainer.style.height = '0';
-        setBorderStyle(infoRow, row);
+        wrapImage.style.transform = 'rotate(0deg)';
+        setBorderStyle(infoRow, row);        
     } else {
         // Если закрыто, открываем
         infoRow.classList.add('expanded');
         row.classList.remove('processing');
         row.classList.add('curr-expanded-row');
+        wrapImage.style.transform = 'rotate(180deg)';  
     }
 }
 
@@ -275,15 +281,76 @@ function setBorderStyle(infoRow, row) {
         infoRow.classList.remove('expanded');
         row.classList.remove('processing');
         row.classList.remove('curr-expanded-row');
-    }, 800);
+    }, 900);
 }
 
 // Функция для создания разметки полного описания
-function createInfoMarkup(info) {
-    return `<div>
-                <p>${info.tag_color}</p>
-                <p>${info.date}</p>
-                <p>${info.effective_date}</p>
+function createInfoMarkup(item) {
+    return `<div id='info-content'>
+                <div class='info-title'>
+                    <h2 class='bold-title'>General</h2>
+                    <hr class='info-hr'>
+                </div>
+                <div class='info-text-container'>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Contract type</p>
+                        <p class='info-text'>${item.contractType}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Date / Effective date</p>
+                        <p class='info-text'>${item.info.date} / ${item.info.effective_date}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Terms</p>
+                        <p class='info-text'>${item.info.terms}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Financial Terms</p>
+                        <p class='info-text'>${item.info.financial_terms}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Penalties</p>
+                        <p class='info-text'>${item.info.penalties}</p>
+                    </div>
+                </div>
+
+                <div class='info-title'>
+                    <h2 class='bold-title'>First party</h2>
+                    <hr class='info-hr'>
+                </div>
+                <div class='info-text-container'>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Name</p>
+                        <p class='info-text'>${item.side1}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Rights</p>
+                        <p class='info-text'>${item.info.rights1}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Responsibilities</p>
+                        <p class='info-text'>${item.info.responsibilities1}</p>
+                    </div>
+                </div>
+
+                <div class='info-title'>
+                    <h2 class='bold-title'>Second party</h2>
+                    <hr class='info-hr'>
+                </div>
+                <div class='info-text-container'>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Name</p>
+                        <p class='info-text'>${item.side2}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Rights</p>
+                        <p class='info-text'>${item.info.rights2}</p>
+                    </div>
+                    <div class='info-point'>
+                        <p class='title info-point-title'>Responsibilities</p>
+                        <p class='info-text'>${item.info.responsibilities2}</p>
+                    </div>
+                </div>
             </div>
-            <div style='height: 28px'></div>`;
+            <div style='height: 12px'></div>`;
 }

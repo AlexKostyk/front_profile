@@ -138,3 +138,12 @@ body {
     letter-spacing: -0.02em;
     text-align: left;
 }
+
+.info-text {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
