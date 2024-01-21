@@ -130,7 +130,8 @@ body {
     text-align: left;
 }
 
-.email_menu_text {
+.email_menu_text,
+.actions_menu_text {
     font-family: Inter;
     font-size: 13px;
     font-weight: 500;
@@ -146,4 +147,13 @@ body {
     line-height: 18px;
     letter-spacing: -0.02em;
     text-align: left;
+}
+
+.copy-menu-text {
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 12px;
+    letter-spacing: -0.02em;
+    text-align: center;
 }

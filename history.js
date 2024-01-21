@@ -59,7 +59,8 @@ function fillTable(data) {
     data.forEach(item => {
         let row = document.createElement('tr');
 
-        let wrapImage;
+        let wrapImage, dotsImage;
+        let tagColor = item.info.tag_color;
 
         // Добавляем класс "expandable-row" к строке для обозначения, что она раскрываема
         row.classList.add('expandable-row');
@@ -70,10 +71,22 @@ function fillTable(data) {
                 let cell = document.createElement('td');
                 if (key === 'requestDate') {
                     cell.textContent = formatDate(item);
+
                     cell.style.paddingLeft = '8px';
                     cell.style.borderTopLeftRadius = '8px';
+                } else if (key === 'tag') {
+                    if (item[key] !== '') addTag(cell, item[key], tagColor);
+                    else {
+                        cell.classList.add('card-text');
+                        cell.classList.add('no-tag-text');
+                        cell.textContent = 'No Tag';
+                    } 
                 } else if (key === 'actions') {
-                    wrapImage = addActions(cell);
+                    let images = addActions(cell);
+
+                    wrapImage = images.wrapImage;
+                    dotsImage = images.dotsImage;
+
                     cell.style.borderTopRightRadius = '8px';
                 } else {
                     cell.textContent = item[key];
@@ -84,7 +97,8 @@ function fillTable(data) {
         }
 
         // Добавляем слушатель событий click к строке
-        row.addEventListener('click', () => toggleInfo(row, item, wrapImage));
+        row.addEventListener('click', () => toggleInfo(row, item, wrapImage, dotsImage));
+        dotsImage.addEventListener('click', () => showActionMenu(item));
 
         tableBody.appendChild(row);
 
@@ -98,29 +112,41 @@ function fillTable(data) {
     });
 }
 
-function addActions(cell) {
-    // Добавляем блок div с флекс-дисплеем
+function addTag(cell, tag, color) {
     let flexContainer = document.createElement('div');
-    flexContainer.style.display = 'flex';
-    flexContainer.style.alignItems = 'center';
-    flexContainer.style.gap = '12px';
-    flexContainer.style.padding = '0 0 0 12px';
+    flexContainer.classList.add('tag-container');
+    flexContainer.classList.add('link-small');
 
-    // Добавляем изображение wrap
+    let dotImage = document.createElement('div');
+    dotImage.style.backgroundColor = color;
+    dotImage.classList.add('tag-dots');
+    flexContainer.appendChild(dotImage);
+
+    let tagName = document.createElement('p');
+    tagName.textContent = tag;
+    flexContainer.appendChild(tagName);
+
+    cell.appendChild(flexContainer);
+}
+
+function addActions(cell) {
+    let flexContainer = document.createElement('div');
+    flexContainer.classList.add('action-container');
+
     let wrapImage = document.createElement('img');
     wrapImage.src = './imgs/wrap.png';
     wrapImage.alt = 'Wrap icon';
     flexContainer.appendChild(wrapImage);
 
-    // Добавляем изображение dots
     let dotsImage = document.createElement('img');
+    dotsImage.id = 'actions-dots';
     dotsImage.src = './imgs/dots.png';
     dotsImage.alt = 'Dots icon';
     flexContainer.appendChild(dotsImage);
 
     cell.appendChild(flexContainer);
 
-    return wrapImage;
+    return { wrapImage, dotsImage };
 }
 
 function sortTable(column) {
@@ -232,7 +258,12 @@ function showEmptyHistory() {
 }
 
 // Функция для отображения или скрытия полного описания
-function toggleInfo(row, item, wrapImage) {
+function toggleInfo(row, item, wrapImage, dotsImage) {
+    if (event.target === dotsImage) {
+        // Если это dotsImage, ничего не делаем
+        return;
+    }
+
     if (row.classList.contains('processing')) {
         // Если у строки установлен временный класс 'processing', то нажатие блокируется
         return;
@@ -293,8 +324,8 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Contract type</p>
-                        <p class='info-text'>${item.contractType}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${item}', 'Contract type', '${item.contractType}')">Contract type</p>
+                        <p class='info-text' onclick="showCopyMenu('${item}', 'Contract type', '${item.contractType}')">${item.contractType}</p>
                     </div>
                     <div class='info-point'>
                         <p class='title info-point-title'>Date / Effective date</p>
@@ -353,4 +384,83 @@ function createInfoMarkup(item) {
                 </div>
             </div>
             <div style='height: 12px'></div>`;
+}
+
+function showActionMenu(item) {
+    let actionsMenu = document.getElementById('actions-menu');
+
+    // Позиционируем меню абсолютно
+    let coordX = event.clientX - 195;
+    let coordY = event.clientY + 3;
+    actionsMenu.style.position = 'absolute';
+    actionsMenu.style.left = `${coordX}px`;
+    actionsMenu.style.top = `${coordY}px`;
+
+    actionsMenu.style.display = 'flex';
+
+    function clickHandler() {
+        if (event.target.id !== "actions-dots"&&
+            event.target.id !== "actions-menu"&&
+            !event.target.classList.contains("action-element")) {
+            console.log(event.target.id);
+            actionsMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        }
+    }
+
+    document.addEventListener('click', clickHandler);
+}
+
+function showCopyMenu(item, part_name, part_text) {
+    let copyMenu = document.getElementById('copy-menu');
+    let copy = document.getElementById('copy');
+
+    // Позиционируем меню абсолютно
+    let coordX = event.clientX - 60;
+    let coordY = event.clientY + 8;
+    copyMenu.style.position = 'absolute';
+    copyMenu.style.left = `${coordX}px`;
+    copyMenu.style.top = `${coordY}px`;
+
+    copyMenu.style.display = 'flex';
+
+    function clickHandler() {
+        if (!event.target.classList.contains("info-text")&&
+            !event.target.classList.contains("info-point-title")&&
+            event.target.id !== "copy"&&
+            event.target.id !== "copy-all"&&
+            event.target.id !== "copy-menu") {
+            console.log(event.target.id);
+            copyMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        }
+    }
+
+    document.addEventListener('click', clickHandler);
+    copy.addEventListener('click', () => copyPart(part_name, part_text));
+}
+
+function copyPart(part_name, part_text) {
+    let text = part_name + ': ' + part_text;
+
+    let textArea = document.createElement('textarea');
+    textArea.value = text;
+  
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        let successful = document.execCommand('copy');
+        let msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
 }
