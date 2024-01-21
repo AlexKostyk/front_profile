@@ -11,7 +11,7 @@
     /* Basic */
     --basic-main-text-color: #272727; /* black */
     --basic-background-color: #e3ebf7; /* blue */
-    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопки summarize */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопкищк summarize */
     --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
     --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
     --basic-back: #EAEAEA; /* Задний фон шкалы */
@@ -48,7 +48,7 @@ body {
 }
 
 #table-container {
-    margin-left: 24px;
+    margin-left: 16px;
 }
 
 #sorting-container {
@@ -120,8 +120,12 @@ body {
     cursor: pointer; 
 }
 
-#table-header th {
+#table-headers th {
     padding-bottom: 10px;
+}
+
+#table-headers th:first-child {
+    padding-left: 8px;
 }
 
 #history_table td{
@@ -183,9 +187,9 @@ body {
     padding: 16px 10px 16px 0;
 }
 
-#history_table tbody tr {
+/* #history_table tbody tr {
     border-bottom: 1px solid var(--hr-scrol-color);
-}
+} */
 
 .sort span::after {
     content: url("./imgs/sort.png"); /* Путь к вашему изображению */
@@ -215,4 +219,38 @@ body {
     align-items: center;
     gap: 24px;
     margin-top: 118px;
+}
+
+.info-cell {
+    border: none;
+    padding: 0px !important;
+
+    overflow: hidden;
+    height: 0;
+    transition: height 1s ease;
+}
+
+.expandable-row {
+    border-bottom: 1px solid var(--hr-scrol-color);
+}
+
+#info-container {
+    overflow: hidden;
+    height: 0;
+    transition: height 1s ease;
+}
+
+.expanded #info-container {
+    padding: 0 39px 0 188px;
+
+    border-radius: 8px;
+    background-color: var(--border-backgroung-color);
+    border-bottom: 1px solid var(--basic-background-color);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.curr-expanded-row{
+    background-color: var(--border-backgroung-color);
+    border-bottom: none;
 }

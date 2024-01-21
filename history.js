@@ -5,13 +5,22 @@ let lastSortColumn = null; // Переменная для отслеживани
 let currentSortOrder = 'asc'; // Переменная для отслеживания порядка сортировки
 
 
+
+let info = {tag_color: 'red', date: '17.01.2019', effective_date: '17.01.2019', terms: 'Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually', financial_terms: 'Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions', penalties: '0.1% delay penalty for each day of delay in payment', rights1: "Use of the leased commercial premises; Receiving rent payments", 
+responsibilities1: "Providing the leased premises; Provision of additional services (heating, water, electricity, technical security); Handling other services based on Tenant's wishes; Maintenance of the building and facilities; Provision of security services", rights2: 'Use of the leased commercial premises; Notification to terminate the contract prematurely (subject to conditions)', responsibilities2: 'Paying rent, Additional Services, and General Services fees; Complying with rules and procedures; Handling waste and packaging waste obligations; Returning the premises in the original condition at the end of the contract'};
 // Весь список истории
 let history_data = [
-    { requestDate: new Date(2024, 0, 20, 14, 30), side1: 'Company A', side2: 'Company B', contractType: 'Sale', tag: 'Tag1', actions:''}, // индексация месяца начинается с 0 - январь
-    { requestDate: new Date(2024, 0, 20, 15, 30), side1: 'Company B', side2: 'Company C', contractType: 'Purchase', tag: 'Tag2', actions:''},
-    { requestDate: new Date(2024, 0, 20, 16, 30), side1: 'Company C', side2: 'Company D', contractType: 'Sale', tag: 'Tag3', actions:''},
-    { requestDate: new Date(2023, 0, 20, 16, 30), side1: 'Company D', side2: 'Company E', contractType: 'Purchase', tag: 'Tag4', actions:''},
-    { requestDate: new Date(2024, 1, 20, 16, 30), side1: 'Company E', side2: 'Company F', contractType: 'Sale', tag: 'Tag5', actions:''},
+    { requestDate: new Date(2023, 10, 15, 11, 47), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Boris Elczin LLC.', contractType: 'DNA', tag: '', actions:'', info}, // индексация месяца начинается с 0 - январь
+    { requestDate: new Date(2023, 10, 1, 12, 30), side1: 'Solveig Edbo Berg', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Employment Agreement', tag: 'Employers', actions:'', info},
+    { requestDate: new Date(2023, 10, 1, 12, 20), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
+    { requestDate: new Date(2023, 9, 21, 19, 6), side1: 'FedEx', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Shipping Service Contract', tag: 'Shipping', actions:'', info},
+    { requestDate: new Date(2023, 11, 9, 18, 3), side1: 'Maynard James Keenan', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'DNA', tag: 'Something', actions:'', info},
+    { requestDate: new Date(2023, 0, 1, 12, 10), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
+    { requestDate: new Date(2023, 9, 20, 21, 45), side1: 'Who was that', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Commercial Space Leaserist Group', tag: 'That', actions:'', info},
+    { requestDate: new Date(2023, 10, 1, 12, 0), side1: 'Solveig Edbo Berg', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Employment Agreement', tag: 'Employers', actions:'', info},
+    { requestDate: new Date(2023, 10, 1, 12, 50), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
+    { requestDate: new Date(2023, 9, 21, 19, 6), side1: 'FedEx', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Shipping Service Contract', tag: 'Shipping', actions:'', info},
+    { requestDate: new Date(2023, 10, 15, 11, 47), side1: 'Maynard James Keenan', side2: 'Boris Elczin LLC.', contractType: 'DNA', tag: 'Office', actions:'', info},
 ];
 
 // Форматированный список истории
@@ -49,18 +58,41 @@ function fillTable(data) {
 
     data.forEach(item => {
         let row = document.createElement('tr');
+
+        // Добавляем класс "expandable-row" к строке для обозначения, что она раскрываема
+        row.classList.add('expandable-row');
+
+        // Добавляем слушатель событий click к строке
+        row.addEventListener('click', () => toggleInfo(row, item));
+
+
         for (const key in item) {
-            let cell = document.createElement('td');
-            if (key === 'requestDate') {
-                cell.textContent = formatDate(item);
-            } else if (key === 'actions') {
-                addActions(cell);
-            } else {
-                cell.textContent = item[key];
+            if (key !== 'info'){
+                let cell = document.createElement('td');
+                if (key === 'requestDate') {
+                    cell.textContent = formatDate(item);
+                    cell.style.paddingLeft = '8px';
+                    cell.style.borderTopLeftRadius = '8px';
+                } else if (key === 'actions') {
+                    addActions(cell);
+                    cell.style.borderTopRightRadius = '8px';
+                } else {
+                    cell.textContent = item[key];
+                }
+
+                row.appendChild(cell);
             }
-            row.appendChild(cell);
         }
+
         tableBody.appendChild(row);
+
+        // Добавляем элемент для отображения полного описания после строки
+        let infoRow = document.createElement('tr');
+        let infoCell = document.createElement('td');
+        infoCell.classList.add('info-cell');
+        infoCell.setAttribute('colspan', '100%');
+        infoRow.appendChild(infoCell);
+        tableBody.appendChild(infoRow);
     });
 }
 
@@ -92,11 +124,6 @@ function sortTable(column) {
     if (!searsh_active){
         search_data = history_data.slice(0);
     }
-
-    // Проверяем наличие столбца "formattedDate" и удаляем его
-    // if (search_data[0].hasOwnProperty('formattedDate')) {
-    //     search_data.forEach(item => delete item.formattedDate);
-    // }
 
     // Определение порядка сортировки
     let sortOrder = currentSortOrder;
@@ -176,8 +203,6 @@ function updateTable(searchTerm) {
     let column = lastSortColumn;
     lastSortColumn = null;
     sortTable(column);
-    // Обновляем таблицу с результатами поиска
-    // fillTable(format_data);
 }
 
 // Обработчик события для ввода текста в поле поиска
@@ -202,3 +227,63 @@ function showEmptyHistory() {
     empty_history_container.style.display = 'flex';
 }
 
+// Функция для отображения или скрытия полного описания
+function toggleInfo(row, item) {
+    if (row.classList.contains('processing')) {
+        // Если у строки установлен временный класс 'processing', то нажатие блокируется
+        return;
+    }
+
+    row.classList.add('processing'); // Добавляем временный класс для блокировки
+    let infoRow = row.nextSibling; // Получаем следующую строку (элемент с полным описанием)
+    let infoCell = infoRow.firstElementChild;
+
+    // Проверяем, существует ли элемент с id 'info-container' внутри infoCell
+    let infoContainer = infoCell.querySelector('#info-container');
+    
+    // Если элемент не существует, создаем его
+    if (!infoContainer) {
+        infoContainer = document.createElement('div');
+        infoContainer.id = 'info-container';
+        infoCell.appendChild(infoContainer);
+    }
+
+    // Создаем div для отображения полного описания
+    let infoDiv = document.createElement('div');
+    infoDiv.innerHTML = createInfoMarkup(item.info);
+    infoContainer.innerHTML = ''; // Очищаем содержимое перед добавлением нового
+    infoContainer.appendChild(infoDiv);
+
+    // Устанавливаем высоту вручную, чтобы избежать задержки
+    infoContainer.style.height = infoDiv.clientHeight + 'px';
+
+    // Переключаем класс для управления анимацией
+    if (infoRow.classList.contains('expanded')) {
+        // Если открыто, закрываем
+        infoContainer.style.height = '0';
+        setBorderStyle(infoRow, row);
+    } else {
+        // Если закрыто, открываем
+        infoRow.classList.add('expanded');
+        row.classList.remove('processing');
+        row.classList.add('curr-expanded-row');
+    }
+}
+
+function setBorderStyle(infoRow, row) {
+    setTimeout(function() {
+        infoRow.classList.remove('expanded');
+        row.classList.remove('processing');
+        row.classList.remove('curr-expanded-row');
+    }, 800);
+}
+
+// Функция для создания разметки полного описания
+function createInfoMarkup(info) {
+    return `<div>
+                <p>${info.tag_color}</p>
+                <p>${info.date}</p>
+                <p>${info.effective_date}</p>
+            </div>
+            <div style='height: 28px'></div>`;
+}
