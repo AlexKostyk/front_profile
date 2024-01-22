@@ -1,0 +1,198 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4e; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопки summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--basic-background-color);
+
+    background-image: url(./imgs/LooperGroup.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#contract-crab-logo {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+}
+
+#login-border-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 502px;
+    height: 540px;
+    padding: 32px;
+    border-radius: 8px;
+    gap: 100px;
+    margin: 90px auto;
+
+    background: #FFFFFF;
+    box-shadow: 2px 2px 42px 0px #003A4E4F;
+}
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+#email-input-container {
+    display: flex;
+    align-items: center;
+
+    width: 438px;
+    height: 51px;
+    padding: 4px 4px 4px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--thin-line-color);
+}
+
+#email-input::placeholder {
+    color: var(--secondary-text-and-elements-color);
+}
+
+#email-input {
+    width: 270px;
+    border: none;
+    outline: none;
+}
+
+#email-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+#send-link-btn {
+    width: 128px;
+    height: 43px;
+    padding: 12px 12px;
+    margin-left: auto;
+    text-align: center;
+}
+
+.login-btn {
+    color: var(--accent-and-details-color);
+    text-align: center;
+
+    border-radius: 6px;
+    border: none;
+    background-color: var(--main-accent-color);
+}
+
+.login-btn:hover,
+.login-btn:active {
+    background-color: var(--neon-elements-hover-or-click-color);
+}
+
+.login-or-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-or-container hr {
+    border-top: 1px solid var(--hr-scrol-color);
+    border-left: none;
+    width: 120px;
+}
+
+#login-google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 438px;
+    height: 51px;
+    border-radius: 8px;
+
+    border: 2px solid var(--accent-and-details-color);
+    background-color: transparent;
+}
+
+#email-error-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.error-text {
+    color: var(--error-text-color);
+}
+
+#links-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: auto;
+}
+
+#links-container a {
+    cursor: pointer;
+    color: var(--dark-gray-text-color);
+}
+
+#successful-login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+}
+
+.successful-login-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+#successful-login-text-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#successful-login-text {
+    color: var(--dark-gray-text-color);
+}
+
+#go-to-mailbox-btn {
+    width: 438px;
+    height: 51px;
+}
+
+#gmail-elipse {
+    cursor: pointer;
+}

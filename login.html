@@ -5,9 +5,57 @@
     <title>Login</title>
 
     <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
+        <div id="contract-crab-logo">
+            <img class="logo-icon" src="./imgs/logo-login.png" alt="Logo icon">
+        </div>
 
+        <div id="login-border-container">
+            <h1 class="accent-text">Sign in to account</h1>
+
+            <div id="login-container">
+                <div id="email-error-container">
+                    <div id="email-input-container">
+                        <input id="email-input" class="card-text" placeholder="Enter your email">
+                        <button id="send-link-btn" class="link-text login-btn" onclick="checkEmail()">Send link</button>
+                    </div>
+                    <p id="email-error" class="card-text error-text"></p>
+                </div>
+                
+                <div class="login-or-container card-text">
+                    <hr><p>or</p><hr>
+                </div>
+
+                <button id="login-google-btn">
+                    <img id="gmail-icon" src="./imgs/gmail-icon.png" alt="Gmail icon">
+                    <p class="link-text">Log in with Google</p>
+                </button>
+            </div>
+
+            <div id="successful-login-container" style="display: none;">
+                <div class="successful-login-block">
+                    <div id="successful-login-text-container">
+                        <p id="successful-login-text">Login link has been sent to your email</p>
+                        <img id="poper-icon" src="./imgs/icon-party-popper.png" alt="Poper icon">
+                    </div>
+                    <button id="go-to-mailbox-btn" class="link-text login-btn" onclick="openGmail()">Go to mailbox</button>
+                </div>
+
+                <div class="successful-login-block">
+                    <div class="login-or-container card-text">
+                        <hr><p>or sign in with Google</p><hr>
+                    </div>
+                    <img id="gmail-elipse" src="./imgs/gmail-ellipse.png" alt="Gmail icon">
+                </div>
+            </div>
+
+            <div id="links-container" class="card-text">
+                <a href="https://www.example.com">Terms of Service</a>
+                <a href="https://www.example.com">Privacy Policy</a>
+            </div>
+        </div>
 </body>
+<script src="login.js"></script>
 </html>
