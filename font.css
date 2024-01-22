@@ -157,3 +157,40 @@ body {
     letter-spacing: -0.02em;
     text-align: center;
 }
+
+.filtr-btn-text {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.pika-select {
+    font-family: Inter !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 18px !important;
+    letter-spacing: -0.02em !important;
+    text-align: left !important;
+}
+
+.pika-table abbr {
+    font-family: Inter !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 18px !important;
+    letter-spacing: -0.02em !important;
+    text-align: left !important;
+    cursor: default !important;
+}
+
+.pika-button {
+    font-family: Inter !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    line-height: 18px !important;
+    letter-spacing: -0.02em !important;
+    text-align: left !important;
+}

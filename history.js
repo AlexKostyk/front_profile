@@ -5,7 +5,6 @@ let lastSortColumn = null; // Переменная для отслеживани
 let currentSortOrder = 'asc'; // Переменная для отслеживания порядка сортировки
 
 
-
 let info = {tag_color: 'red', date: '17.01.2019', effective_date: '17.01.2019', terms: 'Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually', financial_terms: 'Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions', penalties: '0.1% delay penalty for each day of delay in payment', rights1: "Use of the leased commercial premises; Receiving rent payments", 
 responsibilities1: "Providing the leased premises; Provision of additional services (heating, water, electricity, technical security); Handling other services based on Tenant's wishes; Maintenance of the building and facilities; Provision of security services", rights2: 'Use of the leased commercial premises; Notification to terminate the contract prematurely (subject to conditions)', responsibilities2: 'Paying rent, Additional Services, and General Services fees; Complying with rules and procedures; Handling waste and packaging waste obligations; Returning the premises in the original condition at the end of the contract'};
 // Весь список истории
@@ -27,7 +26,11 @@ let history_data = [
 let format_data = [];
 
 document.addEventListener('DOMContentLoaded', function() {
+    history_data = escapeSingleQuotes(history_data);
+
     getHistoryData();
+
+    initCalend();
 
     // при пустой history_data
     if (history_data.length === 0) showEmptyHistory();
@@ -35,7 +38,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getHistoryData() {
     // Получаем данные истории с сервера
+
+    // форматируем данные, заменяя '
+    //history_data = escapeSingleQuotes(history_data);
     sortTable('requestDate');
+}
+
+function escapeSingleQuotes(data) {
+    if (typeof data === 'string') {
+        return data.replace(/'/g, "\\'");
+    } else if (Array.isArray(data)) {
+        return data.map(escapeSingleQuotes);
+    } else if (typeof data === 'object' && data !== null) {
+        const result = {};
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                // Добавляем проверку на ключ requestDate
+                if (key === 'requestDate') {
+                    result[key] = data[key];
+                } else {
+                    result[key] = escapeSingleQuotes(data[key]);
+                }
+            }
+        }
+        return result;
+    } else {
+        return data;
+    }
 }
 
 function formatDate(item) {
@@ -235,6 +264,34 @@ function updateTable(searchTerm) {
     sortTable(column);
 }
 
+function filterToDate() {
+    // Очищаем предыдущий результат поиска
+    format_data = [];
+
+    // Ищем совпадения в исходных данных и добавляем их в результат
+    history_data.forEach(item => {
+        // Форматируем requestDate
+        let formattedDate = formatDate(item);
+
+        // Проводим поиск по всем значениям
+        for (const key in item) {
+            if (key === 'requestDate') {
+                if (formattedDate.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    format_data.push(item);
+                    break;
+                }
+            } else if (item[key].toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                format_data.push(item);
+                break;
+            }
+        }
+    });
+
+    let column = lastSortColumn;
+    lastSortColumn = null;
+    sortTable(column);
+}
+
 // Обработчик события для ввода текста в поле поиска
 document.getElementById('search-input').addEventListener('input', function() {
     let searchTerm = this.value.trim();
@@ -317,6 +374,8 @@ function setBorderStyle(infoRow, row) {
 
 // Функция для создания разметки полного описания
 function createInfoMarkup(item) {
+    let all_text = makeAllText(item);
+
     return `<div id='info-content'>
                 <div class='info-title'>
                     <h2 class='bold-title'>General</h2>
@@ -324,24 +383,24 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${item}', 'Contract type', '${item.contractType}')">Contract type</p>
-                        <p class='info-text' onclick="showCopyMenu('${item}', 'Contract type', '${item.contractType}')">${item.contractType}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Contract type', '${item.contractType}')">Contract type</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Contract type', '${item.contractType}')">${item.contractType}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Date / Effective date</p>
-                        <p class='info-text'>${item.info.date} / ${item.info.effective_date}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Date / Effective date', '${item.info.date + ' / ' + item.info.effective_date}')">Date / Effective date</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Date / Effective date', '${item.info.date + ' / ' + item.info.effective_date}')">${item.info.date} / ${item.info.effective_date}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Terms</p>
-                        <p class='info-text'>${item.info.terms}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Terms', '${item.info.terms}')">Terms</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Terms', '${item.info.terms}')">${item.info.terms}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Financial Terms</p>
-                        <p class='info-text'>${item.info.financial_terms}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Financial Terms', '${item.info.financial_terms}')">Financial Terms</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Financial Terms', '${item.info.financial_terms}')">${item.info.financial_terms}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Penalties</p>
-                        <p class='info-text'>${item.info.penalties}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Penalties', '${item.info.penalties}')">Penalties</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Penalties', '${item.info.penalties}')">${item.info.penalties}</p>
                     </div>
                 </div>
 
@@ -351,16 +410,16 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Name</p>
-                        <p class='info-text'>${item.side1}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side1}')">Name</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Name', '${item.side1}')">${item.side1}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Rights</p>
-                        <p class='info-text'>${item.info.rights1}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights1}')">Rights</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights1}')">${item.info.rights1}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Responsibilities</p>
-                        <p class='info-text'>${item.info.responsibilities1}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities1}')">Responsibilities</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities1}')">${item.info.responsibilities1}</p>
                     </div>
                 </div>
 
@@ -370,16 +429,16 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Name</p>
-                        <p class='info-text'>${item.side2}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side2}')">Name</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Name', '${item.side2}')">${item.side2}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Rights</p>
-                        <p class='info-text'>${item.info.rights2}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights2}')">Rights</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights2}')">${item.info.rights2}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title'>Responsibilities</p>
-                        <p class='info-text'>${item.info.responsibilities2}</p>
+                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities2}')">Responsibilities</p>
+                        <p class='info-text' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities2}')">${item.info.responsibilities2}</p>
                     </div>
                 </div>
             </div>
@@ -402,7 +461,6 @@ function showActionMenu(item) {
         if (event.target.id !== "actions-dots"&&
             event.target.id !== "actions-menu"&&
             !event.target.classList.contains("action-element")) {
-            console.log(event.target.id);
             actionsMenu.style.display = 'none';
             document.removeEventListener('click', clickHandler);
         }
@@ -411,9 +469,8 @@ function showActionMenu(item) {
     document.addEventListener('click', clickHandler);
 }
 
-function showCopyMenu(item, part_name, part_text) {
+function showCopyMenu(all_text, part_name, part_text) {
     let copyMenu = document.getElementById('copy-menu');
-    let copy = document.getElementById('copy');
 
     // Позиционируем меню абсолютно
     let coordX = event.clientX - 60;
@@ -424,25 +481,50 @@ function showCopyMenu(item, part_name, part_text) {
 
     copyMenu.style.display = 'flex';
 
-    function clickHandler() {
-        if (!event.target.classList.contains("info-text")&&
-            !event.target.classList.contains("info-point-title")&&
-            event.target.id !== "copy"&&
-            event.target.id !== "copy-all"&&
+    // Создаем функцию обработчика события
+    function clickHandler(event) {
+        if (!event.target.classList.contains("info-text") &&
+            !event.target.classList.contains("info-point-title") &&
+            event.target.id !== "copy" &&
+            event.target.id !== "copy-all" &&
             event.target.id !== "copy-menu") {
-            console.log(event.target.id);
             copyMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        } else if (event.target.id === "copy") {
+            copyPart(part_name, part_text);
+            copyMenu.style.display = 'none'; // Скрываем меню после копирования
+            document.removeEventListener('click', clickHandler);
+        } else if (event.target.id === "copy-all") {
+            makeCopy(all_text);
+            copyMenu.style.display = 'none'; // Скрываем меню после копирования
             document.removeEventListener('click', clickHandler);
         }
     }
 
     document.addEventListener('click', clickHandler);
-    copy.addEventListener('click', () => copyPart(part_name, part_text));
 }
 
 function copyPart(part_name, part_text) {
     let text = part_name + ': ' + part_text;
 
+    makeCopy(text);
+}
+
+function makeAllText(item) {
+    // GENERAL
+    let text = 'GENERAL\\nContract type: '+item.contractType+'\\nDate / Effective date: '+item.info.date+' / '+item.info.effective_date+'\\nTerms: '+item.info.terms+
+    '\\nFinancial terms: '+item.info.financial_terms+'\\nPenalties: '+item.info.penalties;
+
+    // FIRST PARTY
+    text += '\\n\\nFIRST PARTY\\nName: '+item.side1+'\\nRights: '+item.info.rights1+'\\nResponsibilities: '+item.info.responsibilities1;
+
+    // SECOND PARTY
+    text += '\\n\\nSECOND PARTY\\nName: '+item.side2+'\\nRights: '+item.info.rights2+'\\nResponsibilities: '+item.info.responsibilities2;
+
+    return text;
+}
+
+function makeCopy(text) {
     let textArea = document.createElement('textarea');
     textArea.value = text;
   
@@ -463,4 +545,47 @@ function copyPart(part_name, part_text) {
     }
 
     document.body.removeChild(textArea);
+}
+
+function initCalend() {
+    var from_picker = new Pikaday({
+        field: document.getElementById('from-datepicker-container'),
+        bound: false,
+        format: 'YYYY-MM-DD',  // Формат даты
+        showYearDropdown: true, // Опциональные настройки
+        yearRange: [1900, 2050],
+        showDaysInNextAndPreviousMonths: true,
+        i18n: {
+            previousMonth: 'Prev',
+            nextMonth: 'Next',
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        }
+    });
+    
+    from_picker.show();
+    
+    var to_picker = new Pikaday({
+        field: document.getElementById('to-datepicker-container'),
+        bound: false,
+        format: 'YYYY-MM-DD',  // Формат даты
+        showYearDropdown: true, // Опциональные настройки
+        yearRange: [1900, 2050],
+        showDaysInNextAndPreviousMonths: true,
+        i18n: {
+            previousMonth: 'Prev',
+            nextMonth: 'Next',
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        }
+    });
+    
+    to_picker.show();
+
+    let pika_title = document.getElementsByClassName('pika-title');
+
+    pika_title[0].classList.add('pika-title-from');
+    pika_title[1].classList.add('pika-title-to');
 }

@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="history.css">
+
+    <!-- Подключение стилей Pikaday -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 </head>
 <body>
     <div class="content">
@@ -180,6 +183,23 @@
                 <p id="copy-all" class="copy-menu-text">Copy all</p>
             </div>
 
+            <!-- Скрытое меню фильтра по дате -->
+            <div class="filter-menu" style="display: none;">
+                <div class="filter-header">
+                    <h2>Request Date</h2>
+                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon">
+                </div>
+                <hr>
+                <div class="switch-btns-container">
+                    <button class="filtr-btn-text active-switch-btn">Include</button>
+                    <button class="filtr-btn-text">Exclude</button>
+                </div>
+
+                <div id="from-datepicker-container"></div>
+
+                <div id="to-datepicker-container"></div>
+            </div>
+
             <!-- Если история пустая -->
             <div id="empty-history-container" style="display: none;">
                 <img id="empty-history-icon" src="./imgs/history-empty.png" alt="Empty history icon">
@@ -196,6 +216,9 @@
         <button class="secondary-btn link-small" onclick="showEmptyHistory()">Empty history</button>
     </footer>
 </body>
+
+<!-- Подключение скрипта Pikaday -->
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 <script src="history.js"></script>
 <script src="menu.js"></script>
