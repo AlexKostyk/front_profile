@@ -71,11 +71,19 @@ body {
 }
 
 .filter-items {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
     height: 34px;
     padding: 8px 10px;
     border-radius: 4px;
     border: none;
     background-color: var(--border-backgroung-color);
+    cursor: pointer;
+}
+
+.filter-items p {
     cursor: pointer;
 }
 
@@ -192,19 +200,19 @@ body {
 } */
 
 .sort span::after {
-    content: url("./imgs/sort.png"); /* Путь к вашему изображению */
+    content: url("../imgs/sort.png"); /* Путь к вашему изображению */
     margin-left: 8px; /* Расстояние между словом и изображением */
     vertical-align: middle;
 }
 
 .sort-top span::after {
-    content: url("./imgs/active-sort-top.png"); /* Путь к вашему изображению */
+    content: url("../imgs/active-sort-top.png"); /* Путь к вашему изображению */
     margin-left: 8px; /* Расстояние между словом и изображением */
     vertical-align: middle;
 }
 
 .sort-bottom span::after {
-    content: url("./imgs/active-sort-bottom.png"); /* Путь к вашему изображению */
+    content: url("../imgs/active-sort-bottom.png"); /* Путь к вашему изображению */
     margin-left: 8px; /* Расстояние между словом и изображением */
     vertical-align: middle;
 }
@@ -327,7 +335,7 @@ body {
     right: 0;
     top: 0;
 
-    background-image: url(./imgs/back-action-menu.png);
+    background-image: url(../imgs/back-action-menu.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -357,7 +365,7 @@ body {
     right: 0;
     top: 0;
 
-    background-image: url(./imgs/back-copy-menu.png);
+    background-image: url(../imgs/back-copy-menu.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -373,18 +381,20 @@ body {
     display: flex;
     flex-direction: column;
 
-    width: 320px;
-    height: 620px;
-    padding: 50px 20px 0 32px;
-
     position: absolute;
     right: 0;
     top: 0;
 
-    background-image: url(./imgs/back-request-date-filter.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+#request-date-menu {
+    width: 320px;
+    height: 670px;
+    padding: 60px 20px 0 32px;
+    background-image: url(../imgs/back-request-date-filter.png);
 }
 
 .filter-header {
@@ -442,8 +452,8 @@ body {
 
 /* Стиль выделенной даты */
 .is-selected {
-    border-radius: 12px !important;
-    background-color: var(--thin-line-color);
+    background-color: var(--basic-back) !important;
+    border-radius: 8px !important;
 }
 
 .is-selected .pika-button, .has-event .pika-button {
@@ -452,11 +462,11 @@ body {
 
 .pika-prev {
     margin-left: 115px !important;
-    background-image: url("./imgs/date-back.png") !important;
+    background-image: url("../imgs/date-back.png") !important;
 }
 
 .pika-next {
-    background-image: url("./imgs/date-next.png") !important;
+    background-image: url("../imgs/date-next.png") !important;
 }
 
 .pika-prev,
@@ -494,15 +504,143 @@ abbr[title] {
 }
 
 .pika-title-from::before {
-    content: "From";
+    content: "From" !important;
 }
 
 .pika-title-to::before {
-    content: "To";
+    content: "To" !important;
 }
 
 .pika-button {
     color: var(--basic-main-text-color) !important;
     text-align: center !important;
     background: transparent !important;
+    padding: 1px 0 !important;
+    margin: 2px 0 !important;
+    border-radius: 0 !important;
+}
+
+.apply-filter-btn {
+    width: 66px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+
+    margin: auto 18px 38px auto;
+}
+
+.highlighted-date {
+    background-color: var(--basic-back) !important;
+}
+
+.left-select-date {
+    border-radius: 8px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.right-select-date {
+    border-radius: 8px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.select-date {
+    background-color: var(--basic-back) !important;
+    border-radius: 8px !important;
+}
+
+.pika-single td.is-selected, .pika-single td.is-today, .pika-table td.is-highlighted {
+    background: transparent !important;
+}
+
+.pika-table td:hover {
+    background: transparent !important;
+}
+
+.is-outside-current-month .pika-button {
+    opacity: 1 !important;
+    color: var(--secondary-text-and-elements-color) !important;
+}
+
+.active-filter {
+    background-color: var(--main-accent-color);
+}
+
+#side-menu {
+    width: 320px;
+    height: 670px;
+    padding: 60px 20px 0 32px;
+    background-image: url(../imgs/back-request-date-filter.png);
+}
+
+.side-filter-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-filter-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px; /* Позиция изображения слева */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search-filter-input {
+    width: 256px;
+    height: 34px;
+    padding: 8px 16px;
+    padding-left: 40px;
+    border-radius: 32px;
+    border: 1px solid var(--basic-back);
+}
+
+.search-filter-input:focus {
+    outline: none;
+}
+
+.search-filter-input::placeholder {
+    color: var(--secondary-text-and-elements-color);
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.side-filter-block {
+    margin: 20px 10px 0 0;
+}
+
+#side-menu ul {
+    list-style-type: none;
+}
+
+#side-menu ul li {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    
+
+    padding: 5px 0 0 10px;
+    margin: 4px 0 4px 0;
+    width: 250px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: var(--basic-background-color);
+
+    cursor: pointer;
+}
+
+.side-header-filter {
+    margin-left: 10px;
 }

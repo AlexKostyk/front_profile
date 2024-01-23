@@ -1,9 +1,24 @@
+let date_filter_menu = document.getElementById("request-date-menu");
+let date_filter = document.getElementById('date-filter');
+let close_date_filter = document.getElementById('close-date-filter');
+let date_filter_text = document.getElementById("date-filter-text");
+let side_filter = document.getElementById("side-filter");
+let side_menu = document.getElementById("side-menu");
+let side_filter_text = document.getElementById("side-filter-text");
+let close_side_filter = document.getElementById("close-side-filter");
+
 // для внутренней логики
 let curr_menu_pont = 1;
 let searsh_active = 0;
+let filter_active = 0;
 let lastSortColumn = null; // Переменная для отслеживания последнего столбца, по которому производилась сортировка
 let currentSortOrder = 'asc'; // Переменная для отслеживания порядка сортировки
+let searchTerm = '';
 
+// для фильтров
+let to_picker, from_picker;
+let fromDate = null; 
+let toDate = null;
 
 let info = {tag_color: 'red', date: '17.01.2019', effective_date: '17.01.2019', terms: 'Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually', financial_terms: 'Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions', penalties: '0.1% delay penalty for each day of delay in payment', rights1: "Use of the leased commercial premises; Receiving rent payments", 
 responsibilities1: "Providing the leased premises; Provision of additional services (heating, water, electricity, technical security); Handling other services based on Tenant's wishes; Maintenance of the building and facilities; Provision of security services", rights2: 'Use of the leased commercial premises; Notification to terminate the contract prematurely (subject to conditions)', responsibilities2: 'Paying rent, Additional Services, and General Services fees; Complying with rules and procedures; Handling waste and packaging waste obligations; Returning the premises in the original condition at the end of the contract'};
@@ -15,15 +30,17 @@ let history_data = [
     { requestDate: new Date(2023, 9, 21, 19, 6), side1: 'FedEx', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Shipping Service Contract', tag: 'Shipping', actions:'', info},
     { requestDate: new Date(2023, 11, 9, 18, 3), side1: 'Maynard James Keenan', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'DNA', tag: 'Something', actions:'', info},
     { requestDate: new Date(2023, 0, 1, 12, 10), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
-    { requestDate: new Date(2023, 9, 20, 21, 45), side1: 'Who was that', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Commercial Space Leaserist Group', tag: 'That', actions:'', info},
-    { requestDate: new Date(2023, 10, 1, 12, 0), side1: 'Solveig Edbo Berg', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Employment Agreement', tag: 'Employers', actions:'', info},
-    { requestDate: new Date(2023, 10, 1, 12, 50), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
+    { requestDate: new Date(2024, 0, 11, 21, 45), side1: 'Who was that', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Commercial Space Leaserist Group', tag: 'That', actions:'', info},
+    { requestDate: new Date(2024, 0, 10, 12, 0), side1: 'Solveig Edbo Berg', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Employment Agreement', tag: 'Employers', actions:'', info},
+    { requestDate: new Date(2024, 0, 12, 12, 50), side1: 'Gnnpowder Kinnisvara Oii', side2: 'Asia Drinks D&R OÜ', contractType: 'Commercial Space Leaserist Group', tag: 'Office', actions:'', info},
     { requestDate: new Date(2023, 9, 21, 19, 6), side1: 'FedEx', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Shipping Service Contract', tag: 'Shipping', actions:'', info},
     { requestDate: new Date(2023, 10, 15, 11, 47), side1: 'Maynard James Keenan', side2: 'Boris Elczin LLC.', contractType: 'DNA', tag: 'Office', actions:'', info},
 ];
 
 // Форматированный список истории
 let format_data = [];
+
+let filtered_data = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     history_data = escapeSingleQuotes(history_data);
@@ -179,10 +196,11 @@ function addActions(cell) {
 }
 
 function sortTable(column) {
-    let search_data = format_data;
-    if (!searsh_active){
-        search_data = history_data.slice(0);
-    }
+    let search_data = history_data.slice(0);
+
+    if (filter_active) search_data = filtered_data;
+
+    if (searsh_active) search_data = format_data;
 
     // Определение порядка сортировки
     let sortOrder = currentSortOrder;
@@ -238,10 +256,15 @@ function updateSortClass(column, sortOrder) {
 
 function updateTable(searchTerm) {
     // Очищаем предыдущий результат поиска
+    let search_data = filtered_data;
+    if (!filter_active){
+        search_data = history_data.slice(0);
+    }
+
     format_data = [];
 
     // Ищем совпадения в исходных данных и добавляем их в результат
-    history_data.forEach(item => {
+    search_data.forEach(item => {
         // Форматируем requestDate
         let formattedDate = formatDate(item);
 
@@ -260,41 +283,13 @@ function updateTable(searchTerm) {
     });
 
     let column = lastSortColumn;
-    lastSortColumn = null;
     sortTable(column);
-}
-
-function filterToDate() {
-    // Очищаем предыдущий результат поиска
-    format_data = [];
-
-    // Ищем совпадения в исходных данных и добавляем их в результат
-    history_data.forEach(item => {
-        // Форматируем requestDate
-        let formattedDate = formatDate(item);
-
-        // Проводим поиск по всем значениям
-        for (const key in item) {
-            if (key === 'requestDate') {
-                if (formattedDate.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    format_data.push(item);
-                    break;
-                }
-            } else if (item[key].toString().toLowerCase().includes(searchTerm.toLowerCase())) {
-                format_data.push(item);
-                break;
-            }
-        }
-    });
-
-    let column = lastSortColumn;
-    lastSortColumn = null;
     sortTable(column);
 }
 
 // Обработчик события для ввода текста в поле поиска
 document.getElementById('search-input').addEventListener('input', function() {
-    let searchTerm = this.value.trim();
+    searchTerm = this.value.trim();
     if (searchTerm !== ''){
         searsh_active = 1;
         updateTable(searchTerm);
@@ -302,7 +297,7 @@ document.getElementById('search-input').addEventListener('input', function() {
     else {
         searsh_active = 0;
         let column = lastSortColumn;
-        lastSortColumn = null;
+        sortTable(column);
         sortTable(column);
     }
 });
@@ -548,7 +543,7 @@ function makeCopy(text) {
 }
 
 function initCalend() {
-    var from_picker = new Pikaday({
+    from_picker = new Pikaday({
         field: document.getElementById('from-datepicker-container'),
         bound: false,
         format: 'YYYY-MM-DD',  // Формат даты
@@ -561,12 +556,22 @@ function initCalend() {
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        },
+        onSelect: function(date) {
+            updatePikaTitleClasses();
+            highlightDateRange();
+        },
+        onDraw: function() {
+            updatePikaTitleClasses();
+        },
+        onYearChange: function() {
+            updatePikaTitleClasses();
         }
     });
     
     from_picker.show();
     
-    var to_picker = new Pikaday({
+    to_picker = new Pikaday({
         field: document.getElementById('to-datepicker-container'),
         bound: false,
         format: 'YYYY-MM-DD',  // Формат даты
@@ -579,13 +584,215 @@ function initCalend() {
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        },
+        onSelect: function(date) {
+            updatePikaTitleClasses();
+            highlightDateRange();
+        },
+        onDraw: function() {
+            updatePikaTitleClasses();
+        },
+        onYearChange: function() {
+            updatePikaTitleClasses();
         }
     });
     
     to_picker.show();
 
+    // Добавление текста в title
     let pika_title = document.getElementsByClassName('pika-title');
 
     pika_title[0].classList.add('pika-title-from');
     pika_title[1].classList.add('pika-title-to');
+}
+
+function updatePikaTitleClasses() {
+    let pikaTitles = document.getElementsByClassName('pika-title');
+
+    if (pikaTitles.length >= 2) {
+        pikaTitles[0].classList.add('pika-title-from');
+        pikaTitles[1].classList.add('pika-title-to');
+    }
+}
+
+function highlightDateRange() {
+    fromDate = from_picker.getDate();
+    toDate = to_picker.getDate();
+
+    console.log(fromDate + " " + toDate);
+
+    // Удаление предыдущих выделений
+    document.querySelectorAll('.pika-day').forEach(function(day) {
+        day.classList.remove('highlighted-date', 'left-select-date', 'right-select-date', 'select-date');
+    });
+
+    // Если даты не выбраны, выходим
+    if (!fromDate && !toDate) {
+        return;
+    }
+
+    // Если выбрана только одна дата, добавляем класс select-date
+    if (fromDate && !toDate) {
+        document.querySelectorAll('.pika-day[data-pika-year="' + fromDate.getFullYear() + '"][data-pika-month="' + fromDate.getMonth() + '"][data-pika-day="' + fromDate.getDate() + '"]').forEach(function(dayElement) {
+            dayElement.classList.add('select-date');
+        });
+        return;
+    }
+
+    if (!fromDate && toDate) {
+        document.querySelectorAll('.pika-day[data-pika-year="' + toDate.getFullYear() + '"][data-pika-month="' + toDate.getMonth() + '"][data-pika-day="' + toDate.getDate() + '"]').forEach(function(dayElement) {
+            dayElement.classList.add('select-date');
+        });
+        return;
+    }
+
+    // Если from-дата > to-дата, меняем их местами
+    if (fromDate > toDate) {
+        [fromDate, toDate] = [toDate, fromDate];
+    }
+
+    // Получаем все даты между from-датой и to-датой
+    let currentDate = new Date(fromDate);
+    while (currentDate <= toDate) {
+        // Используем querySelectorAll, чтобы обработать все совпадения в обеих таблицах
+        document.querySelectorAll('.pika-day[data-pika-year="' + currentDate.getFullYear() + '"][data-pika-month="' + currentDate.getMonth() + '"][data-pika-day="' + currentDate.getDate() + '"]').forEach(function(dayElement) {
+            
+            dayElement.classList.add('highlighted-date');
+
+            // Определение, является ли дата левой или правой выбранной
+            if (currentDate.getTime() === fromDate.getTime()) {
+                dayElement.classList.add('left-select-date');
+            } else if (currentDate.getTime() === toDate.getTime()) {
+                dayElement.classList.add('right-select-date');
+            }
+
+            // Если выбрана одна и та же дата в обеих таблицах
+            if (fromDate.getTime() === toDate.getTime()) {
+                dayElement.classList.add('select-date');
+            }
+        });
+
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+}
+
+function showDateFilter() {
+    closeOtherMenuFilter();
+
+    let coordX = event.clientX - 50;
+    let coordY = event.clientY;
+    date_filter_menu.style.position = 'absolute';
+    date_filter_menu.style.left = `${coordX}px`;
+    date_filter_menu.style.top = `${coordY}px`;
+
+    date_filter_menu.style.display = 'flex';
+}
+
+function closeDateFilter() {
+    date_filter_menu.style.display = 'none';
+    close_date_filter.style.display = 'none';
+    date_filter.classList.remove('active-filter');
+    date_filter_text.innerText = 'Date';
+
+    filtered_data = [];
+    filter_active = 0;
+    updateTable(searchTerm);
+}
+
+function filterRequestDate() {
+    if (fromDate === null && toDate === null){
+        closeDateFilter();
+        return;
+    }
+
+    let text = '';
+
+    filtered_data = [];
+
+    let toDateAdded = new Date(toDate);
+    if (toDate !== null) toDateAdded.setDate(toDate.getDate() + 1);
+
+    if (fromDate !== null && toDate === null) {
+        let tmp_date = new Date(fromDate);
+        tmp_date.setDate(fromDate.getDate() + 1);
+        filtered_data = history_data.filter(function(item) {
+            return item.requestDate >= fromDate && item.requestDate <= tmp_date;
+        });
+        text+= formatReqDate(fromDate);
+    } else if (fromDate === null && toDate !== null) {
+        let tmp_date = new Date(toDate);
+        filtered_data = history_data.filter(function(item) {
+            return item.requestDate >= tmp_date && item.requestDate <= toDateAdded;
+        });
+        text+= formatReqDate(toDate);
+    } else {
+        filtered_data = history_data.filter(function(item) {
+            return item.requestDate >= fromDate && item.requestDate <= toDateAdded;
+        });
+        text+= formatReqDate(fromDate)+' - '+formatReqDate(toDate);
+    }
+
+    filter_active = 1;
+    updateTable(searchTerm);
+    date_filter_menu.style.display = 'none';
+
+
+    changeFilterButton(date_filter, close_date_filter, text);
+}
+
+function formatReqDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    return `${day}.${month}.${year}`;
+}
+
+function changeFilterButton(object, close, text) {
+    object.classList.add('active-filter');
+    close.style.display = 'block';
+
+    date_filter_text.innerText = text;
+}
+
+date_filter.addEventListener('click', (event) => {
+    if (event.target.id !== "close-date-filter") showDateFilter();
+  });
+
+side_filter.addEventListener('click', (event) => {
+    if (event.target.id !== "close-side-filter") showSideFilter();
+});
+
+function showSideFilter() {
+    closeOtherMenuFilter();
+
+    let coordX = event.clientX - 50;
+    let coordY = event.clientY;
+    side_menu.style.position = 'absolute';
+    side_menu.style.left = `${coordX}px`;
+    side_menu.style.top = `${coordY}px`;
+
+    side_menu.style.display = 'flex';
+
+    addAllSides();
+}
+
+function closeOtherMenuFilter() {
+    date_filter_menu.style.display = 'none';
+    side_menu.style.display = 'none';
+}
+
+function closeSideFilter() {
+    side_menu.style.display = 'none';
+    close_side_filter.style.display = 'none';
+    side_filter.classList.remove('active-filter');
+    side_filter_text.innerText = 'Sides';
+
+    filtered_data = [];
+    filter_active = 0;
+    updateTable(searchTerm);
+}
+
+function addAllSides() {
+
 }

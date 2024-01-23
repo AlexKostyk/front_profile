@@ -37,7 +37,7 @@
 body {
     background-color: var(--basic-background-color);
 
-    background-image: url(./imgs/LooperGroup_mobile.png);
+    background-image: url(../imgs/LooperGroup_mobile.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

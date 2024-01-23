@@ -34,7 +34,7 @@
 body {
     background-color: var(--basic-background-color);
 
-    background-image: url(./imgs/LooperGroup.png);
+    background-image: url(../imgs/LooperGroup.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

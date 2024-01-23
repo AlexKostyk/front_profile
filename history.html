@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>History</title>
 
-    <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="history.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/history.css">
 
     <!-- Подключение стилей Pikaday -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
@@ -112,13 +112,15 @@
                         </div>
 
                         <!-- Фильтрация по дате -->
-                        <div class="filter-items">
-                            <p class="link-large">Date</p>
+                        <div id="date-filter" class="filter-items">
+                            <p id="date-filter-text" class="link-large">Date</p>
+                            <img id="close-date-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()" style="display: none;">
                         </div>
 
                         <!-- Фильтрация по сторонам -->
-                        <div class="filter-items">
-                            <p class="link-large">Sides</p>
+                        <div id="side-filter" class="filter-items">
+                            <p id="side-filter-text" class="link-large">Sides</p>
+                            <img id="close-side-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()" style="display: none;">
                         </div>
 
                         <!-- Фильтрация по типу контракта -->
@@ -184,10 +186,10 @@
             </div>
 
             <!-- Скрытое меню фильтра по дате -->
-            <div class="filter-menu" style="display: none;">
+            <div id="request-date-menu" class="filter-menu" style="display: none;">
                 <div class="filter-header">
                     <h2>Request Date</h2>
-                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon">
+                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()">
                 </div>
                 <hr>
                 <div class="switch-btns-container">
@@ -198,6 +200,38 @@
                 <div id="from-datepicker-container"></div>
 
                 <div id="to-datepicker-container"></div>
+
+                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterRequestDate()">Apply</button>
+            </div>
+
+             <!-- Скрытое меню фильтра по стороне -->
+             <div id="side-menu" class="filter-menu" style="display: none;">
+                <div class="filter-header">
+                    <h2>Side</h2>
+                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()">
+                </div>
+                <hr>
+                <div class="switch-btns-container">
+                    <button class="filtr-btn-text active-switch-btn">Include</button>
+                    <button class="filtr-btn-text">Exclude</button>
+                </div>
+
+                <div class="search-filter-container">
+                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                    <input type="text" class="search-filter-input card-text" placeholder="Search side">
+                </div>
+
+                <div class="side-filter-block">
+                    <p class="bold-title side-header-filter">Side 1</p>
+                    <ul id="side1-filter-ul"></ul>
+                </div>
+
+                <div class="side-filter-block">
+                    <p class="bold-title side-header-filter">Side 2</p>
+                    <ul id="side2-filter-ul"></ul>
+                </div>
+
+                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterSide()">Apply</button>
             </div>
 
             <!-- Если история пустая -->
@@ -220,6 +254,6 @@
 <!-- Подключение скрипта Pikaday -->
 <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
-<script src="history.js"></script>
-<script src="menu.js"></script>
+<script src="./scripts/history.js"></script>
+<script src="./scripts/menu.js"></script>
 </html>
