@@ -11,6 +11,7 @@ function checkEmail() {
         emailError.innerHTML = "Please enter the right format email such sample@gmail.com";
     } else {
         emailError.innerHTML = "";
+        sendEmailToServer(emailInput.value);
         showSuccessfulLogin();
     }
 }
@@ -25,4 +26,33 @@ function showSuccessfulLogin() {
 
 function openGmail() {
     window.open('https://mail.google.com', '_blank');
+}
+
+function sendEmailToServer(email) {
+    const apiUrl = 'https://example.com/api/send-email';
+
+    // ключ API, если он необходим
+    const apiKey = 'your-api-key';
+
+    const data = {
+        email: email,
+        apiKey: apiKey
+    };
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    };
+
+    fetch(apiUrl, options)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Server response:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }

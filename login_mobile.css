@@ -1,0 +1,63 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4e; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопки summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--basic-background-color);
+
+    background-image: url(./imgs/LooperGroup_mobile.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#contract-crab-logo {
+    position: absolute;
+    top: 50px;
+    left: 16px;
+}
+
+#login-border-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 358px;
+    height: 482px;
+    padding: 24px 16px;
+    border-radius: 8px;
+    gap: 56px;
+    margin: 173.5px auto;
+
+    background: #FFFFFF;
+    box-shadow: 2px 2px 42px 0px #003A4E4F;
+}
