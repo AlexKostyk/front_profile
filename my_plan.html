@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="content">
+        <!-- Сайдбар -->
+        <div id="sidebar">
+            <div id="sidebar-container">
+                <div id="menu-header">
+                    <img class="logo-icon" src="./imgs/logo.png" alt="Logo icon">
+                </div>
+
+                <!-- Actions -->
+                <div class="menu-block">
+                    <p class="title menu-title">Actions</p>
+
+                    <div class="menu-point" onclick="switchMenuPoint(0)">
+                        <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon" style="display: none;">
+                        <div class="menu-text-point">
+                            <img class="menu-icon" src="./imgs/menu-icons/menu0.png" alt="Menu icon">
+                            <p class="link-large">Summarize</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-point" onclick="switchMenuPoint(1)">
+                        <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon" style="display: none;">
+                        <div class="menu-text-point">
+                            <img class="menu-icon" src="./imgs/menu-icons/menu1.png" alt="Menu icon">
+                            <p class="link-large">History</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-point" onclick="switchMenuPoint(2)">
+                        <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon" style="display: none;">
+                        <div class="menu-text-point">
+                            <img class="menu-icon" src="./imgs/menu-icons/menu2.png" alt="Menu icon">
+                            <p class="link-large">Payment</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-point active-menu-point" onclick="switchMenuPoint(3)">
+                        <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon">
+                        <div class="menu-text-point">
+                            <img class="menu-icon" src="./imgs/menu-icons/active-menu3.png" alt="Menu icon">
+                            <p class="link-large">My Plan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contacts -->
+                <div class="menu-block">
+                    <p class="title menu-title">Contacts</p>
+
+                    <div id="community-menu-container">
+                        <div class="menu-point" id="community-menu-point" onclick="switchMenuPoint(4)">
+                            <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon" style="display: none;">
+                            <div class="menu-text-point">
+                                <img class="menu-icon" src="./imgs/menu-icons/menu4.png" alt="Menu icon">
+                                <p class="link-large">Community</p>
+                            </div>
+                        </div>
+                        <ul id="community-menu-ul" class="link-large dropdown-content"></ul>
+                    </div>
+
+                    <div class="menu-point">
+                        <img class="active-rectangle" src="./imgs/rectangle.png" alt="Rectangle icon" style="display: none;">
+                        <div class="menu-text-point">
+                            <img class="menu-icon" src="./imgs/menu-icons/menu5.png" alt="Menu icon">
+                            <p class="link-large">Support</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account -->
+            <div id="account-container">
+                <hr>
+                <div id="email-menu" style="display: none;">
+                    <div id="email-menu-container" class="email_menu_text">
+                        <a href="https://www.example.com">Privacy Policy</a>
+                        <a href="https://www.example.com">Terms of Sevice</a>
+                        <a id="logout-link" href="https://www.example.com">
+                            <img class="logout-icon" src="./imgs/logout.png" alt="Logo icon">
+                            <p>Log out</p>
+                        </a>
+                    </div>
+                </div>
+                <p class="small-menu-text" id="user-email" onclick="activateEmailMenu()">seo@contractcrab.com</p>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+    <script src="./scripts/my_plan.js"></script>
+    <script src="./scripts/menu.js"></script>
+</html>

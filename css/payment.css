@@ -1,0 +1,57 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4c; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопкищк summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#payment-container {
+    padding: 32px 24px;
+}
+
+#payment-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.payment-bord {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    width: 620px;
+    height: 83px;
+    background-color: var(--border-backgroung-color);
+    border-radius: 8px;
+}
+
+.payment-bord button {
+    margin-left: auto;
+}

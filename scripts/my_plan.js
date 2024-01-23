@@ -1,0 +1,1 @@
+let curr_menu_pont = 3;
