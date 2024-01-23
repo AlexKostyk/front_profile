@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
     <link rel="stylesheet" href="font.css">
@@ -12,7 +13,8 @@
 </head>
 <body>
         <div id="contract-crab-logo">
-            <img class="logo-icon" src="./imgs/logo-login.png" alt="Logo icon">
+            <img class="logo-icon desktop" src="./imgs/logo-login.png" alt="Logo icon">
+            <img class="logo-icon mobile" src="./imgs/logo-login-mobile.png" alt="Logo icon">
         </div>
 
         <div id="login-border-container">
@@ -20,9 +22,12 @@
 
             <div id="login-container">
                 <div id="email-error-container">
-                    <div id="email-input-container">
-                        <input id="email-input" class="card-text" placeholder="Enter your email">
-                        <button id="send-link-btn" class="link-text login-btn" onclick="checkEmail()">Send link</button>
+                    <div id="mobile-input-login-container">
+                        <div id="email-input-container">
+                            <input id="email-input" class="card-text" placeholder="Enter your email">
+                            <button id="send-link-btn" class="link-text login-btn desktop" onclick="checkEmail()">Send link</button>
+                        </div>
+                        <button id="send-mobile-link-btn" class="link-text login-btn mobile" onclick="checkEmail()">Send link</button>
                     </div>
                     <p id="email-error" class="card-text error-text"></p>
                 </div>

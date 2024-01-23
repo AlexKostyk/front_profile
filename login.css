@@ -40,6 +40,14 @@ body {
     background-size: cover;
 }
 
+.desktop {
+    display: block;
+}
+
+.mobile {
+    display: none;
+}
+
 #contract-crab-logo {
     position: absolute;
     top: 40px;
