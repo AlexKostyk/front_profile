@@ -124,13 +124,15 @@
                         </div>
 
                         <!-- Фильтрация по типу контракта -->
-                        <div class="filter-items">
-                            <p class="link-large">Contract Types</p>
+                        <div id="type-filter" class="filter-items">
+                            <p id="type-filter-text" class="link-large">Contract Types</p>
+                            <img id="close-type-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()" style="display: none;">
                         </div>
 
                         <!-- Фильтрация по тегу -->
-                        <div class="filter-items">
-                            <p class="link-large">Tag</p>
+                        <div id="tag-filter" class="filter-items">
+                            <p id="tag-filter-text" class="link-large">Tag</p>
+                            <img id="close-tag-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()" style="display: none;">
                         </div>
                     </div>
 
@@ -218,7 +220,7 @@
 
                 <div class="search-filter-container">
                     <img class="search-icon" src="./imgs/search.png" alt="Search icon">
-                    <input type="text" class="search-filter-input card-text" placeholder="Search side">
+                    <input type="text" id="input-search-sides" class="search-filter-input card-text" placeholder="Search side">
                 </div>
 
                 <div class="side-filter-block">
@@ -231,7 +233,31 @@
                     <ul id="side2-filter-ul"></ul>
                 </div>
 
-                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterSide()">Apply</button>
+                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterSides()">Apply</button>
+            </div>
+
+            <!-- Скрытое меню фильтра по типу -->
+            <div id="type-menu" class="filter-menu" style="display: none;">
+                <div class="filter-header">
+                    <h2>Contract Type</h2>
+                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()">
+                </div>
+                <hr>
+                <div class="switch-btns-container">
+                    <button class="filtr-btn-text active-switch-btn">Include</button>
+                    <button class="filtr-btn-text">Exclude</button>
+                </div>
+
+                <div class="search-filter-container">
+                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                    <input type="text" id="input-search-type" class="search-filter-input card-text" placeholder="Search type">
+                </div>
+
+                <div class="type-filter-block">
+                    <ul id="type-filter-ul"></ul>
+                </div>
+
+                <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterType()">Apply</button>
             </div>
 
             <!-- Если история пустая -->

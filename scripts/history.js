@@ -2,23 +2,40 @@ let date_filter_menu = document.getElementById("request-date-menu");
 let date_filter = document.getElementById('date-filter');
 let close_date_filter = document.getElementById('close-date-filter');
 let date_filter_text = document.getElementById("date-filter-text");
+
 let side_filter = document.getElementById("side-filter");
 let side_menu = document.getElementById("side-menu");
 let side_filter_text = document.getElementById("side-filter-text");
 let close_side_filter = document.getElementById("close-side-filter");
+let input_search_sides = document.getElementById("input-search-sides");
+
+let type_filter = document.getElementById("type-filter");
+let type_menu = document.getElementById("type-menu");
+let type_filter_text = document.getElementById("type-filter-text");
+let close_type_filter = document.getElementById("close-type-filter");
+let input_search_type = document.getElementById("input-search-type");
 
 // для внутренней логики
 let curr_menu_pont = 1;
 let searsh_active = 0;
-let filter_active = 0;
 let lastSortColumn = null; // Переменная для отслеживания последнего столбца, по которому производилась сортировка
 let currentSortOrder = 'asc'; // Переменная для отслеживания порядка сортировки
 let searchTerm = '';
+
+// флаги фильтров
+let filter_active = 0;
+let date_filter_active = 0;
+let side_filter_active = 0;
+let type_filter_active = 0;
+let tag_filter_active = 0;
 
 // для фильтров
 let to_picker, from_picker;
 let fromDate = null; 
 let toDate = null;
+let selected_sid1 = [];
+let selected_sid2 = [];
+let selected_types = [];
 
 let info = {tag_color: 'red', date: '17.01.2019', effective_date: '17.01.2019', terms: 'Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually', financial_terms: 'Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions', penalties: '0.1% delay penalty for each day of delay in payment', rights1: "Use of the leased commercial premises; Receiving rent payments", 
 responsibilities1: "Providing the leased premises; Provision of additional services (heating, water, electricity, technical security); Handling other services based on Tenant's wishes; Maintenance of the building and facilities; Provision of security services", rights2: 'Use of the leased commercial premises; Notification to terminate the contract prematurely (subject to conditions)', responsibilities2: 'Paying rent, Additional Services, and General Services fees; Complying with rules and procedures; Handling waste and packaging waste obligations; Returning the premises in the original condition at the end of the contract'};
@@ -737,7 +754,7 @@ function filterRequestDate() {
     date_filter_menu.style.display = 'none';
 
 
-    changeFilterButton(date_filter, close_date_filter, text);
+    changeFilterButton(date_filter, close_date_filter, date_filter_text, text);
 }
 
 function formatReqDate(date) {
@@ -748,11 +765,11 @@ function formatReqDate(date) {
     return `${day}.${month}.${year}`;
 }
 
-function changeFilterButton(object, close, text) {
+function changeFilterButton(object, close, filter_text, text) {
     object.classList.add('active-filter');
     close.style.display = 'block';
 
-    date_filter_text.innerText = text;
+    filter_text.innerText = text;
 }
 
 date_filter.addEventListener('click', (event) => {
@@ -780,6 +797,7 @@ function showSideFilter() {
 function closeOtherMenuFilter() {
     date_filter_menu.style.display = 'none';
     side_menu.style.display = 'none';
+    type_menu.style.display = 'none';
 }
 
 function closeSideFilter() {
@@ -788,11 +806,271 @@ function closeSideFilter() {
     side_filter.classList.remove('active-filter');
     side_filter_text.innerText = 'Sides';
 
+    selected_sid1 = [];
+    selected_sid2 = [];
+
     filtered_data = [];
     filter_active = 0;
     updateTable(searchTerm);
 }
 
 function addAllSides() {
+    let side1_filter_ul = document.getElementById("side1-filter-ul");
+    let side2_filter_ul = document.getElementById("side2-filter-ul");
 
+    side1_filter_ul.innerHTML = "";
+    side2_filter_ul.innerHTML = "";
+
+    input_search_sides.value = "";
+
+    let side1_arr = [...new Set(history_data.map(item => item.side1))];
+    let side2_arr = [...new Set(history_data.map(item => item.side2))];
+
+    side1_arr.forEach(item => {
+        let liElement = document.createElement("li");
+
+        liElement.textContent = item;
+        liElement.addEventListener("click", function() {
+            toggleSelectedSide(liElement, item, "side1");
+        });
+
+        side1_filter_ul.appendChild(liElement);
+    });
+
+    side2_arr.forEach(item => {
+        let liElement = document.createElement("li");
+
+        liElement.textContent = item;
+        liElement.addEventListener("click", function() {
+            toggleSelectedSide(liElement, item, "side2");
+        });
+
+        side2_filter_ul.appendChild(liElement);
+    });
+}
+
+function toggleSelectedSide(element, item, side) {
+    const index = side === "side1" ? selected_sid1.indexOf(item) : selected_sid2.indexOf(item);
+
+    if (index === -1) {
+        if (side === "side1") {
+            selected_sid1.push(item);
+        } else {
+            selected_sid2.push(item);
+        }
+    } else {
+        if (side === "side1") {
+            selected_sid1.splice(index, 1);
+        } else {
+            selected_sid2.splice(index, 1);
+        }
+    }
+
+    element.classList.toggle("selected-filter");
+}
+
+function filterSides() {
+    if (selected_sid1.length === 0 && selected_sid2.length === 0){
+        closeSideFilter();
+        return;
+    }
+    
+    filtered_data = [];
+
+    filtered_data = history_data.filter(item => {
+        let isSide1Match = selected_sid1.length === 0 || selected_sid1.includes(item.side1);
+        let isSide2Match = selected_sid2.length === 0 || selected_sid2.includes(item.side2);
+
+        return isSide1Match && isSide2Match;
+    });
+
+
+    filter_active = 1;
+    updateTable(searchTerm);
+    side_menu.style.display = 'none';
+
+    let text = formatArrayToText(selected_sid1, selected_sid2);
+
+    changeFilterButton(side_filter, close_side_filter, side_filter_text, text);
+}
+
+function formatArrayToText(...arrays) {
+    let text = "";
+
+    if (arrays[0].length >= 2) {
+        text += arrays[0][0] + ", " + arrays[0][1] + ", ";
+    } else if (arrays[0].length === 1) {
+        text += arrays[0][0] + ", ";
+        if (arrays[1].length > 0) {
+            text += arrays[1][0] + ", ";
+        }
+    } else if (arrays[1].length >= 2) {
+        text += arrays[1][0] + ", " + arrays[1][1] + ", ";
+    } else if (arrays[1].length === 1) {
+        text += arrays[1][0] + ", ";
+    }
+
+    return text.slice(0, -2);
+}
+
+function addSearchSides() {
+    let side1_filter_ul = document.getElementById("side1-filter-ul");
+    let side2_filter_ul = document.getElementById("side2-filter-ul");
+    let searchInput = document.getElementById("input-search-sides");
+
+    side1_filter_ul.innerHTML = "";
+    side2_filter_ul.innerHTML = "";
+
+    selected_sid1 = [];
+    selected_sid2 = [];
+
+    let side1_arr = [...new Set(history_data.map(item => item.side1))];
+    let side2_arr = [...new Set(history_data.map(item => item.side2))];
+
+    function addToFilterList(ulElement, array, side) {
+        array.forEach(item => {
+            if (item.toLowerCase().includes(searchInput.value.toLowerCase())) {
+                let liElement = document.createElement("li");
+
+                liElement.textContent = item;
+                liElement.addEventListener("click", function() {
+                    toggleSelectedSide(liElement, item, side);
+                });
+
+                ulElement.appendChild(liElement);
+            }
+        });
+    }
+
+    addToFilterList(side1_filter_ul, side1_arr, "side1");
+    addToFilterList(side2_filter_ul, side2_arr, "side2");
+}
+
+input_search_sides.addEventListener("input", addSearchSides);
+
+
+type_filter.addEventListener('click', (event) => {
+    if (event.target.id !== "close-type-filter") showTypeFilter();
+});
+
+function showTypeFilter() {
+    closeOtherMenuFilter();
+
+    let coordX = event.clientX - 60;
+    let coordY = event.clientY + 15;
+    type_menu.style.position = 'absolute';
+    type_menu.style.left = `${coordX}px`;
+    type_menu.style.top = `${coordY}px`;
+
+    type_menu.style.display = 'flex';
+
+    addAllTypes();
+}
+
+function closeTypeFilter() {
+    type_menu.style.display = 'none';
+    close_type_filter.style.display = 'none';
+    type_filter.classList.remove('active-filter');
+    type_filter_text.innerText = 'Contract Types';
+
+    selected_types = [];
+    filtered_data = [];
+    filter_active = 0;
+    updateTable(searchTerm);
+}
+
+function addAllTypes() {
+    let type_filter_ul = document.getElementById("type-filter-ul");
+
+    type_filter_ul.innerHTML = "";
+
+    input_search_type.value = "";
+
+    let type_arr = [...new Set(history_data.map(item => item.contractType))];
+
+    type_arr.forEach(item => {
+        let liElement = document.createElement("li");
+        let truncatedText = truncateText(item, 30);
+
+        liElement.textContent = truncatedText;
+        liElement.title = item;
+        liElement.addEventListener("click", function() {
+            toggleSelectedType(liElement, item);
+        });
+
+        type_filter_ul.appendChild(liElement);
+    });
+}
+
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.slice(0, maxLength - 3) + "...";
+    }
+    return text;
+}
+
+function addSearchTypes() {
+    let searchInput = document.getElementById("input-search-type");
+    let type_filter_ul = document.getElementById("type-filter-ul");
+
+    type_filter_ul.innerHTML = "";
+
+    selected_types = [];
+
+    let type_arr = [...new Set(history_data.map(item => item.contractType))];
+
+    function addToFilterList(ulElement, array) {
+        array.forEach(item => {
+            if (item.toLowerCase().includes(searchInput.value.toLowerCase())) {
+                let liElement = document.createElement("li");
+                let truncatedText = truncateText(item, 30);
+
+                liElement.textContent = truncatedText;
+                liElement.title = item;
+                liElement.addEventListener("click", function() {
+                    toggleSelectedType(liElement, item);
+                });
+
+                ulElement.appendChild(liElement);
+            }
+        });
+    }
+
+    addToFilterList(type_filter_ul, type_arr);
+}
+
+input_search_type.addEventListener("input", addSearchTypes);
+
+
+function toggleSelectedType(element, item) {
+    const index = selected_types.indexOf(item);
+
+    if (index === -1) {
+        selected_types.push(item);
+    } else {
+        selected_types.splice(index, 1);
+    }
+
+    element.classList.toggle("selected-filter");
+}
+
+function filterType() {
+    if (selected_types.length === 0) {
+        closeSideFilter();
+        return;
+    }
+
+    filtered_data = history_data.filter(item => {
+        return selected_types.includes(item.contractType);
+    });
+
+    filter_active = 1;
+    updateTable(searchTerm);
+    type_menu.style.display = 'none';
+
+    let text="";
+    selected_types.forEach(item => {text+=item+", "});
+    text = text.slice(0, -2);
+    text = truncateText(text, 40);
+    changeFilterButton(type_filter, close_type_filter, type_filter_text, text);
 }

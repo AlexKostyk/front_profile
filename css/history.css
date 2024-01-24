@@ -582,6 +582,7 @@ abbr[title] {
 .search-filter-container {
     position: relative;
     margin-bottom: 10px;
+    margin-left: 9px;
 }
 
 .search-icon {
@@ -592,7 +593,7 @@ abbr[title] {
 }
 
 .search-filter-input {
-    width: 256px;
+    width: 240px;
     height: 34px;
     padding: 8px 16px;
     padding-left: 40px;
@@ -618,11 +619,12 @@ abbr[title] {
     margin: 20px 10px 0 0;
 }
 
-#side-menu ul {
+.filter-menu ul {
     list-style-type: none;
 }
 
-#side-menu ul li {
+.filter-menu ul li {
+    position: relative;
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
@@ -632,15 +634,46 @@ abbr[title] {
     
 
     padding: 5px 0 0 10px;
-    margin: 4px 0 4px 0;
+    margin: 2px 0 2px 0;
     width: 250px;
     height: 30px;
     border-radius: 4px;
-    background-color: var(--basic-background-color);
 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    
     cursor: pointer;
+}
+
+.selected-filter {
+    background-color: var(--basic-background-color);
+}
+
+.selected-filter::after {
+    content: url('../imgs/side-menu-check.png');
+    position: absolute;
+    right: 8px;
+    bottom: 4px;
 }
 
 .side-header-filter {
     margin-left: 10px;
+}
+
+#type-menu {
+    width: 340px;
+    height: 420px;
+    padding: 40px 20px 0 41px;
+    background-image: url(../imgs/back-type-filter.png);
+}
+
+#apply-type-btn {
+    margin: auto 20px 28px auto;
+}
+
+#type-menu ul li {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 10px;
 }
