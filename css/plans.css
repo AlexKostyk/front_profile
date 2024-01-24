@@ -1,0 +1,146 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4e; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопки summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--basic-background-color);
+
+    background-image: url(../imgs/LooperGroup.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#contract-crab-logo {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+}
+
+#plans-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 96px;
+    gap: 32px;
+}
+
+#plans-borders-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.plan-border {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 32px;
+    width: 380px;
+    height: 542px;
+    border-radius: 18px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 6px 0px #013A4E33;
+}
+
+.plan-header-text-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 58px;
+}
+
+.popular-accent-text {
+    color: var(--main-accent-color);
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.info-container {
+    width: 100%;
+    border-top: 1px solid var(--main-accent-color);
+}
+
+.info-container ul {
+    margin: 18px 8px 0 46px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.info-container ul li{
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.info-container ul li::before {
+    content: url('../imgs/check-lending.png');
+    position: absolute;
+    left: 0;
+}
+
+.get-sub-btns {
+    position: absolute;
+    width: 100%;
+    color: var(--accent-and-details-color);
+    text-align: center;
+    bottom: 0;
+    height: 80px;
+
+    border-radius: 17px;
+    border: none;
+    background-color: var(--main-accent-color);
+
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.get-sub-btns:hover,
+.get-sub-btns:active {
+    background-color: var(--neon-elements-hover-or-click-color);
+}
+
+.most-popular {
+    background-color: var(--accent-and-details-color);
+    color: #FFFFFF;
+}
+
+.other-price {
+    color: var(--accent-and-details-color);
+}

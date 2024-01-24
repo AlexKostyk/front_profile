@@ -221,3 +221,21 @@ body {
     letter-spacing: 0em;
     text-align: left;
 }
+
+.desktop-h2 {
+    font-family: Cabin;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 67px;
+    letter-spacing: -0.03em;
+    text-align: left;
+}
+
+.mono-text {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+}
