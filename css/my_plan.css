@@ -1,0 +1,180 @@
+:root {
+    /* ---- Colors ---- */
+
+    /* Accent */
+    --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
+    --accent-and-details-color: #003a4c; /* sea */
+    --additional-accent-color: #b5a4de; /* lilac */
+
+    /* Basic */
+    --basic-main-text-color: #272727; /* black */
+    --basic-background-color: #e3ebf7; /* blue */
+    --dark-gray-text-color: #535f63; /* grey text */ /* Основной цвеет кнопкищк summarize */
+    --thin-line-color: #c1c8cc; /* light grey */ /* Основной цвеет фона кнопки summarize */
+    --secondary-text-and-elements-color: #808587; /* grey */ /* Цвеет ховера кнопок на борде и второстепенного текста на борде*/
+    --basic-back: #EAEAEA; /* Задний фон шкалы */
+    --downloaded-text-color: #5E9CFA; /* Цвет посказки загрузки файла */
+
+    /* System */
+    --neon-elements-hover-or-click-color: #94ef00; /* neon green */
+    --error-text-color: #ff1701; /* red */
+
+    /* ---- Other ---- */
+    --border-backgroung-color: #f8f8fa; /* Цвет для фона бордов */
+    --hr-scrol-color: #e4dff2; /* Цвет для линии и заднего фона скролбара textarea */
+    --main-border-btn-color: #9468ff; /* Основной цвет кнопок на борде */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#my-plan-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 32px 0 0 24px;
+}
+
+#plans-container {
+    display: flex;
+    gap: 98px;
+    padding-bottom: 32px;
+}
+
+#curr-plan,
+#upgrade-plan-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.current-plan-border {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 294px;
+    min-height: 362px;
+    padding: 32px 0 40px 0;
+    border-radius: 8px;
+    gap: 16px;
+    border: 1px solid var(--main-accent-color);
+}
+
+.bold-title {
+    color: var(--basic-main-text-color);
+}
+
+#current-plan-tariff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+#current-plan-info {
+    min-width: 294px;
+    border-top: 1px solid var(--main-accent-color);
+}
+
+#current-plan-info ul {
+    margin: 40px 24px 0 40px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#current-plan-info ul li{
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 30px;
+}
+
+#current-plan-info ul li::before {
+    content: url('../imgs/check-plan-info.png');
+    position: absolute;
+    left: 0;
+}
+
+#upgrade-plan-borders {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upgrade-plan-border-container {
+    display: flex;
+    gap: 1px;
+}
+
+.first-upgrade-plan-border {
+    position: relative;
+    padding: 32px 39px 24px 32px;
+    min-height: 240px;
+    min-width: 251px;
+
+    border-radius: 8px;
+    background-color: var(--border-backgroung-color);
+    border: none;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+.upgrade-plan-tariff-container {
+    display: flex;
+    flex-direction: column;
+    padding: 7px 0 0 0;
+}
+
+.upgrade-plan-tarif {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    gap: 2px;
+}
+
+.get-button {
+    position: absolute;
+    bottom: 32px;
+}
+
+.second-upgrade-plan-border {
+    padding: 24px 39px 24px 32px;
+    min-height: 240px;
+    min-width: 336px;
+
+    border-radius: 8px;
+    background-color: var(--border-backgroung-color);
+    border: none;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.upgrade-plan-info {
+    margin-top: 24px;
+}
+
+.upgrade-plan-info ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.upgrade-plan-info ul li{
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.upgrade-plan-info ul li::before {
+    content: url('../imgs/upgrade-plan-check.png');
+    position: absolute;
+    left: 0;
+}
+
+

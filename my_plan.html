@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Payment</title>
+    <title>My Plan</title>
 
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/my_plan.css">
 </head>
 <body>
     <div class="content">
@@ -96,6 +97,75 @@
 
         </div>
 
+        <div id="my-plan-container">
+            <h1>My Plan</h1>
+
+            <div id="plans-container">
+                <div id="curr-plan">
+                    <h2>Current Plan</h2>
+
+                    <div class="current-plan-border">
+                        <p id="current-plan-name" class="bold-title"></p>
+
+                        <div id="current-plan-tariff">
+                            <p id="current-payment" class="payment-text"></p>
+                            <p id="current-term" class="title"></p>
+                        </div>
+
+                        <div id="current-plan-info" class="card-text">
+                            <ul id="current-plan-ul"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="upgrade-plan-container">
+                    <h2>Upgrade Plan</h2>
+
+                    <div id="upgrade-plan-borders">
+                        <div class="upgrade-plan-border-container">
+                            <div class="first-upgrade-plan-border">
+                                <div class="upgrade-plan-tariff-container">
+                                    <p class="upgrade-plan-name bold-title"></p>
+
+                                    <p class="upgrade-plan-tarif">
+                                        <p class="payment-text upgrade-payment"></p>
+                                        <p class="title upgrade-term"></p>
+                                    </p>                                    
+                                </div>
+                                <button class="get-button action-btn">Get Light</button>
+                            </div>
+
+                            <div class="second-upgrade-plan-border">
+                                <div class="card-text upgrade-plan-info">
+                                    <ul class= "upgrade-plan-ul"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="upgrade-plan-border-container">
+                            <div class="first-upgrade-plan-border">
+                                <div class="upgrade-plan-tariff-container">
+                                    <p class="upgrade-plan-name bold-title"></p>
+
+                                    <p class="upgrade-plan-tarif">
+                                        <p class="payment-text upgrade-payment"></p>
+                                        <p class="title upgrade-term"></p>
+                                    </p>                                    
+                                </div>
+                                <button class="get-button action-btn">Get Light</button>
+                            </div>
+
+                            <div class="second-upgrade-plan-border">
+                                <div class="card-text upgrade-plan-info">
+                                    <ul class= "upgrade-plan-ul"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </body>
