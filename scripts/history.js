@@ -35,6 +35,11 @@ let side_filter_active = 0;
 let type_filter_active = 0;
 let tag_filter_active = 0;
 
+let reverse_date_filter = 0;
+let reverse_side_filter = 0;
+let reverse_type_filter = 0;
+let reverse_tag_filter = 0;
+
 // для фильтров
 let to_picker, from_picker;
 let fromDate = null; 
@@ -483,6 +488,10 @@ function showActionMenu(item) {
             actionsMenu.style.display = 'none';
             document.removeEventListener('click', clickHandler);
         }
+
+        // if (event.target.id === "actions-dots") {
+
+        // }
     }
 
     document.addEventListener('click', clickHandler);
@@ -718,20 +727,19 @@ function closeDateFilter() {
     date_filter.classList.remove('active-filter');
     date_filter_text.innerText = 'Date';
 
-    filtered_data = [];
-    filter_active = 0;
-    updateTable(searchTerm);
+
+    date_filter_active = 0;
+    filterPipe();
 }
 
-function filterRequestDate() {
+function filterRequestDate(curr_data) {
     if (fromDate === null && toDate === null){
         closeDateFilter();
         return;
     }
 
     let text = '';
-
-    filtered_data = [];
+    if (reverse_date_filter) text += "No ";
 
     let toDateAdded = new Date(toDate);
     if (toDate !== null) toDateAdded.setDate(toDate.getDate() + 1);
@@ -739,29 +747,43 @@ function filterRequestDate() {
     if (fromDate !== null && toDate === null) {
         let tmp_date = new Date(fromDate);
         tmp_date.setDate(fromDate.getDate() + 1);
-        filtered_data = history_data.filter(function(item) {
-            return item.requestDate >= fromDate && item.requestDate <= tmp_date;
+        curr_data = curr_data.filter(function(item) {
+            if (reverse_date_filter) {
+                // Исключаем числа из промежутка
+                return item.requestDate < fromDate || item.requestDate > tmp_date;
+            } else {
+                // Включаем числа из промежутка
+                return item.requestDate >= fromDate && item.requestDate <= tmp_date;
+            }
         });
-        text+= formatReqDate(fromDate);
+        text += formatReqDate(fromDate);
     } else if (fromDate === null && toDate !== null) {
         let tmp_date = new Date(toDate);
-        filtered_data = history_data.filter(function(item) {
-            return item.requestDate >= tmp_date && item.requestDate <= toDateAdded;
+        curr_data = curr_data.filter(function(item) {
+            if (reverse_date_filter) {
+                return item.requestDate < tmp_date || item.requestDate > toDateAdded;
+            } else {
+                return item.requestDate >= tmp_date && item.requestDate <= toDateAdded;
+            }
         });
-        text+= formatReqDate(toDate);
+        text += formatReqDate(toDate);
     } else {
-        filtered_data = history_data.filter(function(item) {
-            return item.requestDate >= fromDate && item.requestDate <= toDateAdded;
+        curr_data = curr_data.filter(function(item) {
+            if (reverse_date_filter) {
+                return item.requestDate < fromDate || item.requestDate > toDateAdded;
+            } else {
+                return item.requestDate >= fromDate && item.requestDate <= toDateAdded;
+            }
         });
-        text+= formatReqDate(fromDate)+' - '+formatReqDate(toDate);
+        text += formatReqDate(fromDate) + ' - ' + formatReqDate(toDate);
     }
 
-    filter_active = 1;
-    updateTable(searchTerm);
+    date_filter_active = 1;
     date_filter_menu.style.display = 'none';
 
-
     changeFilterButton(date_filter, close_date_filter, date_filter_text, text);
+
+    return curr_data;
 }
 
 function formatReqDate(date) {
@@ -817,9 +839,8 @@ function closeSideFilter() {
     selected_sid1 = [];
     selected_sid2 = [];
 
-    filtered_data = [];
-    filter_active = 0;
-    updateTable(searchTerm);
+    side_filter_active = 0;
+    filterPipe();
 }
 
 function addAllSides() {
@@ -838,6 +859,11 @@ function addAllSides() {
         let liElement = document.createElement("li");
 
         liElement.textContent = item;
+
+        if (selected_sid1.includes(item)) {
+            liElement.classList.add("selected-filter");
+        }
+
         liElement.addEventListener("click", function() {
             toggleSelectedSide(liElement, item, "side1");
         });
@@ -849,6 +875,11 @@ function addAllSides() {
         let liElement = document.createElement("li");
 
         liElement.textContent = item;
+
+        if (selected_sid2.includes(item)) {
+            liElement.classList.add("selected-filter");
+        }
+
         liElement.addEventListener("click", function() {
             toggleSelectedSide(liElement, item, "side2");
         });
@@ -877,33 +908,45 @@ function toggleSelectedSide(element, item, side) {
     element.classList.toggle("selected-filter");
 }
 
-function filterSides() {
-    if (selected_sid1.length === 0 && selected_sid2.length === 0){
+function filterSides(curr_data) {
+    if (selected_sid1.length === 0 && selected_sid2.length === 0) {
         closeSideFilter();
         return;
     }
-    
-    filtered_data = [];
 
-    filtered_data = history_data.filter(item => {
-        let isSide1Match = selected_sid1.length === 0 || selected_sid1.includes(item.side1);
-        let isSide2Match = selected_sid2.length === 0 || selected_sid2.includes(item.side2);
+    if (reverse_side_filter) {
+        // Если reverse_side_filter равен 1, выбираем элементы, которые не входят в списки selected_sid1 и selected_sid2
+        curr_data = curr_data.filter(item => {
+            let isSide1NotMatch = selected_sid1.length !== 0 && !selected_sid1.includes(item.side1);
+            let isSide2NotMatch = selected_sid2.length !== 0 && !selected_sid2.includes(item.side2);
 
-        return isSide1Match && isSide2Match;
-    });
+            return isSide1NotMatch && isSide2NotMatch;
+        });
+    } else {
+        // Иначе выбираем элементы, которые входят в списки selected_sid1 и selected_sid2
+        curr_data = curr_data.filter(item => {
+            let isSide1Match = selected_sid1.length === 0 || selected_sid1.includes(item.side1);
+            let isSide2Match = selected_sid2.length === 0 || selected_sid2.includes(item.side2);
 
+            return isSide1Match && isSide2Match;
+        });
+    }
 
-    filter_active = 1;
-    updateTable(searchTerm);
+    side_filter_active = 1;
     side_menu.style.display = 'none';
 
     let text = formatArrayToText(selected_sid1, selected_sid2);
+    text = truncateText(text, 20);
 
     changeFilterButton(side_filter, close_side_filter, side_filter_text, text);
+
+    return curr_data;
 }
 
 function formatArrayToText(...arrays) {
     let text = "";
+
+    if (reverse_side_filter) text+="No ";
 
     if (arrays[0].length >= 2) {
         text += arrays[0][0] + ", " + arrays[0][1] + ", ";
@@ -929,18 +972,20 @@ function addSearchSides() {
     side1_filter_ul.innerHTML = "";
     side2_filter_ul.innerHTML = "";
 
-    selected_sid1 = [];
-    selected_sid2 = [];
-
     let side1_arr = [...new Set(history_data.map(item => item.side1))];
     let side2_arr = [...new Set(history_data.map(item => item.side2))];
 
-    function addToFilterList(ulElement, array, side) {
+    function addToFilterList(ulElement, array, side, selected_side) {
         array.forEach(item => {
             if (item.toLowerCase().includes(searchInput.value.toLowerCase())) {
                 let liElement = document.createElement("li");
 
                 liElement.textContent = item;
+
+                if (selected_side.includes(item)) {
+                    liElement.classList.add("selected-filter");
+                }
+
                 liElement.addEventListener("click", function() {
                     toggleSelectedSide(liElement, item, side);
                 });
@@ -950,8 +995,8 @@ function addSearchSides() {
         });
     }
 
-    addToFilterList(side1_filter_ul, side1_arr, "side1");
-    addToFilterList(side2_filter_ul, side2_arr, "side2");
+    addToFilterList(side1_filter_ul, side1_arr, "side1", selected_sid1);
+    addToFilterList(side2_filter_ul, side2_arr, "side2", selected_sid2);
 }
 
 input_search_sides.addEventListener("input", addSearchSides);
@@ -982,9 +1027,8 @@ function closeTypeFilter() {
     type_filter_text.innerText = 'Contract Types';
 
     selected_types = [];
-    filtered_data = [];
-    filter_active = 0;
-    updateTable(searchTerm);
+    type_filter_active = 0;
+    filterPipe();
 }
 
 function addAllTypes() {
@@ -1002,6 +1046,11 @@ function addAllTypes() {
 
         liElement.textContent = truncatedText;
         liElement.title = item;
+
+        if (selected_types.includes(item)) {
+            liElement.classList.add("selected-filter");
+        }
+
         liElement.addEventListener("click", function() {
             toggleSelectedType(liElement, item);
         });
@@ -1023,8 +1072,6 @@ function addSearchTypes() {
 
     type_filter_ul.innerHTML = "";
 
-    selected_types = [];
-
     let type_arr = [...new Set(history_data.map(item => item.contractType))];
 
     function addToFilterList(ulElement, array) {
@@ -1035,6 +1082,11 @@ function addSearchTypes() {
 
                 liElement.textContent = truncatedText;
                 liElement.title = item;
+
+                if (selected_types.includes(item)) {
+                    liElement.classList.add("selected-filter");
+                }
+
                 liElement.addEventListener("click", function() {
                     toggleSelectedType(liElement, item);
                 });
@@ -1062,25 +1114,31 @@ function toggleSelectedType(element, item) {
     element.classList.toggle("selected-filter");
 }
 
-function filterType() {
+function filterType(curr_data) {
     if (selected_types.length === 0) {
-        closeSideFilter();
+        closeTypeFilter();
         return;
     }
 
-    filtered_data = history_data.filter(item => {
-        return selected_types.includes(item.contractType);
-    });
+    if (reverse_type_filter) {
+        // Если reverse_type_filter равен 1, выбираем элементы, которые не входят в список selected_types
+        curr_data = curr_data.filter(item => !selected_types.includes(item.contractType));
+    } else {
+        // Иначе выбираем элементы, которые входят в список selected_types
+        curr_data = curr_data.filter(item => selected_types.includes(item.contractType));
+    }
 
-    filter_active = 1;
-    updateTable(searchTerm);
+    type_filter_active = 1;
     type_menu.style.display = 'none';
 
     let text="";
+    if (reverse_type_filter) text+="No ";
     selected_types.forEach(item => {text+=item+", "});
     text = text.slice(0, -2);
-    text = truncateText(text, 40);
+    text = truncateText(text, 20);
     changeFilterButton(type_filter, close_type_filter, type_filter_text, text);
+
+    return curr_data;
 }
 
 // Функции для фильтра по тегу 
@@ -1109,9 +1167,8 @@ function closeTagFilter() {
     tag_filter_text.innerText = 'Tag';
 
     selected_tags = [];
-    filtered_data = [];
-    filter_active = 0;
-    updateTable(searchTerm);
+    tag_filter_active = 0;
+    filterPipe();
 }
 
 function addAllTags() {
@@ -1135,6 +1192,12 @@ function addAllTags() {
 
             liElement.appendChild(divElement); // Добавляем div внутрь li
             liElement.title = item;
+
+            // Проверяем, есть ли текущий тег в списке selected_tags
+            if (selected_tags.includes(item)) {
+                liElement.classList.add("selected-filter");
+            }
+
             liElement.addEventListener("click", function() {
                 toggleSelectedTag(liElement, item);
             });
@@ -1143,6 +1206,7 @@ function addAllTags() {
         }
     });
 }
+
 
 // Функция для получения цвета тега
 function getTagColor(tag) {
@@ -1154,8 +1218,6 @@ function addSearchTags() {
     let tag_filter_ul = document.getElementById("tag-filter-ul");
 
     tag_filter_ul.innerHTML = "";
-
-    selected_tags = [];
 
     let tag_arr = [...new Set(history_data.map(item => item.tag))];
 
@@ -1173,6 +1235,12 @@ function addSearchTags() {
 
                     liElement.appendChild(divElement); // Добавляем div внутрь li
                     liElement.title = item;
+
+                    // Проверяем, есть ли текущий тег в списке selected_tags
+                    if (selected_tags.includes(item)) {
+                        liElement.classList.add("selected-filter");
+                    }
+
                     liElement.addEventListener("click", function() {
                         toggleSelectedTag(liElement, item);
                     });
@@ -1200,23 +1268,94 @@ function toggleSelectedTag(element, item) {
     element.classList.toggle("selected-filter");
 }
 
-function filterTag() {
+function filterTag(curr_data) {
     if (selected_tags.length === 0) {
-        closeSideFilter();
+        closeTagFilter();
         return;
     }
 
-    filtered_data = history_data.filter(item => {
-        return selected_tags.includes(item.tag);
-    });
+    if (reverse_tag_filter) {
+        // Если reverse_tag_filter равен 1, выбираем элементы, которые не входят в список selected_tags
+        curr_data = curr_data.filter(item => !selected_tags.includes(item.tag));
+    } else {
+        // Иначе выбираем элементы, которые входят в список selected_tags
+        curr_data = curr_data.filter(item => selected_tags.includes(item.tag));
+    }
 
-    filter_active = 1;
-    updateTable(searchTerm);
+    tag_filter_active = 1;
     tag_menu.style.display = 'none';
 
     let text="";
+    if (reverse_tag_filter) text+="No ";
     selected_tags.forEach(item => {text+=item+", "});
     text = text.slice(0, -2);
-    text = truncateText(text, 40);
+    text = truncateText(text, 20);
     changeFilterButton(tag_filter, close_tag_filter, tag_filter_text, text);
+
+    return curr_data;
+}
+
+function filterPipe() {
+    filtered_data = history_data.slice(0);
+
+    if (tag_filter_active) filtered_data = filterTag(filtered_data);
+
+    if (type_filter_active) filtered_data = filterType(filtered_data);
+
+    if (side_filter_active) filtered_data = filterSides(filtered_data);   
+
+    if (date_filter_active) filtered_data = filterRequestDate(filtered_data);
+
+    if (tag_filter_active || type_filter_active || side_filter_active || date_filter_active) filter_active = 1;
+    else filter_active = 0;
+
+    updateTable(searchTerm);
+}
+
+function applyFilter(selected_filter) {
+    switch (selected_filter) {
+        case 'tag':
+            tag_filter_active = 1;
+            break;
+        case 'type':
+            type_filter_active = 1;
+            break;
+        case 'side':
+            side_filter_active = 1;
+            break;
+        case 'date':
+            date_filter_active = 1;
+            break;
+        default:
+            break;
+    }
+
+    filterPipe();
+}
+
+function activeSwitchBtn(filter, reverse) {
+    switch (filter) {
+        case 'tag':
+            reverse_tag_filter = reverse;
+            break;
+        case 'type':
+            reverse_type_filter = reverse;
+            break;
+        case 'side':
+            reverse_side_filter = reverse;
+            break;
+        case 'date':
+            reverse_date_filter = reverse;
+            break;
+        default:
+            break;
+    }
+    let include = document.getElementById("include-"+filter+"-btn"); 
+    let exclude = document.getElementById("exclude-"+filter+"-btn"); 
+    toggleRevBrns(include, exclude)
+}
+
+function toggleRevBrns(include, exclude) {
+    include.classList.toggle("active-switch-btn");
+    exclude.classList.toggle("active-switch-btn");
 }

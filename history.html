@@ -195,15 +195,15 @@
                 </div>
                 <hr>
                 <div class="switch-btns-container">
-                    <button class="filtr-btn-text active-switch-btn">Include</button>
-                    <button class="filtr-btn-text">Exclude</button>
+                    <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('date', 0)">Include</button>
+                    <button id="exclude-date-btn" class="filtr-btn-text" onclick="activeSwitchBtn('date', 1)">Exclude</button>
                 </div>
 
                 <div id="from-datepicker-container"></div>
 
                 <div id="to-datepicker-container"></div>
 
-                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterRequestDate()">Apply</button>
+                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('date')">Apply</button>
             </div>
 
              <!-- Скрытое меню фильтра по стороне -->
@@ -214,8 +214,8 @@
                 </div>
                 <hr>
                 <div class="switch-btns-container">
-                    <button class="filtr-btn-text active-switch-btn">Include</button>
-                    <button class="filtr-btn-text">Exclude</button>
+                    <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('side', 0)">Include</button>
+                    <button id="exclude-side-btn" class="filtr-btn-text" onclick="activeSwitchBtn('side', 1)">Exclude</button>
                 </div>
 
                 <div class="search-filter-container">
@@ -233,7 +233,7 @@
                     <ul id="side2-filter-ul"></ul>
                 </div>
 
-                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterSides()">Apply</button>
+                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('side')">Apply</button>
             </div>
 
             <!-- Скрытое меню фильтра по типу -->
@@ -244,8 +244,8 @@
                 </div>
                 <hr>
                 <div class="switch-btns-container">
-                    <button class="filtr-btn-text active-switch-btn">Include</button>
-                    <button class="filtr-btn-text">Exclude</button>
+                    <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('type', 0)">Include</button>
+                    <button id="exclude-type-btn" class="filtr-btn-text" onclick="activeSwitchBtn('type', 1)">Exclude</button>
                 </div>
 
                 <div class="search-filter-container">
@@ -257,7 +257,7 @@
                     <ul id="type-filter-ul"></ul>
                 </div>
 
-                <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterType()">Apply</button>
+                <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('type')">Apply</button>
             </div>
 
             <!-- Скрытое меню фильтра по тегу -->
@@ -268,8 +268,8 @@
                 </div>
                 <hr>
                 <div class="switch-btns-container">
-                    <button class="filtr-btn-text active-switch-btn">Include</button>
-                    <button class="filtr-btn-text">Exclude</button>
+                    <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('tag', 0)">Include</button>
+                    <button id="exclude-tag-btn" class="filtr-btn-text" onclick="activeSwitchBtn('tag', 1)">Exclude</button>
                 </div>
 
                 <div class="search-filter-container">
@@ -281,7 +281,7 @@
                     <ul id="tag-filter-ul"></ul>
                 </div>
 
-                <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterTag()">Apply</button>
+                <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
             </div>
 
             <!-- Если история пустая -->
