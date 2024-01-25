@@ -72,8 +72,6 @@ let format_data = [];
 let filtered_data = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    history_data = escapeSingleQuotes(history_data);
-
     getHistoryData();
 
     initCalend();
@@ -86,7 +84,7 @@ function getHistoryData() {
     // Получаем данные истории с сервера
 
     // форматируем данные, заменяя '
-    //history_data = escapeSingleQuotes(history_data);
+    history_data = escapeSingleQuotes(history_data);
     sortTable('requestDate');
 }
 
@@ -137,7 +135,7 @@ function fillTable(data) {
         let wrapImage, dotsImage;
         let tagColor = item.info.tag_color;
 
-        // Добавляем класс "expandable-row" к строке для обозначения, что она раскрываема
+        // Добавляем класс expandable-row к строке для обозначения, что она раскрываема
         row.classList.add('expandable-row');
 
 
@@ -346,12 +344,12 @@ function toggleInfo(row, item, wrapImage, dotsImage) {
     }
 
     if (row.classList.contains('processing')) {
-        // Если у строки установлен временный класс 'processing', то нажатие блокируется
+        // Если у строки установлен временный класс processing, то нажатие блокируется
         return;
     }
 
-    row.classList.add('processing'); // Добавляем временный класс для блокировки
-    let infoRow = row.nextSibling; // Получаем следующую строку (элемент с полным описанием)
+    row.classList.add('processing'); 
+    let infoRow = row.nextSibling; 
     let infoCell = infoRow.firstElementChild;
 
     // Проверяем, существует ли элемент с id 'info-container' внутри infoCell
@@ -367,7 +365,7 @@ function toggleInfo(row, item, wrapImage, dotsImage) {
     // Создаем div для отображения полного описания
     let infoDiv = document.createElement('div');
     infoDiv.innerHTML = createInfoMarkup(item);
-    infoContainer.innerHTML = ''; // Очищаем содержимое перед добавлением нового
+    infoContainer.innerHTML = '';
     infoContainer.appendChild(infoDiv);
 
     // Устанавливаем высоту вручную, чтобы избежать задержки
@@ -469,12 +467,16 @@ function createInfoMarkup(item) {
             <div style='height: 12px'></div>`;
 }
 
-function showActionMenu(item) {
+function showActionMenu(curr_element) {
     let actionsMenu = document.getElementById('actions-menu');
+    let tag_container = document.getElementById("edit-tag-container");
+    let edit_tag_open = 0;
+
+    tag_container.style.height = "24px";
 
     // Позиционируем меню абсолютно
-    let coordX = event.clientX - 195;
-    let coordY = event.clientY + 3;
+    let coordX = event.clientX - 170;
+    let coordY = event.clientY + 20;
     actionsMenu.style.position = 'absolute';
     actionsMenu.style.left = `${coordX}px`;
     actionsMenu.style.top = `${coordY}px`;
@@ -489,12 +491,96 @@ function showActionMenu(item) {
             document.removeEventListener('click', clickHandler);
         }
 
-        // if (event.target.id === "actions-dots") {
+        if (event.target.classList.contains("copy-to-clipboard")) {
+            let text = makeAllText(curr_element);
+            makeCopy(text);
 
-        // }
+            actionsMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        }
+
+        if (event.target.classList.contains("delete")) {
+            history_data = history_data.filter(existingItem => !isObjectEqual(existingItem, curr_element));
+
+            filterPipe();
+            actionsMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        }
+
+        if (event.target.classList.contains("edit-tag")) {
+            let tag_arr = [...new Set(history_data.map(item => item.tag))];
+
+            // Получаем все элементы span внутри tag_container и преобразуем их в массив
+            let spanElements = Array.from(tag_container.querySelectorAll("span"));
+
+            // Удаляем каждый элемент span
+            spanElements.forEach(span => {
+                tag_container.removeChild(span);
+            });
+
+            tag_arr.forEach(item => {
+                if (item != '') {
+                let spanElement = document.createElement("span");
+                spanElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div>${item}`;
+                spanElement.classList.add('action-element');
+                tag_container.appendChild(spanElement);
+
+                spanElement.addEventListener('click', function() {
+                    updateHistoryData(getTagColor(item), item);
+                });
+                }
+            });
+
+            function updateHistoryData(color, tag) {
+
+                // тут данные об обновлении тега отправляются на сервер
+
+                if (curr_element) {
+                    curr_element.info.tag_color = color;
+                    curr_element.tag = tag;
+                }
+                filterPipe();
+                actionsMenu.style.display = 'none';
+                document.removeEventListener('click', clickHandler);
+            }
+
+            let spanElement = document.createElement("span");
+            spanElement.id = "new-tag";
+            spanElement.innerHTML = "New Tag"
+            tag_container.appendChild(spanElement);
+
+            // Получаем высоту всех span элементов
+            let totalHeight = tag_container.scrollHeight;
+
+            if (!edit_tag_open) {
+                tag_container.style.height = `${totalHeight}px`;
+                edit_tag_open = 1;
+            } else {
+                tag_container.style.height = "24px";
+                edit_tag_open = 0;
+            }
+            
+        }
     }
 
     document.addEventListener('click', clickHandler);
+}
+
+function isObjectEqual(obj1, obj2) {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) {
+        return false;
+    }
+
+    for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function showCopyMenu(all_text, part_name, part_text) {
