@@ -677,3 +677,29 @@ abbr[title] {
     align-items: center;
     padding: 0 0 0 10px;
 }
+
+#tag-menu {
+    width: 340px;
+    height: 535px;
+    padding: 55px 20px 0 41px;
+    background-image: url(../imgs/back-tag-filter.png);
+}
+
+#apply-tag-btn {
+    margin: auto 20px 40px auto;
+}
+
+#tag-menu ul li {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 10px;
+}
+
+.filtered-tag {
+    display: flex;
+    align-items: center;
+    padding: 2px 10px 2px 10px;
+    border-radius: 32px;
+    gap: 4px;
+    background: var(--border-backgroung-color);
+}

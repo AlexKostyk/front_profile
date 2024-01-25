@@ -260,6 +260,30 @@
                 <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterType()">Apply</button>
             </div>
 
+            <!-- Скрытое меню фильтра по тегу -->
+            <div id="tag-menu" class="filter-menu" style="display: none;">
+                <div class="filter-header">
+                    <h2>Tag</h2>
+                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()">
+                </div>
+                <hr>
+                <div class="switch-btns-container">
+                    <button class="filtr-btn-text active-switch-btn">Include</button>
+                    <button class="filtr-btn-text">Exclude</button>
+                </div>
+
+                <div class="search-filter-container">
+                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                    <input type="text" id="input-search-tag" class="search-filter-input card-text" placeholder="Search tag">
+                </div>
+
+                <div class="tag-filter-block">
+                    <ul id="tag-filter-ul"></ul>
+                </div>
+
+                <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="filterTag()">Apply</button>
+            </div>
+
             <!-- Если история пустая -->
             <div id="empty-history-container" style="display: none;">
                 <img id="empty-history-icon" src="./imgs/history-empty.png" alt="Empty history icon">

@@ -15,6 +15,12 @@ let type_filter_text = document.getElementById("type-filter-text");
 let close_type_filter = document.getElementById("close-type-filter");
 let input_search_type = document.getElementById("input-search-type");
 
+let tag_filter = document.getElementById("tag-filter");
+let tag_menu = document.getElementById("tag-menu");
+let tag_filter_text = document.getElementById("tag-filter-text");
+let close_tag_filter = document.getElementById("close-tag-filter");
+let input_search_tag = document.getElementById("input-search-tag");
+
 // для внутренней логики
 let curr_menu_pont = 1;
 let searsh_active = 0;
@@ -36,6 +42,7 @@ let toDate = null;
 let selected_sid1 = [];
 let selected_sid2 = [];
 let selected_types = [];
+let selected_tags = [];
 
 let info = {tag_color: 'red', date: '17.01.2019', effective_date: '17.01.2019', terms: 'Rent of 1,190 euros per month per sqm plus applicable VAT, with rent escalation of 3% annually', financial_terms: 'Fixed-term contract of 2 years with the option for Tenant to terminate prematurely under specific conditions', penalties: '0.1% delay penalty for each day of delay in payment', rights1: "Use of the leased commercial premises; Receiving rent payments", 
 responsibilities1: "Providing the leased premises; Provision of additional services (heating, water, electricity, technical security); Handling other services based on Tenant's wishes; Maintenance of the building and facilities; Provision of security services", rights2: 'Use of the leased commercial premises; Notification to terminate the contract prematurely (subject to conditions)', responsibilities2: 'Paying rent, Additional Services, and General Services fees; Complying with rules and procedures; Handling waste and packaging waste obligations; Returning the premises in the original condition at the end of the contract'};
@@ -798,6 +805,7 @@ function closeOtherMenuFilter() {
     date_filter_menu.style.display = 'none';
     side_menu.style.display = 'none';
     type_menu.style.display = 'none';
+    tag_menu.style.display = 'none';
 }
 
 function closeSideFilter() {
@@ -1073,4 +1081,142 @@ function filterType() {
     text = text.slice(0, -2);
     text = truncateText(text, 40);
     changeFilterButton(type_filter, close_type_filter, type_filter_text, text);
+}
+
+// Функции для фильтра по тегу 
+tag_filter.addEventListener('click', (event) => {
+    if (event.target.id !== "close-tag-filter") showTagFilter();
+});
+
+function showTagFilter() {
+    closeOtherMenuFilter();
+
+    let coordX = event.clientX - 55;
+    let coordY = event.clientY + 5;
+    tag_menu.style.position = 'absolute';
+    tag_menu.style.left = `${coordX}px`;
+    tag_menu.style.top = `${coordY}px`;
+
+    tag_menu.style.display = 'flex';
+
+    addAllTags();
+}
+
+function closeTagFilter() {
+    tag_menu.style.display = 'none';
+    close_tag_filter.style.display = 'none';
+    tag_filter.classList.remove('active-filter');
+    tag_filter_text.innerText = 'Tag';
+
+    selected_tags = [];
+    filtered_data = [];
+    filter_active = 0;
+    updateTable(searchTerm);
+}
+
+function addAllTags() {
+    let tag_filter_ul = document.getElementById("tag-filter-ul");
+
+    tag_filter_ul.innerHTML = "";
+
+    input_search_tag.value = "";
+
+    let tag_arr = [...new Set(history_data.map(item => item.tag))];
+
+    tag_arr.forEach(item => {
+        if (item !== ""){
+            let liElement = document.createElement("li");
+            let divElement = document.createElement("div"); // Создаем элемент div
+            let truncatedText = truncateText(item, 30);
+
+            // Устанавливаем стили для div
+            divElement.className = "filtered-tag";
+            divElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div>${truncatedText}`;
+
+            liElement.appendChild(divElement); // Добавляем div внутрь li
+            liElement.title = item;
+            liElement.addEventListener("click", function() {
+                toggleSelectedTag(liElement, item);
+            });
+
+            tag_filter_ul.appendChild(liElement);
+        }
+    });
+}
+
+// Функция для получения цвета тега
+function getTagColor(tag) {
+    return history_data.find(item => item.tag === tag)?.info.tag_color || 'default_color';
+}
+
+function addSearchTags() {
+    let searchInput = document.getElementById("input-search-tag");
+    let tag_filter_ul = document.getElementById("tag-filter-ul");
+
+    tag_filter_ul.innerHTML = "";
+
+    selected_tags = [];
+
+    let tag_arr = [...new Set(history_data.map(item => item.tag))];
+
+    function addToFilterList(ulElement, array) {
+        array.forEach(item => {
+            if (item.toLowerCase().includes(searchInput.value.toLowerCase())) {
+                if (item !== ""){
+                    let liElement = document.createElement("li");
+                    let divElement = document.createElement("div"); // Создаем элемент div
+                    let truncatedText = truncateText(item, 30);
+
+                    // Устанавливаем стили для div
+                    divElement.className = "filtered-tag";
+                    divElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div>${truncatedText}`;
+
+                    liElement.appendChild(divElement); // Добавляем div внутрь li
+                    liElement.title = item;
+                    liElement.addEventListener("click", function() {
+                        toggleSelectedTag(liElement, item);
+                    });
+
+                    tag_filter_ul.appendChild(liElement);
+                }
+            }
+        });
+    }
+
+    addToFilterList(tag_filter_ul, tag_arr);
+}
+
+input_search_tag.addEventListener("input", addSearchTags);
+
+function toggleSelectedTag(element, item) {
+    const index = selected_tags.indexOf(item);
+
+    if (index === -1) {
+        selected_tags.push(item);
+    } else {
+        selected_tags.splice(index, 1);
+    }
+
+    element.classList.toggle("selected-filter");
+}
+
+function filterTag() {
+    if (selected_tags.length === 0) {
+        closeSideFilter();
+        return;
+    }
+
+    filtered_data = history_data.filter(item => {
+        return selected_tags.includes(item.tag);
+    });
+
+    filter_active = 1;
+    updateTable(searchTerm);
+    tag_menu.style.display = 'none';
+
+    let text="";
+    selected_tags.forEach(item => {text+=item+", "});
+    text = text.slice(0, -2);
+    text = truncateText(text, 40);
+    changeFilterButton(tag_filter, close_tag_filter, tag_filter_text, text);
 }
