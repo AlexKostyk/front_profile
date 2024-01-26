@@ -89,25 +89,25 @@ function getHistoryData() {
     history_data = escapeSingleQuotes(history_data);
     sortTable('requestDate');
 
-    markFirsElement();
+    // markFirsElement();
 }
 
-function markFirsElement() {
-    let first_row = document.getElementsByClassName("expandable-row")[0];
+// function markFirsElement() {
+//     let first_row = document.getElementsByClassName("expandable-row")[0];
 
-    first_row.classList.add("expandable-first-row");
+//     first_row.classList.add("expandable-first-row");
 
-    setTimeout(function() {
-        first_row.classList.remove("expandable-first-row");
-    }, 3000);
+//     setTimeout(function() {
+//         first_row.classList.remove("expandable-first-row");
+//     }, 3000);
 
-    function clickCloseMark() {
-        first_row.classList.remove("expandable-first-row");
-        document.removeEventListener('click', clickCloseMark);
-    }
+//     function clickCloseMark() {
+//         first_row.classList.remove("expandable-first-row");
+//         document.removeEventListener('click', clickCloseMark);
+//     }
 
-    document.addEventListener('click', clickCloseMark);
-}
+//     document.addEventListener('click', clickCloseMark);
+// }
 
 function escapeSingleQuotes(data) {
     if (typeof data === 'string') {
@@ -179,7 +179,7 @@ function fillTable(data) {
                     let images = addActions(cell);
 
                     wrapImage = images.wrapImage;
-                    dotsImage = images.dotsImage;
+                    dotsImage = images.divContainer;
 
                     cell.style.borderTopRightRadius = '8px';
                 } else {
@@ -232,15 +232,20 @@ function addActions(cell) {
     wrapImage.alt = 'Wrap icon';
     flexContainer.appendChild(wrapImage);
 
+    let divContainer = document.createElement('div');
+    divContainer.id = 'actions-dots-container';
+
     let dotsImage = document.createElement('img');
     dotsImage.id = 'actions-dots';
     dotsImage.src = './imgs/dots.png';
     dotsImage.alt = 'Dots icon';
-    flexContainer.appendChild(dotsImage);
+
+    divContainer.appendChild(dotsImage);
+    flexContainer.appendChild(divContainer);
 
     cell.appendChild(flexContainer);
 
-    return { wrapImage, dotsImage };
+    return { wrapImage, divContainer };
 }
 
 function sortTable(column) {
@@ -358,8 +363,8 @@ function showEmptyHistory() {
 }
 
 // Функция для отображения или скрытия полного описания
-function toggleInfo(row, item, wrapImage, dotsImage) {
-    if (event.target === dotsImage) {
+function toggleInfo(row, item, wrapImage) {
+    if (event.target.id === 'actions-dots' || event.target.id === 'actions-dots-container') {
         // Если это dotsImage, ничего не делаем
         return;
     }
@@ -507,6 +512,7 @@ function showActionMenu(curr_element) {
 
     function clickHandler() {
         if (event.target.id !== "actions-dots"&&
+            event.target.id !== "actions-dots-container"&&
             event.target.id !== "actions-menu"&&
             !event.target.classList.contains("action-element")) {
             actionsMenu.style.display = 'none';

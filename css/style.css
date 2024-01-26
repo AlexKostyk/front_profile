@@ -34,8 +34,6 @@
 body {
     background-color: #ffffff;
     color: var(--basic-main-text-color);
-
-    position: relative;
 }
 
 .content {

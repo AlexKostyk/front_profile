@@ -100,12 +100,31 @@ document.addEventListener('DOMContentLoaded', function() {
     getRequestLimit();
 
     if(subscription_ended_flag) subscriptionEnded();
+
+    markFirsElement();
 });
+
+function markFirsElement() {
+    let first_row = document.getElementsByClassName("expandable-row")[0];
+
+    first_row.classList.add("expandable-first-row");
+
+    setTimeout(function() {
+        first_row.classList.remove("expandable-first-row");
+    }, 3000);
+
+    function clickCloseMark() {
+        first_row.classList.remove("expandable-first-row");
+        document.removeEventListener('click', clickCloseMark);
+    }
+
+    document.addEventListener('click', clickCloseMark);
+}
 
 // функция для получения информации о подписке у пользователя
 function getLimitData() {
     // сервер даёт нам значения plan_text, perday_text, date_text здесь, также здесь определяется subscription_ended_flag
-    plan_text = "Light Subscription";
+    plan_text = "Pro";
     perday_text = "4 per day";
     date_text = "01.02.2024";
 

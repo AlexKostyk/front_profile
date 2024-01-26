@@ -306,7 +306,7 @@ body {
     display: flex;
     align-items: center;
     width: fit-content;
-    gap: 12px;
+    gap: 6px;
     padding: 0 0 0 12px;
 }
 
@@ -995,4 +995,15 @@ abbr[title] {
     line-height: 16px;
     letter-spacing: -0.02em;
     text-align: left;
+}
+
+#actions-dots-container {
+    width: 14px;
+    margin: 0 auto;
+}
+
+#actions-dots {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
 }
