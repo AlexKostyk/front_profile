@@ -36,11 +36,14 @@
 body {
     background-color: #ffffff;
     color: var(--basic-main-text-color);
+
+    position: relative;
 }
 
 #history-container {
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
 }
 
 #history-header {

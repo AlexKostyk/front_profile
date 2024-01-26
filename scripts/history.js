@@ -497,8 +497,8 @@ function showActionMenu(curr_element) {
     tag_container.style.height = "24px";
 
     // Позиционируем меню абсолютно
-    let coordX = event.clientX - 170;
-    let coordY = event.clientY + 20;
+    let coordX = event.clientX - 170 + window.scrollX;
+    let coordY = event.clientY + 20 + window.scrollY;
     actionsMenu.style.position = 'absolute';
     actionsMenu.style.left = `${coordX}px`;
     actionsMenu.style.top = `${coordY}px`;
@@ -724,8 +724,8 @@ function showCopyMenu(all_text, part_name, part_text) {
     let copyMenu = document.getElementById('copy-menu');
 
     // Позиционируем меню абсолютно
-    let coordX = event.clientX - 60;
-    let coordY = event.clientY + 8;
+    let coordX = event.clientX - 60 + window.scrollX;
+    let coordY = event.clientY + 8 + window.scrollY;
     copyMenu.style.position = 'absolute';
     copyMenu.style.left = `${coordX}px`;
     copyMenu.style.top = `${coordY}px`;
@@ -935,8 +935,8 @@ function highlightDateRange() {
 function showDateFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 50;
-    let coordY = event.clientY;
+    let coordX = event.clientX - 50 + window.scrollX;
+    let coordY = event.clientY + window.scrollY;
     date_filter_menu.style.position = 'absolute';
     date_filter_menu.style.left = `${coordX}px`;
     date_filter_menu.style.top = `${coordY}px`;
@@ -1035,8 +1035,8 @@ side_filter.addEventListener('click', (event) => {
 function showSideFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 50;
-    let coordY = event.clientY;
+    let coordX = event.clientX - 50 + window.scrollX;
+    let coordY = event.clientY + window.scrollY;
     side_menu.style.position = 'absolute';
     side_menu.style.left = `${coordX}px`;
     side_menu.style.top = `${coordY}px`;
@@ -1232,8 +1232,8 @@ type_filter.addEventListener('click', (event) => {
 function showTypeFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 60;
-    let coordY = event.clientY + 15;
+    let coordX = event.clientX - 60 + window.scrollX;
+    let coordY = event.clientY + 15 + + window.scrollY;
     type_menu.style.position = 'absolute';
     type_menu.style.left = `${coordX}px`;
     type_menu.style.top = `${coordY}px`;
@@ -1372,8 +1372,8 @@ tag_filter.addEventListener('click', (event) => {
 function showTagFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 55;
-    let coordY = event.clientY + 5;
+    let coordX = event.clientX - 55 + window.scrollX;
+    let coordY = event.clientY + 5 + window.scrollY;
     tag_menu.style.position = 'absolute';
     tag_menu.style.left = `${coordX}px`;
     tag_menu.style.top = `${coordY}px`;
