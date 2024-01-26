@@ -243,6 +243,11 @@ body {
     border-bottom: 1px solid var(--hr-scrol-color);
 }
 
+.expandable-first-row {
+    border: 1px solid var(--main-accent-color);
+    border-radius: 8px;
+}
+
 #info-container {
     overflow: hidden;
     height: 0;
@@ -310,7 +315,7 @@ body {
     padding: 2px 10px;
 
     border-radius: 32px;
-    background: var(--border-backgroung-color);
+    background-color: var(--border-backgroung-color);
 }
 
 .tag-dots {
@@ -346,6 +351,43 @@ body {
     align-items: center;
     gap: 5px;
     cursor: pointer;
+}
+
+#edit-tag-text-container:hover{
+    color: var(--main-border-btn-color);
+}
+
+#edit-tag-text-container:hover img {
+    content: url('../imgs/shoppingmode_hover.png');
+}
+
+#edit-tag-container span:hover{
+    color: var(--main-border-btn-color);
+    background-color: var(--hr-scrol-color);
+}
+
+#edit-tag-container:hover #edit-tag-text-container{
+    color: var(--main-border-btn-color);
+}
+
+#edit-tag-container:hover #edit-tag-text-container img{
+    content: url('../imgs/shoppingmode_hover.png');
+}
+
+.copy-to-clipboard:hover{
+    color: var(--main-border-btn-color);
+}
+
+.copy-to-clipboard:hover img {
+    content: url('../imgs/content_copy_hover.png');
+}
+
+.download-summary:hover{
+    color: var(--main-border-btn-color);
+}
+
+.download-summary:hover img {
+    content: url('../imgs/download_hover.png');
 }
 
 .action-delete-text {
@@ -822,4 +864,132 @@ abbr[title] {
 
 #color-coltainer div {
     cursor: pointer;
+}
+
+#apply-new-tag {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    width: 72px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+
+    margin-left: 94px;
+}
+
+.selected-new-tag {
+    background-color: var(--hr-scrol-color);
+    color: var(--main-border-btn-color);
+}
+
+.new-tag-input-containet {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#new-tag-error {
+    color: var(--error-text-color);
+}
+
+#apply-delete-container {
+    width: 198px;
+    height: 107px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 13px 0px #042A4A1A;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px 21px;
+}
+
+.apply-delete-text {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+    padding: 0 5px;
+}
+
+#apply-btns-container {
+    display: flex;
+    gap: 12px;
+}
+
+#cancel-delete {
+    width: 73px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+
+#cancel-delete:active {
+    color: #FFFFFF;
+    background-color: var(--main-border-btn-color);
+}
+
+#apply-delete {
+    width: 70px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+
+    border: 1px solid var(--main-border-btn-color);
+    background-color: transparent;
+    color: var(--main-border-btn-color);
+
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+#apply-delete:active {
+    border: none;
+    background-color: var(--error-text-color);
+    color: #FFFFFF;
+}
+
+#info-copy-download {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    height: 56px;
+    border-radius: 8px;
+    padding: 11px 24px;
+    gap: 12px;
+
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 13px 0px #042A4A1A;
+}
+
+#text-info-copy-download {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    text-align: left;
 }

@@ -798,3 +798,7 @@ textarea::-webkit-scrollbar-track {
     color: var(--downloaded-text-color);
 }
 
+#inf-container {
+    display: flex;
+    align-items: center;
+}

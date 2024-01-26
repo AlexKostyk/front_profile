@@ -26,6 +26,8 @@ let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
 let limit_date_text = document.getElementById('limit-date-text');
 
+let inf_container = document.getElementById('inf-container');
+
 let response_limit_plan_text = document.getElementById('response-limit-plan-text');
 let response_limit_perday_text = document.getElementById('response-limit-perday-text');
 let response_limit_date_text = document.getElementById('response-limit-date-text');
@@ -56,6 +58,7 @@ let subscription_ended_flag = 0; // флаг для обозначения ок�
 // для внутренней логики
 let request_limit_value = 0;
 let curr_menu_pont = 0;
+let basic_subscription = 1;
 
 // файл загруженный пользователем
 let user_file;
@@ -93,8 +96,8 @@ let second_party_responsibilities_text;
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    getRequestLimit();
     getLimitData();
+    getRequestLimit();
 
     if(subscription_ended_flag) subscriptionEnded();
 });
@@ -106,16 +109,77 @@ function getLimitData() {
     perday_text = "4 per day";
     date_text = "01.02.2024";
 
+    if (plan_text !== "Light Subscription") basic_subscription = 0;
+
     updateLimitData();
 }
+
+function updateLimitData() {
+    limit_plan_text.innerHTML = plan_text;
+    limit_date_text.innerHTML = date_text;
+
+    response_limit_plan_text.innerHTML = plan_text;
+    response_limit_date_text.innerHTML = date_text;
+    
+    if (basic_subscription){
+        limit_perday_text.innerHTML = perday_text;
+        response_limit_perday_text.innerHTML = perday_text;
+    } else {
+        inf_container.style.display = 'flex';
+    }
+}
+
 
 // функция для получения количества запросов у пользователя
 function getRequestLimit(){
     // сервер даёт нам значения request_limit_counter и max_request_limit_counter здесь
-    request_limit_counter = 0;
-    max_request_limit_counter = 4;
+    if (basic_subscription){
+        request_limit_counter = 0;
+        max_request_limit_counter = 4;
+    } else {
+        request_limit_counter = 0;
+        max_request_limit_counter = 31;
+    }
 
     updateRequestLimit();
+}
+
+function updateRequestLimit(){
+    if (request_limit_counter<=max_request_limit_counter){
+        if (basic_subscription){
+            limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
+            response_limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
+        } else {
+            limit_text.textContent = request_limit_counter + ' FROM ' + max_request_limit_counter + ' DAYS';
+            response_limit_text.textContent = request_limit_counter + ' FROM ' + max_request_limit_counter + ' DAYS';
+        }
+
+        limit_bar.max = max_request_limit_counter;
+        response_limit_bar.max = max_request_limit_counter;
+
+        if (request_limit_counter>0){
+            const interval = setInterval(() => {
+                request_limit_value += 0.05;
+                limit_bar.value = request_limit_value;
+                response_limit_bar.value = request_limit_value;
+                if (request_limit_value >= request_limit_counter) {
+                    clearInterval(interval);
+                }
+            }, 10);
+        }
+
+        if (request_limit_counter>=max_request_limit_counter){
+            limit_bar.classList.add('limit-bar-is-max');
+            response_limit_bar.classList.add('limit-bar-is-max');
+            limit_warning_text.innerHTML = 'Your request limit is exceeded';
+            summarize_btn.disabled = true;
+        }
+        else {
+            limit_bar.classList.remove('limit-bar-is-max');
+            response_limit_bar.classList.remove('limit-bar-is-max');
+            limit_warning_text.innerHTML = '';
+        }
+    }
 }
 
 function setTextContract() {
@@ -279,7 +343,8 @@ function summarize(){
 
         alignmentDividers();
 
-        request_limit_counter++;
+        if (basic_subscription) request_limit_counter++;
+
         updateRequestLimit();
     }, 2000);
 }
@@ -325,49 +390,6 @@ function updateResponseData() {
     second_party_rights.innerHTML = second_party_rights_text;
     second_party_responsibilities.innerHTML = second_party_responsibilities_text;
 
-}
-
-function updateRequestLimit(){
-    if (request_limit_counter<=max_request_limit_counter){
-        limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
-        response_limit_text.textContent = request_limit_counter + ' OF ' + max_request_limit_counter + ' USED';
-
-        limit_bar.max = max_request_limit_counter;
-        response_limit_bar.max = max_request_limit_counter;
-
-        if (request_limit_counter>0){
-            const interval = setInterval(() => {
-                request_limit_value += 0.05;
-                limit_bar.value = request_limit_value;
-                response_limit_bar.value = request_limit_value;
-                if (request_limit_value >= request_limit_counter) {
-                    clearInterval(interval);
-                }
-            }, 10);
-        }
-
-        if (request_limit_counter>=max_request_limit_counter){
-            limit_bar.classList.add('limit-bar-is-max');
-            response_limit_bar.classList.add('limit-bar-is-max');
-            limit_warning_text.innerHTML = 'Your request limit is exceeded';
-            summarize_btn.disabled = true;
-        }
-        else {
-            limit_bar.classList.remove('limit-bar-is-max');
-            response_limit_bar.classList.remove('limit-bar-is-max');
-            limit_warning_text.innerHTML = '';
-        }
-    }
-}
-
-function updateLimitData() {
-    limit_plan_text.innerHTML = plan_text;
-    limit_perday_text.innerHTML = perday_text;
-    limit_date_text.innerHTML = date_text;
-
-    response_limit_plan_text.innerHTML = plan_text;
-    response_limit_perday_text.innerHTML = perday_text;
-    response_limit_date_text.innerHTML = date_text;
 }
 
 function subscriptionEnded() {

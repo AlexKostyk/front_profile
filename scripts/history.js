@@ -21,12 +21,14 @@ let tag_filter_text = document.getElementById("tag-filter-text");
 let close_tag_filter = document.getElementById("close-tag-filter");
 let input_search_tag = document.getElementById("input-search-tag");
 
+let new_tag_error = document.getElementById("new-tag-error");
+
 // для внутренней логики
-let curr_menu_pont = 1;
 let searsh_active = 0;
 let lastSortColumn = null; // Переменная для отслеживания последнего столбца, по которому производилась сортировка
 let currentSortOrder = 'asc'; // Переменная для отслеживания порядка сортировки
 let searchTerm = '';
+let new_tag_color = null;
 
 // флаги фильтров
 let filter_active = 0;
@@ -86,6 +88,25 @@ function getHistoryData() {
     // форматируем данные, заменяя '
     history_data = escapeSingleQuotes(history_data);
     sortTable('requestDate');
+
+    markFirsElement();
+}
+
+function markFirsElement() {
+    let first_row = document.getElementsByClassName("expandable-row")[0];
+
+    first_row.classList.add("expandable-first-row");
+
+    setTimeout(function() {
+        first_row.classList.remove("expandable-first-row");
+    }, 3000);
+
+    function clickCloseMark() {
+        first_row.classList.remove("expandable-first-row");
+        document.removeEventListener('click', clickCloseMark);
+    }
+
+    document.addEventListener('click', clickCloseMark);
 }
 
 function escapeSingleQuotes(data) {
@@ -470,6 +491,7 @@ function createInfoMarkup(item) {
 function showActionMenu(curr_element) {
     let actionsMenu = document.getElementById('actions-menu');
     let tag_container = document.getElementById("edit-tag-container");
+    let apply_delete_container = document.getElementById("apply-delete-container");
     let edit_tag_open = 0;
 
     tag_container.style.height = "24px";
@@ -491,20 +513,52 @@ function showActionMenu(curr_element) {
             document.removeEventListener('click', clickHandler);
         }
 
+        if (event.target.classList.contains("download-summary")) {
+            showInfoCopDow("The file has been downloaded", coordX, coordY, 265);
+
+            actionsMenu.style.display = 'none';
+            document.removeEventListener('click', clickHandler);
+        }
+
         if (event.target.classList.contains("copy-to-clipboard")) {
             let text = makeAllText(curr_element);
             makeCopy(text);
+            showInfoCopDow("Copied to the clipboard", coordX, coordY, 225);
 
             actionsMenu.style.display = 'none';
             document.removeEventListener('click', clickHandler);
         }
 
         if (event.target.classList.contains("delete")) {
-            history_data = history_data.filter(existingItem => !isObjectEqual(existingItem, curr_element));
-
-            filterPipe();
             actionsMenu.style.display = 'none';
             document.removeEventListener('click', clickHandler);
+
+            apply_delete_container.style.position = 'absolute';
+            apply_delete_container.style.left = `${coordX}px`;
+            apply_delete_container.style.top = `${coordY}px`;
+            apply_delete_container.style.display = 'flex';
+
+            document.addEventListener('click', clickDelete);
+        }
+
+        function clickDelete() { 
+            if (!event.target.classList.contains("action-element")) {
+                apply_delete_container.style.display = 'none';
+                document.removeEventListener('click', clickDelete);
+            }
+
+            if (event.target.id === "apply-delete"){
+                apply_delete_container.style.display = 'none';
+                document.removeEventListener('click', clickDelete);
+
+                history_data = history_data.filter(existingItem => !isObjectEqual(existingItem, curr_element));
+                filterPipe();
+            }
+
+            if (event.target.id === "cancel-delete"){
+                apply_delete_container.style.display = 'none';
+                document.removeEventListener('click', clickDelete);
+            }
         }
 
         if (event.target.classList.contains("edit-tag")) {
@@ -546,8 +600,47 @@ function showActionMenu(curr_element) {
 
             let spanElement = document.createElement("span");
             spanElement.id = "new-tag";
+            spanElement.className = "action-element";
             spanElement.innerHTML = "New Tag"
             tag_container.appendChild(spanElement);
+
+            spanElement.addEventListener('click', function() {
+                let new_tag_menu = document.getElementById("new-tag-menu");
+                let new_tag_input = document.getElementById("new-tag-input");
+                new_tag_input.value = '';
+                clearAllColors();
+
+                actionsMenu.style.display = 'none';
+                document.removeEventListener('click', clickHandler);
+
+                new_tag_menu.style.position = 'absolute';
+                new_tag_menu.style.left = `${coordX}px`;
+                new_tag_menu.style.top = `${coordY}px`;
+                new_tag_menu.style.display = 'flex';
+
+                function clickNewTag() {
+                    if (!event.target.classList.contains("action-element")) {
+                        new_tag_menu.style.display = 'none';
+                        document.removeEventListener('click', clickNewTag);
+                    }
+
+                    if (event.target.id === "apply-new-tag") {
+                        if (new_tag_input.value === '') {
+                            new_tag_error.innerText = 'The tag name is not defined';
+                        } else if (new_tag_color === null) {
+                            new_tag_error.innerText = 'The color of the tag is not defined';
+                        } else if (tag_arr.includes(new_tag_input.value)){
+                            new_tag_error.innerText = 'This tag name is already defined';
+                        } else {
+                            new_tag_menu.style.display = 'none';
+                            document.removeEventListener('click', clickNewTag);
+                            updateHistoryData(new_tag_color, new_tag_input.value);
+                        }
+                    }
+                }
+
+                document.addEventListener('click', clickNewTag);
+            });
 
             // Получаем высоту всех span элементов
             let totalHeight = tag_container.scrollHeight;
@@ -565,6 +658,50 @@ function showActionMenu(curr_element) {
 
     document.addEventListener('click', clickHandler);
 }
+
+function showInfoCopDow(text, coordX, coordY, width) {
+    let info_text = document.getElementById("text-info-copy-download");
+    let info_text_container = document.getElementById("info-copy-download");
+
+    info_text_container.style.width = width + 'px';
+    info_text.innerText = text;
+
+    info_text_container.style.position = 'absolute';
+    info_text_container.style.left = `${coordX}px`;
+    info_text_container.style.top = `${coordY}px`;
+    info_text_container.style.display = 'flex';
+
+    setTimeout(function() {
+        info_text_container.style.display = 'none';
+    }, 3000);
+
+    function clickCloseInfo() {
+        info_text_container.style.display = 'none';
+        document.removeEventListener('click', clickCloseInfo);
+    }
+
+    document.addEventListener('click', clickCloseInfo);
+}
+
+function clearAllColors() {
+    let tag_color_btn = document.getElementsByClassName("tag-color");
+    new_tag_error.innerText = '';
+    new_tag_color = null;
+
+    for (const item of tag_color_btn) {
+        item.classList.remove("selected-new-tag");
+    }
+}
+
+function changeNewTagColor(element, color) {
+    let tag_color_btn = document.getElementsByClassName("tag-color");
+    clearAllColors();
+    setTimeout(function() {
+        tag_color_btn[element].classList.add("selected-new-tag");
+    }, 10);
+    new_tag_color = color;
+}
+
 
 function isObjectEqual(obj1, obj2) {
     const keys1 = Object.keys(obj1);

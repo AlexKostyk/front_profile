@@ -6,6 +6,10 @@
 
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/history.css">
+
+    <!-- Подключение стилей Pikaday -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 </head>
 <body>
     <div class="content">
@@ -169,6 +173,9 @@
                             <div class="perday-container">
                                 <p class="small-limit-text">Requests limit</p>
                                 <p class="card-text limit-text" id="limit-perday-text"></p>
+                                <div id="inf-container" style="display: none;">
+                                    <img id="inf-icon" src="./imgs/inf.png" alt="Infinity icon">
+                                </div>
                             </div>
 
                             <div class="date-container">
@@ -182,6 +189,240 @@
             </div>
 
             <button class="link-small action-btn" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
+
+
+            <div id="history-container">
+                <h1 id="history-header">History</h1>
+    
+                <div id="table-container">
+                    <div id="sorting-container">
+                        <div id="filter-container">
+                            <div id="filter-by-container">
+                                <img id="filter-by-icon" src="./imgs/filter_list.png" alt="Filter icon">
+                                <p class="link-large">Filter by</p>
+                            </div>
+    
+                            <!-- Фильтрация по дате -->
+                            <div id="date-filter" class="filter-items">
+                                <p id="date-filter-text" class="link-large">Date</p>
+                                <img id="close-date-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()" style="display: none;">
+                            </div>
+    
+                            <!-- Фильтрация по сторонам -->
+                            <div id="side-filter" class="filter-items">
+                                <p id="side-filter-text" class="link-large">Sides</p>
+                                <img id="close-side-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()" style="display: none;">
+                            </div>
+    
+                            <!-- Фильтрация по типу контракта -->
+                            <div id="type-filter" class="filter-items">
+                                <p id="type-filter-text" class="link-large">Contract Types</p>
+                                <img id="close-type-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()" style="display: none;">
+                            </div>
+    
+                            <!-- Фильтрация по тегу -->
+                            <div id="tag-filter" class="filter-items">
+                                <p id="tag-filter-text" class="link-large">Tag</p>
+                                <img id="close-tag-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()" style="display: none;">
+                            </div>
+                        </div>
+    
+                        <div id="search-container">
+                            <img id="search-icon" src="./imgs/search.png" alt="Search icon">
+                            <input type="text" id="search-input" class="card-text" placeholder="Search">
+                        </div>
+                    </div>
+    
+                    <!-- Таблица -->
+                    <table id="history_table">
+                        <thead>
+                            <tr id="table-headers" class="bold-title">
+                                <th id="requestDate-header" class="table-header sort sort-top" onclick="sortTable('requestDate')"><span>Request date</span></th>
+                                <th id="side1-header" class="table-header sort" onclick="sortTable('side1')"><span>Side 1</span></th>
+                                <th id="side2-header" class="table-header sort" onclick="sortTable('side2')"><span>Side 2</span></th>
+                                <th id="contractType-header" class="table-header sort" onclick="sortTable('contractType')"><span>Contract</span></th>
+                                <th id="tag-header" class="table-header sort" onclick="sortTable('tag')"><span>Tag</span></th>
+                                <th id="actions-header"><span>Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="card-text" id="table-body">
+                            <!-- Напонение таблицы -->
+                        </tbody>
+                    </table>
+    
+                </div>
+                
+                <!-- Скрытое меню actions -->
+                <div id="actions-menu" class="action-element" style="display: none;">
+                    <div class="action-menu-point actions_menu_text download-summary action-element">
+                        <img class="action-element download-summary" src="./imgs/download.png" alt="Download icon">
+                        <p class="action-element download-summary">Download Summary</p>
+                    </div>
+                    <div class="action-menu-point actions_menu_text copy-to-clipboard action-element">
+                        <img class="action-element copy-to-clipboard" src="./imgs/content_copy.png" alt="Download icon">
+                        <p class="action-element copy-to-clipboard">Copy to Clipboard</p>
+                    </div>
+                    <div id="edit-tag-container" class="action-menu-point actions_menu_text edit-tag action-element">
+                        <div id="edit-tag-text-container" class="action-element">
+                            <img class="action-element edit-tag"src="./imgs/shoppingmode.png" alt="Download icon">
+                            <p class="action-element edit-tag">Edit tag</p>
+                        </div>
+                    </div>
+                    <div class="action-menu-point actions_menu_text action-delete-text delete action-element">
+                        <img class="action-element delete" src="./imgs/delete.png" alt="Download icon">
+                        <p class="action-element delete">Delete</p>
+                    </div>
+                </div>
+    
+                <!-- Скрытое окно подтверждения удаления -->
+                <div id="apply-delete-container" class="action-element" style="display: none;"> 
+                    <p class="apply-delete-text action-element">Are you sure you want to delete this summary?</p>
+                    <div class="action-element" id="apply-btns-container">
+                        <button id="apply-delete" class="action-element">Delete</button>
+                        <button id="cancel-delete" class="action-btn">Cancel</button>
+                    </div>
+                </div>
+    
+                <!-- Скрытые элементы подтверждения копирования и загрузки -->
+                <div id="info-copy-download" style="display: none;">
+                    <img class="action-element delete" src="./imgs/check_large.png" alt="Download icon">
+                    <p id="text-info-copy-download"></p>
+                </div>
+    
+                <!-- Скрытое меню new tag -->
+                <div id="new-tag-menu" class="action-element" style="display: none;">
+                    <div id="new-tag" class="action-element">New Tag</div>
+                    <div class="new-tag-input-containet action-element">
+                        <input id="new-tag-input" class="action-element" placeholder="Name of Tag">
+                        <p id="new-tag-error" class="action-element small-limit-text"></p>
+                    </div>
+                    <div id="color-coltainer" class="action-element">
+                        <p id="color-header" class="action-element">Color</p>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(0, 'blue')"><div class="tag-dots action-element" style="background-color: blue;"></div >Blue</div>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(1, 'red')"><div class="tag-dots action-element" style="background-color: red;"></div>Red</div>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(2, 'green')"><div class="tag-dots action-element" style="background-color: green;"></div>Green</div>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(3, '#003A4E')"><div class="tag-dots action-element" style="background-color: #003A4E;"></div>Seawave</div>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(4, '#535F63')"><div class="tag-dots action-element" style="background-color: #535F63;"></div>Dark Grey</div>
+                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(5, '#C1C8CC')"><div class="tag-dots action-element" style="background-color: #C1C8CC;"></div>Light Grey</div>
+                    </div>
+                    <button id="apply-new-tag" class="action-btn action-element">Create</button>
+                </div>
+    
+                <!-- Скрытое меню copy -->
+                <div id="copy-menu" style="display: none;">
+                    <p id="copy" class="copy-menu-text">Copy</p>
+                    <p id="copy-all" class="copy-menu-text">Copy all</p>
+                </div>
+    
+                <!-- Скрытое меню фильтра по дате -->
+                <div id="request-date-menu" class="filter-menu" style="display: none;">
+                    <div class="filter-header">
+                        <h2>Request Date</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('date', 0)">Include</button>
+                        <button id="exclude-date-btn" class="filtr-btn-text" onclick="activeSwitchBtn('date', 1)">Exclude</button>
+                    </div>
+    
+                    <div id="from-datepicker-container"></div>
+    
+                    <div id="to-datepicker-container"></div>
+    
+                    <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('date')">Apply</button>
+                </div>
+    
+                 <!-- Скрытое меню фильтра по стороне -->
+                 <div id="side-menu" class="filter-menu" style="display: none;">
+                    <div class="filter-header">
+                        <h2>Side</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('side', 0)">Include</button>
+                        <button id="exclude-side-btn" class="filtr-btn-text" onclick="activeSwitchBtn('side', 1)">Exclude</button>
+                    </div>
+    
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-sides" class="search-filter-input card-text" placeholder="Search side">
+                    </div>
+    
+                    <div class="side-filter-block">
+                        <p class="bold-title side-header-filter">Side 1</p>
+                        <ul id="side1-filter-ul"></ul>
+                    </div>
+    
+                    <div class="side-filter-block">
+                        <p class="bold-title side-header-filter">Side 2</p>
+                        <ul id="side2-filter-ul"></ul>
+                    </div>
+    
+                    <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('side')">Apply</button>
+                </div>
+    
+                <!-- Скрытое меню фильтра по типу -->
+                <div id="type-menu" class="filter-menu" style="display: none;">
+                    <div class="filter-header">
+                        <h2>Contract Type</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('type', 0)">Include</button>
+                        <button id="exclude-type-btn" class="filtr-btn-text" onclick="activeSwitchBtn('type', 1)">Exclude</button>
+                    </div>
+    
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-type" class="search-filter-input card-text" placeholder="Search type">
+                    </div>
+    
+                    <div class="type-filter-block">
+                        <ul id="type-filter-ul"></ul>
+                    </div>
+    
+                    <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('type')">Apply</button>
+                </div>
+    
+                <!-- Скрытое меню фильтра по тегу -->
+                <div id="tag-menu" class="filter-menu" style="display: none;">
+                    <div class="filter-header">
+                        <h2>Tag</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('tag', 0)">Include</button>
+                        <button id="exclude-tag-btn" class="filtr-btn-text" onclick="activeSwitchBtn('tag', 1)">Exclude</button>
+                    </div>
+    
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-tag" class="search-filter-input card-text" placeholder="Search tag">
+                    </div>
+    
+                    <div class="tag-filter-block">
+                        <ul id="tag-filter-ul"></ul>
+                    </div>
+    
+                    <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
+                </div>
+    
+                <!-- Если история пустая -->
+                <div id="empty-history-container" style="display: none;">
+                    <img id="empty-history-icon" src="./imgs/history-empty.png" alt="Empty history icon">
+                    <div class="error-text">
+                        <p>There is nothing here yet!</p>
+                        <p>But since you start summarizing contracts they will appear in the History.</p>
+                    </div>
+                    <button class="link-small action-btn" id="empty-history-summ-contr-btn">Summarize contract</button>
+                </div>
+            </div>
+    
+        </div>
         </div>
 
         <!-- Loader -->
@@ -374,14 +615,17 @@
             </div>
         </div>
 
-    </div>
     <!-- Отладочная панель -->
-    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px;">
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px; display: none;">
         <button class="secondary-btn link-small" onclick="subscriptionEnded()">Subscription ended</button>
         <button class="secondary-btn link-small" onclick="summarize()">Go to response</button>
         <button class="secondary-btn link-small" onclick="loaderError()">Show loader error</button>
     </footer>
 </body>
+<!-- Подключение скрипта Pikaday -->
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
 <script src="./scripts/script.js"></script>
 <script src="./scripts/menu.js"></script>
+<script src="./scripts/history.js"></script>
 </html>
