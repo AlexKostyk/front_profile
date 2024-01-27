@@ -1143,12 +1143,21 @@ function filterSides(curr_data) {
 
     if (reverse_side_filter) {
         // Если reverse_side_filter равен 1, выбираем элементы, которые не входят в списки selected_sid1 и selected_sid2
-        curr_data = curr_data.filter(item => {
-            let isSide1NotMatch = selected_sid1.length !== 0 && !selected_sid1.includes(item.side1);
-            let isSide2NotMatch = selected_sid2.length !== 0 && !selected_sid2.includes(item.side2);
+        if (selected_sid1.length === 0 || selected_sid2.length === 0){
+            curr_data = curr_data.filter(item => {
+                let isSide1NotMatch = selected_sid1.length !== 0 && !selected_sid1.includes(item.side1);
+                let isSide2NotMatch = selected_sid2.length !== 0 && !selected_sid2.includes(item.side2);
 
-            return isSide1NotMatch && isSide2NotMatch;
-        });
+                return isSide1NotMatch || isSide2NotMatch;
+            });
+        } else {
+            curr_data = curr_data.filter(item => {
+                let isSide1NotMatch = selected_sid1.length !== 0 && !selected_sid1.includes(item.side1);
+                let isSide2NotMatch = selected_sid2.length !== 0 && !selected_sid2.includes(item.side2);
+
+                return isSide1NotMatch && isSide2NotMatch;
+            });
+        }
     } else {
         // Иначе выбираем элементы, которые входят в списки selected_sid1 и selected_sid2
         curr_data = curr_data.filter(item => {
