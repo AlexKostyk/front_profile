@@ -128,7 +128,9 @@ body {
 
 #history_table {
     margin-top: 32px;
-    border-collapse: collapse; 
+    /* border-collapse: collapse;  */
+    border-collapse: separate;
+    border-spacing: 0;
     cursor: pointer; 
 }
 
@@ -242,15 +244,34 @@ body {
     transition: height 1s ease;
 }
 
-.expandable-row {
+.expandable-row td {
     border-bottom: 1px solid var(--hr-scrol-color);
 }
 
-
+.curr-expanded-row td {
+    border-bottom: none;
+}
 
 .expandable-first-row {
     border: 1px solid var(--main-accent-color);
     border-radius: 8px;
+}
+
+.expandable-first-row td {
+    border-top: 1px solid var(--main-accent-color);
+    border-bottom: 1px solid var(--main-accent-color);
+}
+
+.expandable-first-row td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-left: 1px solid var(--main-accent-color);
+}
+
+.expandable-first-row td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-right: 1px solid var(--main-accent-color);
 }
 
 #info-container {
@@ -265,6 +286,11 @@ body {
     border-radius: 8px;
     background-color: var(--border-backgroung-color);
     border-bottom: 1px solid var(--basic-background-color);
+
+    /* поменял */
+    border-left: 1px solid var(--basic-background-color);
+    border-right: 1px solid var(--basic-background-color);
+
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -272,6 +298,24 @@ body {
 .curr-expanded-row{
     background-color: var(--border-backgroung-color);
     border-bottom: none;
+}
+
+.curr-expanded-row td{
+    border-top: 1px solid var(--basic-background-color);
+}
+
+.curr-expanded-row td:first-child{
+    /* border-top: none; */
+    border-top-left-radius: 8px;
+
+    border-left: 1px solid var(--basic-background-color);
+}
+
+.curr-expanded-row td:last-child{
+    /* border-top: none; */
+    border-top-right-radius: 8px;
+
+    border-right: 1px solid var(--basic-background-color);
 }
 
 .info-title {

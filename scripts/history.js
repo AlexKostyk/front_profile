@@ -167,7 +167,7 @@ function fillTable(data) {
                     cell.textContent = formatDate(item);
 
                     cell.style.paddingLeft = '8px';
-                    cell.style.borderTopLeftRadius = '8px';
+
                 } else if (key === 'tag') {
                     if (item[key] !== '') addTag(cell, item[key], tagColor);
                     else {
@@ -180,8 +180,6 @@ function fillTable(data) {
 
                     wrapImage = images.wrapImage;
                     dotsImage = images.divContainer;
-
-                    cell.style.borderTopRightRadius = '8px';
                 } else {
                     cell.textContent = item[key];
                 }
