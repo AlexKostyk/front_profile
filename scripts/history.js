@@ -156,7 +156,7 @@ function fillTable(data) {
         let wrapImage, dotsImage;
         let tagColor = item.info.tag_color;
 
-        // Добавляем класс expandable-row к строке для обозначения, что она раскрываема
+        // применяем класс expandable-row к строке для обозначения, что она раскрываема
         row.classList.add('expandable-row');
 
 
@@ -190,13 +190,13 @@ function fillTable(data) {
             }
         }
 
-        // Добавляем слушатель событий click к строке
+        // слушатель событий click к строке
         row.addEventListener('click', () => toggleInfo(row, item, wrapImage, dotsImage));
         dotsImage.addEventListener('click', () => showActionMenu(item));
 
         tableBody.appendChild(row);
 
-        // Добавляем элемент для отображения полного описания после строки
+        // элемент для отображения полного описания после строки
         let infoRow = document.createElement('tr');
         let infoCell = document.createElement('td');
         infoCell.classList.add('info-cell');

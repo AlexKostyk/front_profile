@@ -41,9 +41,10 @@ body {
 }
 
 #sidebar {
+    position: relative;
     min-width: 232px;
-    height: 720px;
     background-color: var(--border-backgroung-color);
+    height: 100vh;
 }
 
 #sidebar-container {
@@ -100,7 +101,12 @@ body {
     flex-direction: column;
     margin: 0 24px 32px 24px;
     gap: 8px;
-    position: relative;
+    bottom: 10px;
+    position: absolute;
+}
+
+#account-container hr {
+    width: 184px;
 }
 
 #community-menu-container {

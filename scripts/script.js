@@ -124,7 +124,7 @@ function markFirsElement() {
 // функция для получения информации о подписке у пользователя
 function getLimitData() {
     // сервер даёт нам значения plan_text, perday_text, date_text здесь, также здесь определяется subscription_ended_flag
-    plan_text = "Pro";
+    plan_text = "Light Subscription";
     perday_text = "4 per day";
     date_text = "01.02.2024";
 

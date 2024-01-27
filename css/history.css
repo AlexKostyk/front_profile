@@ -246,6 +246,8 @@ body {
     border-bottom: 1px solid var(--hr-scrol-color);
 }
 
+
+
 .expandable-first-row {
     border: 1px solid var(--main-accent-color);
     border-radius: 8px;
@@ -1006,4 +1008,11 @@ abbr[title] {
     max-width: 100%;
     display: block;
     margin: 0 auto;
+}
+
+#show-more-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
