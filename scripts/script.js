@@ -21,6 +21,7 @@ let loader_container = document.getElementById('loader-container');
 let response_container = document.getElementById('response-container');
 let file_downloaded_container = document.getElementById('file-downloaded-container');
 let download_file_btn = document.getElementById('download-file-btn');
+let history_container = document.getElementById('history-container');
 
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
@@ -431,6 +432,7 @@ function subscriptionEnded() {
 
 function activateLoader() {
     summarize_container.style.display = 'none';
+    history_container.style.display = 'none';
     loader_container.style.display ='flex';
 }
 
@@ -441,6 +443,7 @@ function activateResponseDisplay() {
     // обновление кнопки Download PDF
     response_container.style.display ='flex';
     download_file_btn.style.display = 'block';
+    history_container.style.display = 'flex';
 }
 
 function backToSummarize() {

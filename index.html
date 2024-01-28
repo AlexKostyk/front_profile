@@ -100,100 +100,294 @@
 
         </div>
 
-        <!-- Основное окно загрузки файла -->
-        <div id="summarize-container">
-            <h1 class="summarize-heading">Summarize Contract</h1>
-            <div class="boards">
-                    <div class="board" id="upload-contract-board">
-                        <div class="upload-top">
-                            <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
-                            <button class="btn-text-instead secondary-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
+        <div class="summarize-content">
+            <!-- Основное окно загрузки файла -->
+            <div id="summarize-container">
+                <h1 class="summarize-heading">Summarize Contract</h1>
+                <div class="boards">
+                        <div class="board" id="upload-contract-board">
+                            <div class="upload-top">
+                                <h2 class="upload-contract-heading card-header" id="upload-contract-heading">Upload contract</h2>
+                                <button class="btn-text-instead secondary-btn link-small" id="btn-text-contract" onclick="setTextContract()">Paste text instead</button>
+                            </div>
+
+                            <hr>
+
+                            <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
+                                <form>
+                                    <input type="file" id="file-input" style="display: none"/>
+                                </form>
+                                <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
+                                <p class="card-text upload-text">Click here or drag file to upload</p>
+                                <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
+                            </div>
+
+                            <div id="progress-container" style="display: none;">
+                                <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
+                                <div class="name-file-bar-container">
+                                    <div class="name-expansion-container">
+                                        <p class="card-text" id="upload-file-name"></p>
+                                        <p class="card-text" id="upload-file-expansion"></p>
+                                    </div>
+                                    <progress class="uploading-progress-bar-file" max=100 value=0></progress>
+                                </div>
+                                <img id="close-file-icon" src="./imgs/close.png" alt="Close icon" onclick="closeUploadFile()">
+                            </div>
+
+                            <form class="load-text-container" id="load-text-container" style="display: none;">
+                                <textarea class="text-input card-text" id="text-input" name="text-input" oninput="checkTextarea()" placeholder="Start writing here"></textarea>
+                            </form>
+                        </div>
+
+                        <div class="board" id="plan-expired-border" style="display: none;">
+                            <img id="acute-icon" src="./imgs/acute.png" alt="Acute icon">
+                            <p class="card-text">Your subscription is expired.</p>
+                            <p class="card-text">Please renew it to continue summarizing.</p>
+                            <button class="link-small action-btn" id="expired-btn">Renew Subscription</button>
+                        </div>
+
+                    <div class="board" id="requests-limit-board">
+
+                        <div class="limit-top">
+                            <h2 class="requests-limit-heading card-header">Requests Limit</h2>
+                            <button class="btn-requests-limit secondary-btn link-small">Upgrade my Plan</button>
                         </div>
 
                         <hr>
+                        
+                        <div class="request-limit-container">
 
-                        <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
-                            <form>
-                                <input type="file" id="file-input" style="display: none"/>
-                            </form>
-                            <img class="upload-icon" src="./imgs/icon--upload.png" alt="Upload icon">
-                            <p class="card-text upload-text">Click here or drag file to upload</p>
-                            <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
-                        </div>
-
-                        <div id="progress-container" style="display: none;">
-                            <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
-                            <div class="name-file-bar-container">
-                                <div class="name-expansion-container">
-                                    <p class="card-text" id="upload-file-name"></p>
-                                    <p class="card-text" id="upload-file-expansion"></p>
+                            <div class="limit-bar-container">
+                                <div class="limit-text-bar-container">
+                                    <p class="small-limit-text" id="request-limit-text"></p>
+                                    <progress class="limit-bar" id="request-limit-bar"></progress>
                                 </div>
-                                <progress class="uploading-progress-bar-file" max=100 value=0></progress>
-                            </div>
-                            <img id="close-file-icon" src="./imgs/close.png" alt="Close icon" onclick="closeUploadFile()">
-                        </div>
-
-                        <form class="load-text-container" id="load-text-container" style="display: none;">
-                            <textarea class="text-input card-text" id="text-input" name="text-input" oninput="checkTextarea()" placeholder="Start writing here"></textarea>
-                        </form>
-                    </div>
-
-                    <div class="board" id="plan-expired-border" style="display: none;">
-                        <img id="acute-icon" src="./imgs/acute.png" alt="Acute icon">
-                        <p class="card-text">Your subscription is expired.</p>
-                        <p class="card-text">Please renew it to continue summarizing.</p>
-                        <button class="link-small action-btn" id="expired-btn">Renew Subscription</button>
-                    </div>
-
-                <div class="board" id="requests-limit-board">
-
-                    <div class="limit-top">
-                        <h2 class="requests-limit-heading card-header">Requests Limit</h2>
-                        <button class="btn-requests-limit secondary-btn link-small">Upgrade my Plan</button>
-                    </div>
-
-                    <hr>
-                    
-                    <div class="request-limit-container">
-
-                        <div class="limit-bar-container">
-                            <div class="limit-text-bar-container">
-                                <p class="small-limit-text" id="request-limit-text"></p>
-                                <progress class="limit-bar" id="request-limit-bar"></progress>
-                            </div>
-                            <p id="limit-warning-text" class="card-text"></p>
-                        </div>
-
-                        <div class="limit-other-container">
-                            <div class="plan-container">
-                                <p class="small-limit-text">Current plan</p>
-                                <p class="card-text limit-text" id="limit-plan-text"></p>
+                                <p id="limit-warning-text" class="card-text"></p>
                             </div>
 
-                            <div class="perday-container">
-                                <p class="small-limit-text">Requests limit</p>
-                                <p class="card-text limit-text" id="limit-perday-text"></p>
-                                <div id="inf-container" style="display: none;">
-                                    <img id="inf-icon" src="./imgs/inf.png" alt="Infinity icon">
+                            <div class="limit-other-container">
+                                <div class="plan-container">
+                                    <p class="small-limit-text">Current plan</p>
+                                    <p class="card-text limit-text" id="limit-plan-text"></p>
+                                </div>
+
+                                <div class="perday-container">
+                                    <p class="small-limit-text">Requests limit</p>
+                                    <p class="card-text limit-text" id="limit-perday-text"></p>
+                                    <div id="inf-container" style="display: none;">
+                                        <img id="inf-icon" src="./imgs/inf.png" alt="Infinity icon">
+                                    </div>
+                                </div>
+
+                                <div class="date-container">
+                                    <p class="small-limit-text">Expiration date</p>
+                                    <p class="card-text limit-text" id="limit-date-text"></p>
                                 </div>
                             </div>
 
-                            <div class="date-container">
-                                <p class="small-limit-text">Expiration date</p>
-                                <p class="card-text limit-text" id="limit-date-text"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="link-small action-btn" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
+        
+            </div>
+
+
+            <!-- Loader -->
+            <div id="loader-container" style="display: none;">
+                <img id="load-icon" src="./imgs/load.png" alt="Load icon">
+                <p class="load-text">We are summarizing your contract.</p>
+                <p class="load-text">Please wait, it takes less than a minute.</p>
+            </div>
+
+            <!-- Loader Error -->
+            <div id="error-container" style="display: none;">
+                <img id="error-icon" src="./imgs/error.png" alt="Error icon">
+                <div class="error-text">
+                    <p>Something went wrong.</p>
+                    <p>Please reload the page to continue the summarizing.</p>
+                </div>
+                <button class="link-small action-btn" id="reload-btn">Reload</button>
+            </div>
+
+            <!-- Response -->
+            <div id="response-container" style="display: none;">
+                <div id="response-header">
+                    <div id="link-back-summarize">
+                        <img id="img-back-summarize" src="./imgs/arrow_back_ios.png" alt="Back icon" onclick="backToSummarize()">
+                        <p id="text-back-summarize" onclick="backToSummarize()">Back to Summarize</p>
+                    </div>
+                    <h1>Contract Summary</h1>
+                </div>
+
+                <div id="response-boards-container">
+                    <div id="content-boards-container">
+                        <!-- GENERAL -->
+                        <div class="board" id="general-board">
+                            <div class="response-tag">
+                                <p class="title">general</p>
+                            </div>
+
+                            <div id="general-dates">
+                                <div class="response-text-block">
+                                    <p class="bold-title" id="general-effective-date-title">effective date</p>
+                                    <p class="card-text" id="general-effective-date-text"></p>
+                                </div>
+
+                                <div class="response-text-block">
+                                    <p class="bold-title" id="general-date-title">date</p>
+                                    <p class="card-text" id="general-date-text"></p>
+                                </div>                            
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-type-title">contract type</p>
+                                <p class="card-text" id="general-type-text"></p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-terms-title">terms</p>
+                                <p class="card-text" id="general-terms-text"></p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-financial-terms-title">financial terms</p>
+                                <p class="card-text" id="general-financial-terms-text"></p>
+                            </div>
+
+                            <div class="response-text-block">
+                                <p class="bold-title" id="general-penalties-title">penalties</p>
+                                <p class="card-text" id="general-penalties-text"></p>
                             </div>
                         </div>
 
+                        <div id="parties-boards-container">
+                            <!-- FIRST PARTY -->
+                            <div class="board" id="first-party-board">
+                                <div class="response-tag">
+                                    <p class="title">first party</p>
+                                </div>
+
+                                <div class="response-text-block">
+                                    <p class="bold-title" id="first-party-name-title">name</p>
+                                    <p class="card-text" id="first-party-name-text"></p>
+                                </div>
+
+                                <hr class="first-parties-line">
+                                
+                                <div class="response-point-text-block" id="first-parties-rights-divider">
+                                    <p class="bold-title" id="first-party-rights-title">rights</p>
+                                    <ul class="card-text point-list" id="first-party-rights-text"></ul>
+                                </div>
+
+                                <hr class="second-parties-line">
+
+                                <div class="response-point-text-block" id="first-parties-responsibilities-divider">
+                                    <p class="bold-title" id="first-party-responsibilities-title">responsibilities</p>
+                                    <ul class="card-text point-list" id="first-party-responsibilities-text"></ul>
+                                </div>
+                            </div>
+
+                            <!-- SECOND PARTY -->
+                            <div class="board" id="second-party-board">
+                                <div class="response-tag">
+                                    <p class="title">second party</p>
+                                </div>
+
+                                <div class="response-text-block">
+                                    <p class="bold-title" id="second-party-name-title">name</p>
+                                    <p class="card-text" id="second-party-name-text"></p>
+                                </div>
+
+                                <hr class="first-parties-line">
+
+                                <div class="response-point-text-block" id="second-parties-rights-divider">
+                                    <p class="bold-title" id="second-party-rights-title">rights</p>
+                                    <ul class="card-text point-list" id="second-party-rights-text"></ul>
+                                </div>
+
+                                <hr class="second-parties-line">
+
+                                <div class="response-point-text-block" id="second-parties-responsibilities-divider">
+                                    <p class="bold-title" id="second-party-responsibilities-title">responsibilities</p>
+                                    <ul class="card-text point-list" id="second-party-responsibilities-text"></ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Side Panel -->
+                    <div id="response-side-panel">
+                        <div id="response-contract-details-container">
+
+                            <h2 id="response-contract-details-header">Contract Details</h2>
+
+                            <div id="response-name-file-container">
+                                <div id="response-name-icon-file">
+                                    <img class="small-file-icon" id="small-file-icon" src="./imgs/small-file.png" alt="Small file icon">
+                                    <div class="name-expansion-container">
+                                        <p class="card-text" id="response-file-name"></p>
+                                        <p class="card-text" id="response-file-expansion"></p>
+                                    </div>
+                                </div>
+                                <img id="close-file-icon" src="./imgs/close.png" onclick="backToSummarize()" alt="Close icon">
+                            </div>
+
+                            <div id="pages-processed-container">
+                                <p class="title response-side-panel-title">pages processed</p>
+                                <p class="card-text">45/45</p>
+                            </div>
+
+                            <button class="link-small action-btn" id="another-contract-btn" onclick="backToSummarize()">Another contract</button>
+                        </div>
+
+                        <hr id="response-side-panel-hr">
+
+                        <div id="response-requests-limit-container">
+                            <h2 id="response-requests-limit-header">Requests Limit</h2>
+
+                            <div id="response-limit-text-bar-container">
+                                <p class="small-limit-text" id="response-limit-text"></p>
+                                <progress class="limit-bar" id="response-limit-bar"></progress>
+                            </div>
+                            
+                            <div class="response-limit-data-container">
+                                <p class="title response-side-panel-title">current plan</p>
+                                <p class="card-text" id="response-limit-plan-text"></p>
+                            </div>
+
+                            <div class="response-limit-data-container">
+                                <p class="title response-side-panel-title">requests limit</p>
+                                <p class="card-text" id="response-limit-perday-text"></p>
+                            </div>
+
+                            <div class="response-limit-data-container">
+                                <p class="title response-side-panel-title">expiration date</p>
+                                <p class="card-text" id="response-limit-date-text"></p>
+                            </div>
+
+                            <button class="link-small action-btn" id="response-upgrade-plan-btn">Upgrade Plan</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Response btns -->
+                <div id="response-btns">
+                    <button class="secondary-btn link-small" id="copy-btn" onclick="copyTextToClipboard()">Copy to clipboard</button>
+
+                    <button class="link-small action-btn" id="download-file-btn" onclick="downloadResponseFile()">Download PDF</button>
+                    <div id="file-downloaded-container" style="display: none;">
+                        <img id="check-downloaded-icon" src="./imgs/check.png" alt="Check icon">
+                        <p class="link-small" id="file-downloaded-text">File has been downloaded</p>
                     </div>
                 </div>
             </div>
 
-            <button class="link-small action-btn" id="summarize-btn" onclick="summarize()" disabled>Summarize Contract</button>
-
-
+            <!-- History table -->
             <div id="history-container">
                 <h1 id="history-header">History</h1>
-    
+
                 <div id="table-container">
                     <div id="sorting-container">
                         <div id="filter-container">
@@ -201,38 +395,38 @@
                                 <img id="filter-by-icon" src="./imgs/filter_list.png" alt="Filter icon">
                                 <p class="link-large">Filter by</p>
                             </div>
-    
+
                             <!-- Фильтрация по дате -->
                             <div id="date-filter" class="filter-items">
                                 <p id="date-filter-text" class="link-large">Date</p>
                                 <img id="close-date-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()" style="display: none;">
                             </div>
-    
+
                             <!-- Фильтрация по сторонам -->
                             <div id="side-filter" class="filter-items">
                                 <p id="side-filter-text" class="link-large">Sides</p>
                                 <img id="close-side-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()" style="display: none;">
                             </div>
-    
+
                             <!-- Фильтрация по типу контракта -->
                             <div id="type-filter" class="filter-items">
                                 <p id="type-filter-text" class="link-large">Contract Types</p>
                                 <img id="close-type-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()" style="display: none;">
                             </div>
-    
+
                             <!-- Фильтрация по тегу -->
                             <div id="tag-filter" class="filter-items">
                                 <p id="tag-filter-text" class="link-large">Tag</p>
                                 <img id="close-tag-filter" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()" style="display: none;">
                             </div>
                         </div>
-    
+
                         <div id="search-container">
                             <img id="search-icon" src="./imgs/search.png" alt="Search icon">
                             <input type="text" id="search-input" class="card-text" placeholder="Search">
                         </div>
                     </div>
-    
+
                     <!-- Таблица -->
                     <table id="history_table">
                         <thead>
@@ -276,7 +470,7 @@
                         <p class="action-element delete">Delete</p>
                     </div>
                 </div>
-    
+
                 <!-- Скрытое окно подтверждения удаления -->
                 <div id="apply-delete-container" class="action-element" style="display: none;"> 
                     <p class="apply-delete-text action-element">Are you sure you want to delete this summary?</p>
@@ -285,13 +479,13 @@
                         <button id="cancel-delete" class="action-btn">Cancel</button>
                     </div>
                 </div>
-    
+
                 <!-- Скрытые элементы подтверждения копирования и загрузки -->
                 <div id="info-copy-download" style="display: none;">
                     <img class="action-element delete" src="./imgs/check_large.png" alt="Download icon">
                     <p id="text-info-copy-download"></p>
                 </div>
-    
+
                 <!-- Скрытое меню new tag -->
                 <div id="new-tag-menu" class="action-element" style="display: none;">
                     <div id="new-tag" class="action-element">New Tag</div>
@@ -310,13 +504,13 @@
                     </div>
                     <button id="apply-new-tag" class="action-btn action-element">Create</button>
                 </div>
-    
+
                 <!-- Скрытое меню copy -->
                 <div id="copy-menu" style="display: none;">
                     <p id="copy" class="copy-menu-text">Copy</p>
                     <p id="copy-all" class="copy-menu-text">Copy all</p>
                 </div>
-    
+
                 <!-- Скрытое меню фильтра по дате -->
                 <div id="request-date-menu" class="filter-menu" style="display: none;">
                     <div class="filter-header">
@@ -328,16 +522,16 @@
                         <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('date', 0)">Include</button>
                         <button id="exclude-date-btn" class="filtr-btn-text" onclick="activeSwitchBtn('date', 1)">Exclude</button>
                     </div>
-    
+
                     <div id="from-datepicker-container"></div>
-    
+
                     <div id="to-datepicker-container"></div>
-    
+
                     <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('date')">Apply</button>
                 </div>
-    
-                 <!-- Скрытое меню фильтра по стороне -->
-                 <div id="side-menu" class="filter-menu" style="display: none;">
+
+                <!-- Скрытое меню фильтра по стороне -->
+                <div id="side-menu" class="filter-menu" style="display: none;">
                     <div class="filter-header">
                         <h2>Side</h2>
                         <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()">
@@ -347,25 +541,25 @@
                         <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('side', 0)">Include</button>
                         <button id="exclude-side-btn" class="filtr-btn-text" onclick="activeSwitchBtn('side', 1)">Exclude</button>
                     </div>
-    
+
                     <div class="search-filter-container">
                         <img class="search-icon" src="./imgs/search.png" alt="Search icon">
                         <input type="text" id="input-search-sides" class="search-filter-input card-text" placeholder="Search side">
                     </div>
-    
+
                     <div class="side-filter-block">
                         <p class="bold-title side-header-filter">Side 1</p>
                         <ul id="side1-filter-ul"></ul>
                     </div>
-    
+
                     <div class="side-filter-block">
                         <p class="bold-title side-header-filter">Side 2</p>
                         <ul id="side2-filter-ul"></ul>
                     </div>
-    
+
                     <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('side')">Apply</button>
                 </div>
-    
+
                 <!-- Скрытое меню фильтра по типу -->
                 <div id="type-menu" class="filter-menu" style="display: none;">
                     <div class="filter-header">
@@ -377,19 +571,19 @@
                         <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('type', 0)">Include</button>
                         <button id="exclude-type-btn" class="filtr-btn-text" onclick="activeSwitchBtn('type', 1)">Exclude</button>
                     </div>
-    
+
                     <div class="search-filter-container">
                         <img class="search-icon" src="./imgs/search.png" alt="Search icon">
                         <input type="text" id="input-search-type" class="search-filter-input card-text" placeholder="Search type">
                     </div>
-    
+
                     <div class="type-filter-block">
                         <ul id="type-filter-ul"></ul>
                     </div>
-    
+
                     <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('type')">Apply</button>
                 </div>
-    
+
                 <!-- Скрытое меню фильтра по тегу -->
                 <div id="tag-menu" class="filter-menu" style="display: none;">
                     <div class="filter-header">
@@ -401,19 +595,19 @@
                         <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('tag', 0)">Include</button>
                         <button id="exclude-tag-btn" class="filtr-btn-text" onclick="activeSwitchBtn('tag', 1)">Exclude</button>
                     </div>
-    
+
                     <div class="search-filter-container">
                         <img class="search-icon" src="./imgs/search.png" alt="Search icon">
                         <input type="text" id="input-search-tag" class="search-filter-input card-text" placeholder="Search tag">
                     </div>
-    
+
                     <div class="tag-filter-block">
                         <ul id="tag-filter-ul"></ul>
                     </div>
-    
+
                     <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
                 </div>
-    
+
                 <!-- Если история пустая -->
                 <div id="empty-history-container" style="display: none;">
                     <img id="empty-history-icon" src="./imgs/history-empty.png" alt="Empty history icon">
@@ -422,198 +616,6 @@
                         <p>But since you start summarizing contracts they will appear in the History.</p>
                     </div>
                     <button class="link-small action-btn" id="empty-history-summ-contr-btn">Summarize contract</button>
-                </div>
-            </div>
-    
-        </div>
-
-
-        <!-- Loader -->
-        <div id="loader-container" style="display: none;">
-            <img id="load-icon" src="./imgs/load.png" alt="Load icon">
-            <p class="load-text">We are summarizing your contract.</p>
-            <p class="load-text">Please wait, it takes less than a minute.</p>
-        </div>
-
-        <!-- Loader Error -->
-        <div id="error-container" style="display: none;">
-            <img id="error-icon" src="./imgs/error.png" alt="Error icon">
-            <div class="error-text">
-                <p>Something went wrong.</p>
-                <p>Please reload the page to continue the summarizing.</p>
-            </div>
-            <button class="link-small action-btn" id="reload-btn">Reload</button>
-        </div>
-
-        <!-- Response -->
-        <div id="response-container" style="display: none;">
-            <div id="response-header">
-                <div id="link-back-summarize">
-                    <img id="img-back-summarize" src="./imgs/arrow_back_ios.png" alt="Back icon" onclick="backToSummarize()">
-                    <p id="text-back-summarize" onclick="backToSummarize()">Back to Summarize</p>
-                </div>
-                <h1>Contract Summary</h1>
-            </div>
-
-            <div id="response-boards-container">
-                <div id="content-boards-container">
-                    <!-- GENERAL -->
-                    <div class="board" id="general-board">
-                        <div class="response-tag">
-                            <p class="title">general</p>
-                        </div>
-
-                        <div id="general-dates">
-                            <div class="response-text-block">
-                                <p class="bold-title" id="general-effective-date-title">effective date</p>
-                                <p class="card-text" id="general-effective-date-text"></p>
-                            </div>
-
-                            <div class="response-text-block">
-                                <p class="bold-title" id="general-date-title">date</p>
-                                <p class="card-text" id="general-date-text"></p>
-                            </div>                            
-                        </div>
-
-                        <div class="response-text-block">
-                            <p class="bold-title" id="general-type-title">contract type</p>
-                            <p class="card-text" id="general-type-text"></p>
-                        </div>
-
-                        <div class="response-text-block">
-                            <p class="bold-title" id="general-terms-title">terms</p>
-                            <p class="card-text" id="general-terms-text"></p>
-                        </div>
-
-                        <div class="response-text-block">
-                            <p class="bold-title" id="general-financial-terms-title">financial terms</p>
-                            <p class="card-text" id="general-financial-terms-text"></p>
-                        </div>
-
-                        <div class="response-text-block">
-                            <p class="bold-title" id="general-penalties-title">penalties</p>
-                            <p class="card-text" id="general-penalties-text"></p>
-                        </div>
-                    </div>
-
-                    <div id="parties-boards-container">
-                        <!-- FIRST PARTY -->
-                        <div class="board" id="first-party-board">
-                            <div class="response-tag">
-                                <p class="title">first party</p>
-                            </div>
-
-                            <div class="response-text-block">
-                                <p class="bold-title" id="first-party-name-title">name</p>
-                                <p class="card-text" id="first-party-name-text"></p>
-                            </div>
-
-                            <hr class="first-parties-line">
-                            
-                            <div class="response-point-text-block" id="first-parties-rights-divider">
-                                <p class="bold-title" id="first-party-rights-title">rights</p>
-                                <ul class="card-text point-list" id="first-party-rights-text"></ul>
-                            </div>
-
-                            <hr class="second-parties-line">
-
-                            <div class="response-point-text-block" id="first-parties-responsibilities-divider">
-                                <p class="bold-title" id="first-party-responsibilities-title">responsibilities</p>
-                                <ul class="card-text point-list" id="first-party-responsibilities-text"></ul>
-                            </div>
-                        </div>
-
-                        <!-- SECOND PARTY -->
-                        <div class="board" id="second-party-board">
-                            <div class="response-tag">
-                                <p class="title">second party</p>
-                            </div>
-
-                            <div class="response-text-block">
-                                <p class="bold-title" id="second-party-name-title">name</p>
-                                <p class="card-text" id="second-party-name-text"></p>
-                            </div>
-
-                            <hr class="first-parties-line">
-
-                            <div class="response-point-text-block" id="second-parties-rights-divider">
-                                <p class="bold-title" id="second-party-rights-title">rights</p>
-                                <ul class="card-text point-list" id="second-party-rights-text"></ul>
-                            </div>
-
-                            <hr class="second-parties-line">
-
-                            <div class="response-point-text-block" id="second-parties-responsibilities-divider">
-                                <p class="bold-title" id="second-party-responsibilities-title">responsibilities</p>
-                                <ul class="card-text point-list" id="second-party-responsibilities-text"></ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Side Panel -->
-                <div id="response-side-panel">
-                    <div id="response-contract-details-container">
-
-                        <h2 id="response-contract-details-header">Contract Details</h2>
-
-                        <div id="response-name-file-container">
-                            <div id="response-name-icon-file">
-                                <img class="small-file-icon" id="small-file-icon" src="./imgs/small-file.png" alt="Small file icon">
-                                <div class="name-expansion-container">
-                                    <p class="card-text" id="response-file-name"></p>
-                                    <p class="card-text" id="response-file-expansion"></p>
-                                </div>
-                            </div>
-                            <img id="close-file-icon" src="./imgs/close.png" onclick="backToSummarize()" alt="Close icon">
-                        </div>
-
-                        <div id="pages-processed-container">
-                            <p class="title response-side-panel-title">pages processed</p>
-                            <p class="card-text">45/45</p>
-                        </div>
-
-                        <button class="link-small action-btn" id="another-contract-btn" onclick="backToSummarize()">Another contract</button>
-                    </div>
-
-                    <hr id="response-side-panel-hr">
-
-                    <div id="response-requests-limit-container">
-                        <h2 id="response-requests-limit-header">Requests Limit</h2>
-
-                        <div id="response-limit-text-bar-container">
-                            <p class="small-limit-text" id="response-limit-text"></p>
-                            <progress class="limit-bar" id="response-limit-bar"></progress>
-                        </div>
-                        
-                        <div class="response-limit-data-container">
-                            <p class="title response-side-panel-title">current plan</p>
-                            <p class="card-text" id="response-limit-plan-text"></p>
-                        </div>
-
-                        <div class="response-limit-data-container">
-                            <p class="title response-side-panel-title">requests limit</p>
-                            <p class="card-text" id="response-limit-perday-text"></p>
-                        </div>
-
-                        <div class="response-limit-data-container">
-                            <p class="title response-side-panel-title">expiration date</p>
-                            <p class="card-text" id="response-limit-date-text"></p>
-                        </div>
-
-                        <button class="link-small action-btn" id="response-upgrade-plan-btn">Upgrade Plan</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Response btns -->
-            <div id="response-btns">
-                <button class="secondary-btn link-small" id="copy-btn" onclick="copyTextToClipboard()">Copy to clipboard</button>
-
-                <button class="link-small action-btn" id="download-file-btn" onclick="downloadResponseFile()">Download PDF</button>
-                <div id="file-downloaded-container" style="display: none;">
-                    <img id="check-downloaded-icon" src="./imgs/check.png" alt="Check icon">
-                    <p class="link-small" id="file-downloaded-text">File has been downloaded</p>
                 </div>
             </div>
         </div>

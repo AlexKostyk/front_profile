@@ -545,11 +545,13 @@ textarea::-webkit-scrollbar-track {
 }
 
 #loader-container {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    margin: 172px auto;
+    top: 172px;
+    left: 45%;
 }
 
 #load-icon {
@@ -807,4 +809,10 @@ textarea::-webkit-scrollbar-track {
 #inf-container {
     display: flex;
     align-items: center;
+}
+
+.summarize-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }

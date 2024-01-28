@@ -68,7 +68,6 @@ let history_data = [
     { requestDate: new Date(2023, 10, 15, 11, 47), side1: 'Maynard James Keenan', side2: 'Boris Elczin LLC.', contractType: 'DNA', tag: 'Office', actions:'', info},
 ];
 
-
 // Форматированный список истории
 let format_data = [];
 
