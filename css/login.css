@@ -110,6 +110,8 @@ body {
     text-align: center;
 }
 
+/* Исправлено: Send Link курсор; Go to mailbox курсор [ */
+
 .login-btn {
     color: var(--accent-and-details-color);
     text-align: center;
@@ -117,7 +119,11 @@ body {
     border-radius: 6px;
     border: none;
     background-color: var(--main-accent-color);
+
+    cursor: pointer;
 }
+
+/* ] */
 
 .login-btn:hover,
 .login-btn:active {
@@ -136,6 +142,8 @@ body {
     width: 120px;
 }
 
+/* Исправлено: Login with google  курсор [ */
+
 #login-google-btn {
     display: flex;
     align-items: center;
@@ -148,7 +156,11 @@ body {
 
     border: 2px solid var(--accent-and-details-color);
     background-color: transparent;
+
+    cursor: pointer;
 }
+
+/* ] */
 
 #email-error-container {
     display: flex;

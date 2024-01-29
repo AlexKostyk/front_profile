@@ -348,13 +348,15 @@ body {
     color: var(--secondary-text-and-elements-color);
 }
 
+/* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки[ */
 .action-container {
     display: flex;
     align-items: center;
     width: fit-content;
-    gap: 6px;
-    padding: 0 0 0 12px;
+    gap: 12px;
+    padding: 0 0 0 6px;
 }
+/* ] */
 
 .tag-container {
     display: flex;
@@ -1043,10 +1045,21 @@ abbr[title] {
     text-align: left;
 }
 
+/* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки[ */
+
 #actions-dots-container {
-    width: 14px;
+    padding-top: 5px;
+    height: 22px;
+    width: 16px;
     margin: 0 auto;
 }
+
+#actions-dots-container:hover {
+    border-radius: 8px;
+    background-color: #e5e8e9;
+}
+
+/* ] */
 
 #actions-dots {
     max-width: 100%;
