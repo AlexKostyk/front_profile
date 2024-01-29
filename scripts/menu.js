@@ -68,37 +68,62 @@ function switchMenuPoint(point){
     curr_menu_pont = point;
 }
 
+// Изменено 29.01 [
+
 function dropDownMenu() {
     let ul_height = 0;
+    let community_menu_ul = document.getElementById("community-menu-ul");
 
     for (let _ of community_menu_ul.children) ul_height += 27;
-    community_menu_ul.style.height = ul_height + 'px';
 
-    function clickHandler() {
+    // Проверяем текущую высоту и устанавливаем соответствующее значение
+    if (community_menu_ul.style.height === '' || community_menu_ul.style.height === '0px') {
+        community_menu_ul.style.height = ul_height + 'px';
+
+        // обработчик события для скрытия меню при клике на любое место в документе
+        function clickHandler(event) {
+            if (
+                event.target.id !== "community-menu-icon" &&
+                event.target.id !== "community-menu-text" &&
+                event.target.id !== "community-menu-point"
+            ) {
+                community_menu_ul.style.height = '0px';
+                document.removeEventListener('click', clickHandler);
+            }
+        }
+
+        document.addEventListener('click', clickHandler);
+    } else {
         community_menu_ul.style.height = '0px';
-        document.removeEventListener('click', clickHandler);
     }
-
-    document.addEventListener('click', clickHandler);
 }
+
+// ]
+
+// Изменено 29.01 [
 
 function activateEmailMenu() {  
-   let email_menu = document.getElementById("email-menu");
+    let email_menu = document.getElementById("email-menu");
 
-   email_menu.style.display = 'block';
+    if (email_menu.style.display === 'none') {
+        email_menu.style.display = 'block';
  
-   // обработчик события для скрытия меню при клике на любое место в документе
-   function hideEmailMenu(event) {
-     // Проверяем был ли клик вне элемента "user-email" и "email-menu"
-        if (
-            event.target.id !== "user-email" &&
-            event.target.id !== "email-menu"
-        ) {
-            email_menu.style.display = 'none';
-            // Удаляем обработчик события после первого клика вне меню
-            document.removeEventListener("click", hideEmailMenu);
+        // обработчик события для скрытия меню при клике на любое место в документе
+        function hideEmailMenu(event) {
+            if (
+                event.target.id !== "user-email" &&
+                event.target.id !== "email-menu"
+            ) {
+                email_menu.style.display = 'none';
+                // Удаляем обработчик события после каждого клика вне меню
+                document.removeEventListener("click", hideEmailMenu);
+            }
         }
-   }
  
-   document.addEventListener("click", hideEmailMenu);
+        document.addEventListener("click", hideEmailMenu);
+    } else {
+        email_menu.style.display = 'none';
+    }
 }
+
+// ]
