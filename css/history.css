@@ -126,13 +126,13 @@ body {
     text-align: left;
 }
 
+/* Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [ */
 #history_table {
     margin-top: 32px;
-    /* border-collapse: collapse;  */
     border-collapse: separate;
     border-spacing: 0;
-    cursor: pointer; 
 }
+/* ] */
 
 #table-headers th {
     padding-bottom: 10px;
@@ -142,36 +142,46 @@ body {
     padding-left: 8px;
 }
 
+/* Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [ */
 #history_table td{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer;
 }
+/* ] */
+
+/* Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [*/
 
 #requestDate-header {
     width: 188px;
+    cursor: default;
 }
 
 #side1-header {
     width: 265px;
+    cursor: default;
 }
 
 #side2-header {
     width: 265px;
+    cursor: default;
 }
 
 #contractType-header {
     width: 254px;
+    cursor: default;
 }
 
 #tag-header {
     width: 146px;
+    cursor: default;
 }
 
 #actions-header {
     width: 58px;
+    cursor: default;
 }
+
 
 #history_table th:nth-child(1), #history_table td:nth-child(1) {
     max-width: 188px;
@@ -201,27 +211,32 @@ body {
     padding: 16px 10px 16px 0;
 }
 
-/* #history_table tbody tr {
-    border-bottom: 1px solid var(--hr-scrol-color);
-} */
+.sort span {
+    cursor: pointer;
+}
 
 .sort span::after {
-    content: url("../imgs/sort.png"); /* Путь к вашему изображению */
-    margin-left: 8px; /* Расстояние между словом и изображением */
+    content: url("../imgs/sort.png");
+    margin-left: 8px; 
     vertical-align: middle;
+    cursor: pointer;
 }
 
 .sort-top span::after {
-    content: url("../imgs/active-sort-top.png"); /* Путь к вашему изображению */
-    margin-left: 8px; /* Расстояние между словом и изображением */
+    content: url("../imgs/active-sort-top.png"); 
+    margin-left: 8px;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 .sort-bottom span::after {
-    content: url("../imgs/active-sort-bottom.png"); /* Путь к вашему изображению */
-    margin-left: 8px; /* Расстояние между словом и изображением */
+    content: url("../imgs/active-sort-bottom.png");
+    margin-left: 8px; 
     vertical-align: middle;
+    cursor: pointer;
 }
+
+/* ] */
 
 #empty-history-container {
     display: flex;
@@ -244,9 +259,12 @@ body {
     transition: height 1s ease;
 }
 
+/* Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [ */
 .expandable-row td {
     border-bottom: 1px solid var(--hr-scrol-color);
+    cursor: pointer;
 }
+/* ] */
 
 .curr-expanded-row td {
     border-bottom: none;
@@ -329,6 +347,12 @@ body {
     margin: 0 0 3px 3px;
 }
 
+/* Добавление Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [ */
+.info-text {
+    cursor: pointer;
+}
+/* ] */
+
 .info-text-container {
     display: flex;
     flex-direction: column;
@@ -336,19 +360,28 @@ body {
     margin-bottom: 16px;
 }
 
+/* Исправление: Выравнивание пунктов в саммари по верхнему краю а не по центру [ */
 .info-point {
     display: flex;
-    align-items: center;
     text-wrap:wrap;
     gap: 148px;
 }
+/* ] */
 
-.info-point-title {
+/* Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть  */
+.info-point-title-container {
+    margin-top: 3px;
     min-width: 117px;
     color: var(--secondary-text-and-elements-color);
 }
 
-/* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки[ */
+.info-point-title {
+    width: fit-content;
+    cursor: pointer;
+}
+/* ] */
+
+/* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки [ */
 .action-container {
     display: flex;
     align-items: center;

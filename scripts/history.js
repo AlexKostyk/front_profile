@@ -425,6 +425,8 @@ function setBorderStyle(infoRow, row) {
     }, 900);
 }
 
+// Исправление: Курсор становится пальцем только при наведении на текст или на верхнюю часть [
+
 // Функция для создания разметки полного описания
 function createInfoMarkup(item) {
     let all_text = makeAllText(item);
@@ -436,23 +438,33 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Contract type', '${item.contractType}')">Contract type</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Contract type', '${item.contractType}')">Contract type</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Contract type', '${item.contractType}')">${item.contractType}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Date / Effective date', '${item.info.date + ' / ' + item.info.effective_date}')">Date / Effective date</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Date / Effective date', '${item.info.date + ' / ' + item.info.effective_date}')">Date / Effective date</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Date / Effective date', '${item.info.date + ' / ' + item.info.effective_date}')">${item.info.date} / ${item.info.effective_date}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Terms', '${item.info.terms}')">Terms</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Terms', '${item.info.terms}')">Terms</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Terms', '${item.info.terms}')">${item.info.terms}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Financial Terms', '${item.info.financial_terms}')">Financial Terms</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Financial Terms', '${item.info.financial_terms}')">Financial Terms</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Financial Terms', '${item.info.financial_terms}')">${item.info.financial_terms}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Penalties', '${item.info.penalties}')">Penalties</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Penalties', '${item.info.penalties}')">Penalties</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Penalties', '${item.info.penalties}')">${item.info.penalties}</p>
                     </div>
                 </div>
@@ -463,15 +475,21 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side1}')">Name</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side1}')">Name</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Name', '${item.side1}')">${item.side1}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights1}')">Rights</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights1}')">Rights</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights1}')">${item.info.rights1}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities1}')">Responsibilities</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities1}')">Responsibilities</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities1}')">${item.info.responsibilities1}</p>
                     </div>
                 </div>
@@ -482,21 +500,28 @@ function createInfoMarkup(item) {
                 </div>
                 <div class='info-text-container'>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side2}')">Name</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Name', '${item.side2}')">Name</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Name', '${item.side2}')">${item.side2}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights2}')">Rights</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights2}')">Rights</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Rights', '${item.info.rights2}')">${item.info.rights2}</p>
                     </div>
                     <div class='info-point'>
-                        <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities2}')">Responsibilities</p>
+                        <div class='info-point-title-container'>
+                            <p class='title info-point-title' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities2}')">Responsibilities</p>
+                        </div>
                         <p class='info-text' onclick="showCopyMenu('${all_text}', 'Responsibilities', '${item.info.responsibilities2}')">${item.info.responsibilities2}</p>
                     </div>
                 </div>
             </div>
             <div style='height: 12px'></div>`;
 }
+// ]
 
 function showActionMenu(curr_element) {
     let actionsMenu = document.getElementById('actions-menu');
