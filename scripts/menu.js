@@ -15,12 +15,15 @@ document.addEventListener('DOMContentLoaded', function() {
     updateComunityLinks();
 });
 
+// Изменено 30.01 [
 function updateComunityLinks() {
     linksArray.forEach(function(link) {
 
         let listItem = document.createElement('li');
-      
+        listItem.classList.add("community-menu-li");
+
         let linkElement = document.createElement('a');
+        linkElement.classList.add("community-menu-href");
         linkElement.href = link.url;
         linkElement.textContent = link.title;
       
@@ -29,6 +32,7 @@ function updateComunityLinks() {
         community_menu_ul.appendChild(listItem);
     });
 }
+// ]
 
 function switchMenuPoint(point){
     let menu_point = document.getElementsByClassName('menu-point');
@@ -69,7 +73,7 @@ function switchMenuPoint(point){
     curr_menu_pont = point;
 }
 
-// Изменено 29.01 [
+// Изменено 30.01 [
 
 function dropDownMenu() {
     let ul_height = 0;
@@ -86,7 +90,10 @@ function dropDownMenu() {
             if (
                 event.target.id !== "community-menu-icon" &&
                 event.target.id !== "community-menu-text" &&
-                event.target.id !== "community-menu-point"
+                event.target.id !== "community-menu-point" && 
+                event.target.id !== "community-menu-ul" &&
+                !event.target.classList.contains("community-menu-li") &&
+                !event.target.classList.contains("community-menu-href")
             ) {
                 community_menu_ul.style.height = '0px';
                 document.removeEventListener('click', clickHandler);
