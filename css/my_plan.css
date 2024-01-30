@@ -38,11 +38,13 @@
     margin: 32px 0 0 24px;
 }
 
+/* Исправлено: Upgrade pan подвинуть левее, чтобы расстояние было такое же, как от my plan до меню [ */
 #plans-container {
     display: flex;
-    gap: 98px;
+    gap: 24px;
     padding-bottom: 32px;
 }
+/* ] */
 
 #curr-plan,
 #upgrade-plan-container {

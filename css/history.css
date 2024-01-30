@@ -215,28 +215,30 @@ body {
     cursor: pointer;
 }
 
-.sort span::after {
+/* Исправлено: Сортировка только по клику на надпись или стрелочки [ */
+
+.sort img {
     content: url("../imgs/sort.png");
     margin-left: 8px; 
     vertical-align: middle;
     cursor: pointer;
 }
 
-.sort-top span::after {
+.sort-top img {
     content: url("../imgs/active-sort-top.png"); 
     margin-left: 8px;
     vertical-align: middle;
     cursor: pointer;
 }
 
-.sort-bottom span::after {
+.sort-bottom img {
     content: url("../imgs/active-sort-bottom.png");
     margin-left: 8px; 
     vertical-align: middle;
     cursor: pointer;
 }
 
-/* ] */
+/* ] ] */
 
 #empty-history-container {
     display: flex;
@@ -437,12 +439,30 @@ body {
     cursor: pointer;
 }
 
+/* Исправлено: Actions подгрузка img в ховере */
+
+#edit-tag-text-container .hover-img {
+    display: none;
+}
+
+.copy-to-clipboard .hover-img {
+    display: none;
+}
+
+.download-summary .hover-img {
+    display: none;
+}
+
 #edit-tag-text-container:hover{
     color: var(--main-border-btn-color);
 }
 
-#edit-tag-text-container:hover img {
-    content: url('../imgs/shoppingmode_hover.png');
+#edit-tag-text-container:hover .hover-img {
+    display: block;
+}
+
+#edit-tag-text-container:hover .place-img {
+    display: none;
 }
 
 #edit-tag-container span:hover{
@@ -450,29 +470,31 @@ body {
     background-color: var(--hr-scrol-color);
 }
 
-#edit-tag-container:hover #edit-tag-text-container{
-    color: var(--main-border-btn-color);
-}
-
-#edit-tag-container:hover #edit-tag-text-container img{
-    content: url('../imgs/shoppingmode_hover.png');
-}
-
 .copy-to-clipboard:hover{
     color: var(--main-border-btn-color);
 }
 
-.copy-to-clipboard:hover img {
-    content: url('../imgs/content_copy_hover.png');
+.copy-to-clipboard:hover .hover-img {
+    display: block;
+}
+
+.copy-to-clipboard:hover .place-img {
+    display: none;
 }
 
 .download-summary:hover{
     color: var(--main-border-btn-color);
 }
 
-.download-summary:hover img {
-    content: url('../imgs/download_hover.png');
+.download-summary:hover .hover-img {
+    display: block;
 }
+
+.download-summary:hover .place-img {
+    display: none;
+}
+
+/* ] */
 
 .action-delete-text {
     color: var(--error-text-color);

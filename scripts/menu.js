@@ -1,5 +1,6 @@
 let community_menu_ul = document.getElementById('community-menu-ul');
 let user_email = document.getElementById('user-email');
+let email_menu = document.getElementById("email-menu");
 
 // Ссылки на внешние ресурсы из comunity
 let linksArray = [
@@ -100,8 +101,7 @@ function dropDownMenu() {
 
 // ]
 
-// Изменено 29.01 [
-
+// Исправлено: Поялвение меню сделать не по клику, а при ховере [
 function activateEmailMenu() {  
     let email_menu = document.getElementById("email-menu");
 
@@ -122,6 +122,17 @@ function activateEmailMenu() {
  
         document.addEventListener("click", hideEmailMenu);
     } else {
+        email_menu.style.display = 'none';
+    }
+}
+
+function activateEmailMenu() {
+    email_menu.style.display = 'block';
+}
+
+function hideEmailMenu() {
+    // Проверяем, если курсор не находится ни внутри user-email, ни внутри email-menu
+    if (!user_email.contains(event.relatedTarget) && !email_menu.contains(event.relatedTarget)) {
         email_menu.style.display = 'none';
     }
 }

@@ -85,23 +85,28 @@
             </div>
             
             <!-- Account -->
+            
+            <!-- Исправлено: Поялвение меню сделать не по клику, а при ховере [ -->
             <div id="account-container">
                 <hr>
-                <div id="email-menu" style="display: none;">
+                <div id="email-menu" style="display: none" onmouseleave="hideEmailMenu()">
                     <div id="email-menu-container" class="email_menu_text">
                         <a href="https://www.example.com">Privacy Policy</a>
-                        <a href="https://www.example.com">Terms of Sevice</a>
+                        <a href="https://www.example.com">Terms of Service</a>
                         <a id="logout-link" href="https://www.example.com">
                             <img class="logout-icon" src="./imgs/logout.png" alt="Logo icon">
                             <p>Log out</p>
                         </a>
                     </div>
                 </div>
-                <p class="small-menu-text" id="user-email" onclick="activateEmailMenu()">seo@contractcrab.com</p>
+                <p class="small-menu-text" id="user-email" onmouseenter="activateEmailMenu()" onmouseleave="hideEmailMenu()">seo@contractcrab.com</p>
             </div>
+            <!-- ] -->
 
         </div>
-
+        <!-- Исправлено: Меню фиксируем, крутим только правую часть [ -->
+        <div id="space-container"></div>
+        <!-- ] -->
         <div class="summarize-content">
             <!-- Основное окно загрузки файла -->
             <div id="summarize-container">
@@ -432,14 +437,16 @@
                     <!-- Таблица -->
                     <table id="history_table">
                         <thead>
+                            <!-- Исправлено: Сортировка только по клику на надпись или стрелочки [ -->
                             <tr id="table-headers" class="bold-title">
-                                <th id="requestDate-header" class="table-header sort sort-top" onclick="sortTable('requestDate')"><span>Request date</span></th>
-                                <th id="side1-header" class="table-header sort" onclick="sortTable('side1')"><span>Side 1</span></th>
-                                <th id="side2-header" class="table-header sort" onclick="sortTable('side2')"><span>Side 2</span></th>
+                                <th id="requestDate-header" class="table-header sort sort-top"><span onclick="sortTable('requestDate')">Request date</span><img class="sort-icon" onclick="sortTable('requestDate')"></th>
+                                <th id="side1-header" class="table-header sort"><span onclick="sortTable('side1')">Side 1</span><img class="sort-icon" onclick="sortTable('side1')"></th>
+                                <th id="side2-header" class="table-header sort"><span onclick="sortTable('side2')">Side 2</span><img class="sort-icon" onclick="sortTable('side2')"></th>
                                 <!-- Исправлено: Contract -> contract type  в хистори [ -->
-                                <th id="contractType-header" class="table-header sort" onclick="sortTable('contractType')"><span>Contract type</span></th>
+                                <th id="contractType-header" class="table-header sort"><span onclick="sortTable('contractType')">Contract type</span><img class="sort-icon" onclick="sortTable('contractType')"></th>
                                 <!-- ] -->
-                                <th id="tag-header" class="table-header sort" onclick="sortTable('tag')"><span>Tag</span></th>
+                                <th id="tag-header" class="table-header sort"><span onclick="sortTable('tag')">Tag</span><img class="sort-icon" onclick="sortTable('tag')"></th>
+                            <!-- ] -->
                                 <th id="actions-header"><span>Actions</span></th>
                             </tr>
                         </thead>
@@ -454,26 +461,32 @@
                 </div>
                 
                 <!-- Скрытое меню actions -->
+
+                <!-- Исправлено: Actions подгрузка img в ховере [ -->
                 <div id="actions-menu" class="action-element" style="display: none;">
                     <div class="action-menu-point actions_menu_text download-summary action-element">
-                        <img class="action-element download-summary" src="./imgs/download.png" alt="Download icon">
+                        <img class="place-img action-element download-summary" src="./imgs/download.png" alt="Download icon">
+                        <img class="hover-img action-element download-summary" src="./imgs/download_hover.png" alt="Download icon">
                         <p class="action-element download-summary">Download Summary</p>
                     </div>
                     <div class="action-menu-point actions_menu_text copy-to-clipboard action-element">
-                        <img class="action-element copy-to-clipboard" src="./imgs/content_copy.png" alt="Download icon">
+                        <img class="place-img action-element copy-to-clipboard" src="./imgs/content_copy.png" alt="Copy icon">
+                        <img class="hover-img action-element copy-to-clipboard" src="./imgs/content_copy_hover.png" alt="Copy icon">
                         <p class="action-element copy-to-clipboard">Copy to Clipboard</p>
                     </div>
                     <div id="edit-tag-container" class="action-menu-point actions_menu_text edit-tag action-element">
                         <div id="edit-tag-text-container" class="action-element">
-                            <img class="action-element edit-tag"src="./imgs/shoppingmode.png" alt="Download icon">
+                            <img class="place-img action-element edit-tag"src="./imgs/shoppingmode.png" alt="shoppingmode icon">
+                            <img class="hover-img action-element edit-tag"src="./imgs/shoppingmode_hover.png" alt="shoppingmode icon">
                             <p class="action-element edit-tag">Edit tag</p>
                         </div>
-                    </div>
+                    </div>                
                     <div class="action-menu-point actions_menu_text action-delete-text delete action-element">
                         <img class="action-element delete" src="./imgs/delete.png" alt="Download icon">
                         <p class="action-element delete">Delete</p>
                     </div>
                 </div>
+                <!-- ] -->
 
                 <!-- Скрытое окно подтверждения удаления -->
                 <div id="apply-delete-container" class="action-element" style="display: none;"> 
@@ -515,6 +528,8 @@
                     <p id="copy-all" class="copy-menu-text">Copy all</p>
                 </div>
 
+            <!-- Исправлено 30.01 [ -->
+
                 <!-- Скрытое меню фильтра по дате -->
                 <div id="request-date-menu" class="filter-menu" style="display: none;">
                     <div class="filter-header">
@@ -523,8 +538,8 @@
                     </div>
                     <hr>
                     <div class="switch-btns-container">
-                        <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('date', 0)">Include</button>
-                        <button id="exclude-date-btn" class="filtr-btn-text" onclick="activeSwitchBtn('date', 1)">Exclude</button>
+                        <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('date')">Include</button>
+                        <button id="exclude-date-btn" class="filtr-btn-text" onclick="excludeSwitch('date')">Exclude</button>
                     </div>
 
                     <div id="from-datepicker-container"></div>
@@ -542,8 +557,8 @@
                     </div>
                     <hr>
                     <div class="switch-btns-container">
-                        <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('side', 0)">Include</button>
-                        <button id="exclude-side-btn" class="filtr-btn-text" onclick="activeSwitchBtn('side', 1)">Exclude</button>
+                        <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('side')">Include</button>
+                        <button id="exclude-side-btn" class="filtr-btn-text" onclick="excludeSwitch('side')">Exclude</button>
                     </div>
 
                     <div class="search-filter-container">
@@ -572,8 +587,8 @@
                     </div>
                     <hr>
                     <div class="switch-btns-container">
-                        <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('type', 0)">Include</button>
-                        <button id="exclude-type-btn" class="filtr-btn-text" onclick="activeSwitchBtn('type', 1)">Exclude</button>
+                        <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('type')">Include</button>
+                        <button id="exclude-type-btn" class="filtr-btn-text" onclick="excludeSwitch('type')">Exclude</button>
                     </div>
 
                     <div class="search-filter-container">
@@ -596,8 +611,8 @@
                     </div>
                     <hr>
                     <div class="switch-btns-container">
-                        <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="activeSwitchBtn('tag', 0)">Include</button>
-                        <button id="exclude-tag-btn" class="filtr-btn-text" onclick="activeSwitchBtn('tag', 1)">Exclude</button>
+                        <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('tag')">Include</button>
+                        <button id="exclude-tag-btn" class="filtr-btn-text" onclick="excludeSwitch('tag')">Exclude</button>
                     </div>
 
                     <div class="search-filter-container">
@@ -611,6 +626,8 @@
 
                     <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
                 </div>
+
+            <!-- ] -->
 
                 <!-- Если история пустая -->
                 <div id="empty-history-container" style="display: none;">

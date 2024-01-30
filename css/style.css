@@ -40,12 +40,18 @@ body {
     display: flex;
 }
 
+/* Исправлено: Меню фиксируем, крутим только правую часть [ */
+#space-container {
+    min-width: 232px;
+}
+
 #sidebar {
-    position: relative;
+    position: fixed;
     min-width: 232px;
     background-color: var(--border-backgroung-color);
     height: 100vh;
 }
+/* ] */
 
 #sidebar-container {
     display: flex;
@@ -96,14 +102,16 @@ body {
     left: 0;
 }
 
+/* Исправлено: Show more и email сделать одинаковый отступ сверху от линий [ */
 #account-container {
     display: flex;
     flex-direction: column;
     margin: 0 24px 32px 24px;
-    gap: 8px;
+    gap: 24px;
     bottom: 10px;
     position: absolute;
 }
+/* ] */
 
 #account-container hr {
     width: 184px;
@@ -141,10 +149,13 @@ body {
     transition: height 0.8s;
 }
 
+/* Исправлено: Поялвение меню сделать не по клику, а при ховере [ */
 #user-email {
     cursor: pointer;
     color: var(--secondary-text-and-elements-color);
+    width: fit-content;
 }
+/* ] */
 
 #email-menu {
     position: absolute;

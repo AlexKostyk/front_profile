@@ -1607,29 +1607,52 @@ function applyFilter(selected_filter) {
     filterPipe();
 }
 
-function activeSwitchBtn(filter, reverse) {
+// Исправлено 30.01 [
+function includeSwitch(filter) {
     switch (filter) {
         case 'tag':
-            reverse_tag_filter = reverse;
+            reverse_tag_filter = 0;
             break;
         case 'type':
-            reverse_type_filter = reverse;
+            reverse_type_filter = 0;
             break;
         case 'side':
-            reverse_side_filter = reverse;
+            reverse_side_filter = 0;
             break;
         case 'date':
-            reverse_date_filter = reverse;
+            reverse_date_filter = 0;
             break;
         default:
             break;
     }
     let include = document.getElementById("include-"+filter+"-btn"); 
-    let exclude = document.getElementById("exclude-"+filter+"-btn"); 
-    toggleRevBrns(include, exclude)
+    let exclude = document.getElementById("exclude-"+filter+"-btn");
+
+    include.classList.add("active-switch-btn");
+    exclude.classList.remove("active-switch-btn");
 }
 
-function toggleRevBrns(include, exclude) {
-    include.classList.toggle("active-switch-btn");
-    exclude.classList.toggle("active-switch-btn");
+function excludeSwitch(filter) {
+    switch (filter) {
+        case 'tag':
+            reverse_tag_filter = 1;
+            break;
+        case 'type':
+            reverse_type_filter = 1;
+            break;
+        case 'side':
+            reverse_side_filter = 1;
+            break;
+        case 'date':
+            reverse_date_filter = 1;
+            break;
+        default:
+            break;
+    }
+    let include = document.getElementById("include-"+filter+"-btn"); 
+    let exclude = document.getElementById("exclude-"+filter+"-btn");
+
+    include.classList.remove("active-switch-btn");
+    exclude.classList.add("active-switch-btn");
 }
+// ]

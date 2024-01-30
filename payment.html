@@ -82,22 +82,28 @@
             </div>
             
             <!-- Account -->
+            
+            <!-- Исправлено: Поялвение меню сделать не по клику, а при ховере [ -->
             <div id="account-container">
                 <hr>
-                <div id="email-menu" style="display: none;">
+                <div id="email-menu" style="display: none" onmouseleave="hideEmailMenu()">
                     <div id="email-menu-container" class="email_menu_text">
                         <a href="https://www.example.com">Privacy Policy</a>
-                        <a href="https://www.example.com">Terms of Sevice</a>
+                        <a href="https://www.example.com">Terms of Service</a>
                         <a id="logout-link" href="https://www.example.com">
                             <img class="logout-icon" src="./imgs/logout.png" alt="Logo icon">
                             <p>Log out</p>
                         </a>
                     </div>
                 </div>
-                <p class="small-menu-text" id="user-email" onclick="activateEmailMenu()">seo@contractcrab.com</p>
+                <p class="small-menu-text" id="user-email" onmouseenter="activateEmailMenu()" onmouseleave="hideEmailMenu()">seo@contractcrab.com</p>
             </div>
-        </div>
+            <!-- ] -->
 
+        </div>
+        <!-- Исправлено: Меню фиксируем, крутим только правую часть [ -->
+        <div id="space-container"></div>
+        <!-- ] -->
         <div id="payment-container">
             <h1>Payment</h1>
 
