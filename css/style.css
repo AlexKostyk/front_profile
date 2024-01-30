@@ -341,14 +341,16 @@ hr {
     margin-left: 514px;
 }
 
-/* load-contract-container */
+/* Исправлено 30.01 [*/
 .load-contract-container {
     display: flex;
     align-items: center;
     flex-direction: column;
     margin-top: 32px;
     height: 124px;
+    cursor: pointer;
 }
+/* ] */
   
 .upload-icon {
     align-items: center;
