@@ -115,6 +115,7 @@ body {
     left: 0;
 }
 
+/* Исправлено: курсор поинтер на кнопки в чуз тариф [ */
 .get-sub-btns {
     position: absolute;
     width: 100%;
@@ -129,7 +130,10 @@ body {
 
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+
+    cursor: pointer;
 }
+/* ] */
 
 .get-sub-btns:hover,
 .get-sub-btns:active {

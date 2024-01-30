@@ -835,3 +835,34 @@ textarea::-webkit-scrollbar-track {
     flex-direction: column;
     gap: 30px;
 }
+
+/* Исправлено: Мигающая зеленая кнопка к саппорт [*/
+.support-point {
+    gap: 0;
+}
+
+.support-point p {
+    margin: 0 6px 0 12px;    
+}
+
+#active-point {
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    animation: changeColor 2s infinite;
+}
+
+@keyframes changeColor {
+    0% {
+        background-color: #96db28; /* начальный цвет */
+    }
+    50% {
+        background-color: #4ec907; /* цвет в середине анимации */
+    }
+    100% {
+        background-color: #96db28; /* конечный цвет */
+    }
+}
+
+/* ] */

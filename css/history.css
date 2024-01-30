@@ -525,6 +525,12 @@ body {
     cursor: pointer;
 }
 
+/* Исправлено: ховеры для копи и копи ол [*/
+.copy-menu-text:hover {
+    color: rgb(218, 217, 217);
+}
+/* ] */
+
 .filter-menu {
     display: flex;
     flex-direction: column;
@@ -1069,11 +1075,14 @@ abbr[title] {
     cursor: pointer;
 }
 
+/* Исправлено: ховер на delete [ */
+#apply-delete:hover,
 #apply-delete:active {
     border: none;
     background-color: var(--error-text-color);
     color: #FFFFFF;
 }
+/* ] */
 
 #info-copy-download {
     position: absolute;
