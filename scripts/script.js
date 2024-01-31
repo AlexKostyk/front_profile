@@ -26,9 +26,10 @@ let history_container = document.getElementById('history-container');
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
 let limit_date_text = document.getElementById('limit-date-text');
-
+// Исправлено 31.01 [
 let inf_container = document.getElementById('inf-container');
-
+let resp_inf_container = document.getElementById('response-inf-container');
+// ]
 let response_limit_plan_text = document.getElementById('response-limit-plan-text');
 let response_limit_perday_text = document.getElementById('response-limit-perday-text');
 let response_limit_date_text = document.getElementById('response-limit-date-text');
@@ -134,6 +135,7 @@ function getLimitData() {
     updateLimitData();
 }
 
+// Исправлено 31.01 [
 function updateLimitData() {
     limit_plan_text.innerHTML = plan_text;
     limit_date_text.innerHTML = date_text;
@@ -146,8 +148,10 @@ function updateLimitData() {
         response_limit_perday_text.innerHTML = perday_text;
     } else {
         inf_container.style.display = 'flex';
+        resp_inf_container.style.display = 'flex';
     }
 }
+// ]
 
 
 // функция для получения количества запросов у пользователя
