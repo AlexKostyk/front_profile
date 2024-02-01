@@ -24,6 +24,15 @@ let download_file_btn = document.getElementById('download-file-btn');
 let history_container = document.getElementById('history-container');
 
 // Добавление: drag and drop на весь экран [
+let file_name_upoad = document.getElementById('upload-file-name');
+let file_expansion_upoad = document.getElementById('upload-file-expansion');
+
+let file_name_response = document.getElementById('response-file-name');
+let file_expansion_response = document.getElementById('response-file-expansion');
+
+let file_name_drop = document.getElementById('drop-file-name');
+let file_expansion_drop = document.getElementById('drop-file-expansion');
+
 // Drag and drop
 let drag_and_drop_area = document.getElementById('drag-and-drop-area');
 let drop_first_part = document.getElementById('drag-and-drop-first-part');
@@ -327,15 +336,6 @@ function changeProgressBarFile(){
 }
 
 function changeNameFile(file){
-    let file_name_upoad = document.getElementById('upload-file-name');
-    let file_expansion_upoad = document.getElementById('upload-file-expansion');
-
-    let file_name_response = document.getElementById('response-file-name');
-    let file_expansion_response = document.getElementById('response-file-expansion');
-
-    let file_name_drop = document.getElementById('drop-file-name');
-    let file_expansion_drop = document.getElementById('drop-file-expansion');
-
     let curr_file_name = '';
     let curr_file_extension = '';
 
@@ -385,15 +385,26 @@ function checkFileType(file){
         return 0;
     }
 }
-// ]
+
+function clearFileName() {
+    file_name_upoad.innerHTML = '';
+    file_name_response.innerHTML = '';
+    file_name_drop.innerHTML = '';
+
+    file_expansion_upoad.innerHTML = 'text';
+    file_expansion_response.innerHTML = 'text';
+    file_expansion_drop.innerHTML = 'text';
+}
 
 function checkTextarea(){
     if (text_input.value.trim() !== '' && request_limit_counter < max_request_limit_counter) {
         summarize_btn.disabled = false;
+        clearFileName();
     } else {
         summarize_btn.disabled = true;
     }
 }
+// ]
 
 // функция срабатывающая при нажатии на кнопку summarize
 function summarize(){
