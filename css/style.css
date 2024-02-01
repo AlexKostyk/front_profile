@@ -590,14 +590,18 @@ textarea::-webkit-scrollbar-track {
     color: var(--dark-gray-text-color);
 }
 
+/* Исправлено: отображение ошибки лоадера [*/
 #error-container {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
 
-    margin: 194px auto;
+    top: 172px;
+    left: 42%;
 }
+/* ] */
 
 .error-text {
     display: flex;

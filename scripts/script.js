@@ -628,8 +628,12 @@ function makeTextToClipboard() {
     return text;
 }
 
+// Исправлено: отображение ошибки лоадера [
 function loaderError() {
     let error_container = document.getElementById("error-container");
     summarize_container.style.display = 'none';
+    loader_container.style.display = 'none';
+    history_container.style.display = 'none';
     error_container.style.display = 'flex';
 }
+// ]
