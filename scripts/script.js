@@ -239,10 +239,12 @@ const dragging = (e) => {
     e.preventDefault();
     e.stopPropagation();
     // drop_box.style = "border: 1px solid #e4dff2; border-radius: 8px;";
-    drag_and_drop_area.style.display = 'flex';
-    drop_first_part.style.display = 'flex';
-    drop_second_part.style.display = 'none';
-    drop_header_text.innerHTML = 'Upload  your contract';
+    if (window.getComputedStyle(summarize_container).display !== 'none'){
+        drag_and_drop_area.style.display = 'flex';
+        drop_first_part.style.display = 'flex';
+        drop_second_part.style.display = 'none';
+        drop_header_text.innerHTML = 'Upload  your contract';
+    }
 };
   
   // Back to initial stage when dragging ends
@@ -337,17 +339,19 @@ function changeNameFile(file){
     let curr_file_name = '';
     let curr_file_extension = '';
 
-    // Получаем имя без расширения
-    curr_file_name = file.name.split('.').slice(0, -1).join('.') + '.';
-    file_name_upoad.innerHTML = curr_file_name;
-    file_name_response.innerHTML = curr_file_name;
-    file_name_drop.innerHTML = curr_file_name;
+    if (window.getComputedStyle(summarize_container).display !== 'none') {
+        // Получаем имя без расширения
+        curr_file_name = file.name.split('.').slice(0, -1).join('.') + '.';
+        file_name_upoad.innerHTML = curr_file_name;
+        file_name_response.innerHTML = curr_file_name;
+        file_name_drop.innerHTML = curr_file_name;
 
-    // Получаем расширение файла
-    curr_file_extension = file.name.split('.').pop();
-    file_expansion_upoad.innerHTML = curr_file_extension;
-    file_expansion_response.innerHTML = curr_file_extension;
-    file_expansion_drop.innerHTML = curr_file_extension;
+        // Получаем расширение файла
+        curr_file_extension = file.name.split('.').pop();
+        file_expansion_upoad.innerHTML = curr_file_extension;
+        file_expansion_response.innerHTML = curr_file_extension;
+        file_expansion_drop.innerHTML = curr_file_extension;
+    }
 }
 
 function closeUploadFile() {
