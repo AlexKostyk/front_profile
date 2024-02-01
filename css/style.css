@@ -866,3 +866,113 @@ textarea::-webkit-scrollbar-track {
 }
 
 /* ] */
+
+/* Добавление: drag and drop на весь экран [*/
+#drag-and-drop-area {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+
+    background-color: #27272773;
+}
+
+#drag-and-drop-border {
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px 32px;
+    
+    width: 961px;
+    height: 616px;
+    border-radius: 8px;
+
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 20px 0px #1E1E1EB2;
+
+    margin: auto;
+}
+
+#drag-and-drop-header {
+    display: flex;
+    align-items: center;
+}
+
+#drag-and-drop-header img {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.drag-and-drop-content {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-top: 150px;
+}
+
+.drag-and-drop-content img{
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
+
+#drag-and-drop-bottom-text {
+    text-align: center;
+    margin-top: auto;
+    color: var(--secondary-text-and-elements-color);
+}
+
+#drop-file-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#drop-progress-bar-file {
+    height: 6px;
+    width: 345px;
+}
+
+#drop-another-file-btn {
+    margin: 62px auto;
+    
+    width: 197px;
+    height: 43px;
+    padding: 12px 32px;
+    border-radius: 6px;
+
+    border: none;
+    cursor: pointer;
+
+    color: var(--accent-and-details-color);
+    background-color: var(--main-accent-color);
+    box-shadow: 2px 2px 4px 0px #013A4E40;
+}
+
+#drop-another-file-btn:hover {
+    background-color: var(--neon-elements-hover-or-click-color);
+}
+
+#drop-name-file-bar-container {
+    width: fit-content;
+}
+
+#drop-file-name {
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: var(--basic-main-text-color);
+}
+
+#drop-file-expansion {
+    color: var(--basic-main-text-color);
+}
+/* ] */

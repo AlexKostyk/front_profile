@@ -11,7 +11,9 @@
     <!-- Подключение стилей Pikaday -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 </head>
-<body>
+<!-- Добавление: drag and drop на весь экран [ -->
+<body ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
+<!-- ] -->
     <div class="content">
         <!-- Сайдбар -->
         <div id="sidebar">
@@ -121,8 +123,8 @@
                             </div>
 
                             <hr>
-
-                            <div class="load-contract-container" id="load-contract-container" ondrop="onDrop(event)" ondragover="dragging(event)" ondragleave="dragLeft()">
+                            <!-- Добавление: drag and drop на весь экран [ -->
+                            <div class="load-contract-container" id="load-contract-container">
                                 <form>
                                     <input type="file" id="file-input" style="display: none"/>
                                 </form>
@@ -130,6 +132,7 @@
                                 <p class="card-text upload-text">Click here or drag file to upload</p>
                                 <p class="card-text upload-text" id="file-extensions">.docx, .txt, .pdf</p>
                             </div>
+                            <!-- ] -->
 
                             <div id="progress-container" style="display: none;">
                                 <img class="file-icon" id="file-icon" src="./imgs/uploading-file.png" alt="File icon">
@@ -648,6 +651,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Добавление: drag and drop на весь экран [ -->
+    
+    <!-- Drag and drop area -->
+    <div id="drag-and-drop-area" style="display: none;">
+        <div id="drag-and-drop-border">
+            <div id="drag-and-drop-header">
+                <h2 id="drag-and-drop-header-text" class="card-header"></h2>
+                <img id="drag-and-drop-close-icon" src="./imgs/drag-and-drop-close.png" alt="Close icon" onclick="closeUploadFile()">
+            </div>
+
+            <div class="drag-and-drop-content" id="drag-and-drop-first-part">
+                <img src="./imgs/drag-and-drop-cloud.png" alt="Close icon">
+                <p>Drag and drop here the contract to upload</p>
+            </div>
+
+            <div class="drag-and-drop-content" id="drag-and-drop-second-part" style="display: none;">
+                <img src="./imgs/drag-and-drop-file.png" alt="File icon">
+                <div id="drop-name-file-bar-container" class="name-file-bar-container">
+                    <div class="name-expansion-container">
+                        <p class="card-text" id="drop-file-name"></p>
+                        <p class="card-text" id="drop-file-expansion"></p>
+                    </div>
+                    <div id="drop-file-bar-container">
+                        <progress id="drop-progress-bar-file" class="uploading-progress-bar-file" max=100 value=0></progress>
+                        <img id="close-file-icon" src="./imgs/close.png" alt="Close icon" onclick="closeUploadFile()">
+                    </div>
+                </div>
+
+                <button id="drop-another-file-btn" class="link-text" onclick="closeUploadFile()">Upload another file</button>
+            </div>
+
+            <p id="drag-and-drop-bottom-text" class="card-text">Your file should be one of the following formats .docx, .txt, .pdf</p>
+        </div>
+    </div>
+
+    <!-- ] -->
+
     <!-- Отладочная панель -->
     <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 40px; display: none;">
         <button class="secondary-btn link-small" onclick="subscriptionEnded()">Subscription ended</button>

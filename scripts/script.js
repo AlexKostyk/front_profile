@@ -23,6 +23,15 @@ let file_downloaded_container = document.getElementById('file-downloaded-contain
 let download_file_btn = document.getElementById('download-file-btn');
 let history_container = document.getElementById('history-container');
 
+// Добавление: drag and drop на весь экран [
+// Drag and drop
+let drag_and_drop_area = document.getElementById('drag-and-drop-area');
+let drop_first_part = document.getElementById('drag-and-drop-first-part');
+let drop_second_part = document.getElementById('drag-and-drop-second-part');
+let drop_progress_bar_file = document.getElementById('drop-progress-bar-file');
+let drop_header_text = document.getElementById('drag-and-drop-header-text');
+// ]
+
 let limit_plan_text = document.getElementById('limit-plan-text');
 let limit_perday_text = document.getElementById('limit-perday-text');
 let limit_date_text = document.getElementById('limit-date-text');
@@ -224,16 +233,24 @@ function setTextContract() {
     }
 }
 
+// Добавление: drag and drop на весь экран [
 // Change color of the box if something being dragged
 const dragging = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    drop_box.style = "border: 1px solid #e4dff2; border-radius: 8px;";
+    // drop_box.style = "border: 1px solid #e4dff2; border-radius: 8px;";
+    drag_and_drop_area.style.display = 'flex';
+    drop_first_part.style.display = 'flex';
+    drop_second_part.style.display = 'none';
+    drop_header_text.innerHTML = 'Upload  your contract';
 };
   
   // Back to initial stage when dragging ends
 const dragLeft = () => {
-    drop_box.style = "border: none";
+    // drop_box.style = "border: none";
+    drop_first_part.style.display = 'flex';
+    drop_second_part.style.display = 'none';
+    drop_header_text.innerHTML = 'Upload  your contract';
 };
 
   // when something is dropped
@@ -246,8 +263,12 @@ const onDrop = (e) => {
     
     checkAndUploadFile(files[0]);
 
-    drop_box.style.border = 'none';
+    // drop_box.style.border = 'none';
+    drop_first_part.style.display = 'none';
+    drop_second_part.style.display = 'flex';
+    drop_header_text.innerHTML = 'Uploading contract';
 };
+// ]
 
 drop_box.addEventListener('click', () => {
     file_input.click();
@@ -274,6 +295,7 @@ function upoadFiles(file){
         formData.append('file', file);
 }
 
+// Добавление: drag and drop на весь экран [
 function changeProgressBarFile(){
     close_progress_bar_file_flag = 0;
     progress_file.style.display = 'flex';
@@ -283,6 +305,7 @@ function changeProgressBarFile(){
     const interval = setInterval(() => {
         value += 1;
         progress_bar_file.value = value;
+        drop_progress_bar_file.value = value;
         if (value >= 100) {
             clearInterval(interval);
             progress_bar_file.classList.add('ready-progress-bar-file');
@@ -291,19 +314,25 @@ function changeProgressBarFile(){
             if(request_limit_counter < max_request_limit_counter){
                 summarize_btn.disabled = false;
             }
+            closeDragDrop();
         }
         if (close_progress_bar_file_flag){
             clearInterval(interval);
             recoveryProgressBarFile();
+            closeDragDrop();
         }
-    }, 10);
+    }, 15);
 }
 
 function changeNameFile(file){
     let file_name_upoad = document.getElementById('upload-file-name');
     let file_expansion_upoad = document.getElementById('upload-file-expansion');
+
     let file_name_response = document.getElementById('response-file-name');
     let file_expansion_response = document.getElementById('response-file-expansion');
+
+    let file_name_drop = document.getElementById('drop-file-name');
+    let file_expansion_drop = document.getElementById('drop-file-expansion');
 
     let curr_file_name = '';
     let curr_file_extension = '';
@@ -312,16 +341,19 @@ function changeNameFile(file){
     curr_file_name = file.name.split('.').slice(0, -1).join('.') + '.';
     file_name_upoad.innerHTML = curr_file_name;
     file_name_response.innerHTML = curr_file_name;
+    file_name_drop.innerHTML = curr_file_name;
 
     // Получаем расширение файла
     curr_file_extension = file.name.split('.').pop();
     file_expansion_upoad.innerHTML = curr_file_extension;
     file_expansion_response.innerHTML = curr_file_extension;
+    file_expansion_drop.innerHTML = curr_file_extension;
 }
 
 function closeUploadFile() {
     recoveryProgressBarFile();
     contract_element.style.display = 'flex';
+    closeDragDrop();
 }
 
 function recoveryProgressBarFile(){
@@ -335,15 +367,21 @@ function recoveryProgressBarFile(){
     summarize_btn.disabled = true;
 }
 
+function closeDragDrop() {
+    drag_and_drop_area.style.display = 'none';
+}
+
 function checkFileType(file){
     if (/\.(docx|txt|pdf)$/i.test(file.name)) {
         return 1;
     } else {
         console.log('Файл не соответствует нужным расширениям');
         file_extensions.style.color='#ff1701';
+        closeDragDrop();
         return 0;
     }
 }
+// ]
 
 function checkTextarea(){
     if (text_input.value.trim() !== '' && request_limit_counter < max_request_limit_counter) {
