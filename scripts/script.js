@@ -278,6 +278,12 @@ const onDrop = (e) => {
     drop_first_part.style.display = 'none';
     drop_second_part.style.display = 'flex';
     drop_header_text.innerHTML = 'Uploading contract';
+
+    switch_text_contract_btn.innerHTML = 'Paste text instead';
+    upload_contract_heading.innerHTML = 'Upload contract';
+    text_element.style.display = 'none';
+
+    text_contract_flag = 0;
 };
 // ]
 
