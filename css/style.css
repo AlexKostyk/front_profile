@@ -399,9 +399,9 @@ hr {
 .limit-bar {background-color: var(--basic-back);}
 
 /* value: */
-.limit-bar::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 8px;}
-.limit-bar::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 8px;}
-.limit-bar {color: var(--main-accent-color); border-radius: 8px;}
+.limit-bar::-webkit-progress-value {background-color: var(--neon-elements-hover-or-click-color) !important; border-radius: 8px;}
+.limit-bar::-moz-progress-bar {background-color: var(--neon-elements-hover-or-click-color) !important; border-radius: 8px;}
+.limit-bar {color: var(--neon-elements-hover-or-click-color); border-radius: 8px;}
 
 /* максимальное количество лимитов в шкале лимитов */
 .limit-bar-is-max::-webkit-progress-value {background-color: var(--error-text-color) !important; border-radius: 8px;}
@@ -503,9 +503,9 @@ textarea::-webkit-scrollbar-track {
 .uploading-progress-bar-file {background-color: var(--basic-back);}
 
 /* value: */
-.uploading-progress-bar-file::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 4px;}
-.uploading-progress-bar-file::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 4px;}
-.uploading-progress-bar-file {color: var(--main-accent-color); border-radius: 4px;}
+.uploading-progress-bar-file::-webkit-progress-value {background-color: var(--neon-elements-hover-or-click-color) !important; border-radius: 4px;}
+.uploading-progress-bar-file::-moz-progress-bar {background-color: var(--neon-elements-hover-or-click-color) !important; border-radius: 4px;}
+.uploading-progress-bar-file {color: var(--neon-elements-hover-or-click-color); border-radius: 4px;}
 
 /* ready uplod file */
 
@@ -717,7 +717,8 @@ textarea::-webkit-scrollbar-track {
     padding: 8px 12px;
     border-radius: 30px;
     border: 1px;
-    background-color: var(--main-accent-color);
+    background-color: var(--basic-back);
+    color: var(--secondary-text-and-elements-color);
 }
 
 .point-list {
@@ -941,7 +942,19 @@ textarea::-webkit-scrollbar-track {
 #drop-progress-bar-file {
     height: 6px;
     width: 345px;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: width 0.3s ease;
 }
+
+/* background: */
+#drop-progress-bar-file::-webkit-progress-bar {background-color: var(--basic-back); width: 100%;}
+#drop-progress-bar-file {background-color: var(--basic-back);}
+
+/* value: */
+#drop-progress-bar-file::-webkit-progress-value {background-color: var(--main-accent-color) !important; border-radius: 4px;}
+#drop-progress-bar-file::-moz-progress-bar {background-color: var(--main-accent-color) !important; border-radius: 4px;}
+#drop-progress-bar-file {color: var(--main-accent-color); border-radius: 4px;}
 
 #drop-another-file-btn {
     margin: 62px auto;

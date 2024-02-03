@@ -63,7 +63,7 @@
     padding: 32px 0 40px 0;
     border-radius: 8px;
     gap: 16px;
-    border: 1px solid var(--main-accent-color);
+    border: 1px solid var(--downloaded-text-color);
 }
 
 .bold-title {
@@ -80,7 +80,7 @@
 
 #current-plan-info {
     min-width: 294px;
-    border-top: 1px solid var(--main-accent-color);
+    border-top: 1px solid var(--downloaded-text-color);
 }
 
 #current-plan-info ul {
