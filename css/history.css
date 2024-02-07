@@ -404,6 +404,15 @@ body {
     background-color: var(--border-backgroung-color);
 }
 
+/* Исправлено 07.02 [ */
+.tag-container p {
+    max-width: 100px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+/* ] */
+
 .tag-dots {
     width: 6px;
     height: 6px;
@@ -777,15 +786,9 @@ abbr[title] {
     list-style-type: none;
 }
 
+/* Исправлено 07.02 [ */
 .filter-menu ul li {
-    position: relative;
-    font-family: Inter;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: -0.02em;
-    text-align: left;
-    
+    position: relative;    
 
     padding: 5px 0 0 10px;
     margin: 2px 0 2px 0;
@@ -799,6 +802,7 @@ abbr[title] {
     
     cursor: pointer;
 }
+/* ] */
 
 .selected-filter {
     background-color: var(--basic-background-color);
@@ -865,7 +869,7 @@ abbr[title] {
     height: 24px;
 
     transition: height 1s ease;
-    overflow: hidden;
+    overflow: hidden; 
 }
 
 #edit-tag-text-container {
@@ -891,6 +895,15 @@ abbr[title] {
     letter-spacing: -0.02em;
     text-align: left;
 }
+
+/* Исправлено 07.02 [ */
+#edit-tag-container span p {
+    max-width: 80px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+/* ] */
 
 #new-tag {
     padding: 2px 10px;

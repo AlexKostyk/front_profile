@@ -608,10 +608,11 @@ function showActionMenu(curr_element) {
                 tag_container.removeChild(span);
             });
 
+            // Исправлено 07.02 [
             tag_arr.forEach(item => {
                 if (item != '') {
                 let spanElement = document.createElement("span");
-                spanElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div>${item}`;
+                spanElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div><p>${item}</p>`;
                 spanElement.classList.add('action-element');
                 tag_container.appendChild(spanElement);
 
@@ -620,6 +621,7 @@ function showActionMenu(curr_element) {
                 });
                 }
             });
+            // ]
 
             function updateHistoryData(color, tag) {
 
