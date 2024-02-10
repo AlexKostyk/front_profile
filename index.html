@@ -532,26 +532,29 @@
                     </div>
                 </div>
 
+                <!-- Изменено 10.02 [ -->
                 <!-- Скрытое меню new tag -->
                 <div id="new-tag-menu" class="action-element" style="display: none;">
-                    <div id="new-tag" class="action-element">New Tag</div>
-                    <div class="new-tag-input-containet action-element">
-                        <input id="new-tag-input" class="action-element" placeholder="Name of Tag">
-                        <p id="new-tag-error" class="action-element small-limit-text"></p>
+                    <div class="rombus"></div>
+                    <div id="new-tag-border" class="shadow-border">
+                        <div id="new-tag" class="action-element">New Tag</div>
+                        <div class="new-tag-input-containet action-element">
+                            <input id="new-tag-input" class="action-element" placeholder="Name of Tag">
+                            <p id="new-tag-error" class="action-element small-limit-text"></p>
+                        </div>
+                        <div id="color-coltainer" class="action-element">
+                            <p id="color-header" class="action-element">Color</p>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(0, 'blue')"><div class="tag-dots action-element" style="background-color: blue;"></div >Blue</div>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(1, 'red')"><div class="tag-dots action-element" style="background-color: red;"></div>Red</div>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(2, 'green')"><div class="tag-dots action-element" style="background-color: green;"></div>Green</div>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(3, '#003A4E')"><div class="tag-dots action-element" style="background-color: #003A4E;"></div>Seawave</div>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(4, '#535F63')"><div class="tag-dots action-element" style="background-color: #535F63;"></div>Dark Grey</div>
+                            <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(5, '#C1C8CC')"><div class="tag-dots action-element" style="background-color: #C1C8CC;"></div>Light Grey</div>
+                        </div>
+                        <button id="apply-new-tag" class="action-element">Create</button>
                     </div>
-                    <div id="color-coltainer" class="action-element">
-                        <p id="color-header" class="action-element">Color</p>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(0, 'blue')"><div class="tag-dots action-element" style="background-color: blue;"></div >Blue</div>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(1, 'red')"><div class="tag-dots action-element" style="background-color: red;"></div>Red</div>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(2, 'green')"><div class="tag-dots action-element" style="background-color: green;"></div>Green</div>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(3, '#003A4E')"><div class="tag-dots action-element" style="background-color: #003A4E;"></div>Seawave</div>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(4, '#535F63')"><div class="tag-dots action-element" style="background-color: #535F63;"></div>Dark Grey</div>
-                        <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(5, '#C1C8CC')"><div class="tag-dots action-element" style="background-color: #C1C8CC;"></div>Light Grey</div>
-                    </div>
-                    <!-- Изменено 10.02 [ -->
-                    <button id="apply-new-tag" class="action-element">Create</button>
-                    <!-- ] -->
                 </div>
+                <!-- ] -->
 
                 <!-- Скрытое меню copy -->
                 <div id="copy-menu" style="display: none;">

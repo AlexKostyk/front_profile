@@ -964,23 +964,31 @@ abbr[title] {
     text-align: left;
 }
 
+/* Изменено 10.02 [ */
 #new-tag-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
     width: 198px;
     min-height: 167px;
-    padding: 19px 16px;
-
+    
     position: absolute;
     right: 0;
     top: 0;
 
+    padding: 15px 0 0 0;
+}
+
+#new-tag-border {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 19px 16px;
+
+
     border-radius: 8px;
     background-color: #FFFFFF;
-    box-shadow: 1px 1px 13px 0px #042A4A1A;
 }
+/* ] */
 
 #new-tag-input {
     width: 166px;

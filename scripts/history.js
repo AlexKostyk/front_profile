@@ -696,10 +696,12 @@ function showActionMenu(curr_element) {
                 actionsMenu.style.display = 'none';
                 document.removeEventListener('click', clickHandler);
 
+                // Изменено 10.02 [
                 new_tag_menu.style.position = 'absolute';
                 new_tag_menu.style.left = `${coordX}px`;
-                new_tag_menu.style.top = `${coordY}px`;
+                new_tag_menu.style.top = `${coordY - 5}px`;
                 new_tag_menu.style.display = 'flex';
+                // ]
 
                 function clickNewTag() {
                     if (!event.target.classList.contains("action-element")) {
@@ -1060,6 +1062,7 @@ function highlightDateRange() {
     }
 }
 
+// Изменено 10.02 [
 function showDateFilter() {
     closeOtherMenuFilter();
 
@@ -1071,6 +1074,7 @@ function showDateFilter() {
 
     date_filter_menu.style.display = 'flex';
 }
+// ]
 
 function closeDateFilter() {
     date_filter_menu.style.display = 'none';
@@ -1160,6 +1164,7 @@ side_filter.addEventListener('click', (event) => {
     if (event.target.id !== "close-side-filter") showSideFilter();
 });
 
+// Изменено 10.02 [
 function showSideFilter() {
     closeOtherMenuFilter();
 
@@ -1173,6 +1178,7 @@ function showSideFilter() {
 
     addAllSides();
 }
+// ]
 
 function closeOtherMenuFilter() {
     date_filter_menu.style.display = 'none';
@@ -1366,6 +1372,7 @@ type_filter.addEventListener('click', (event) => {
     if (event.target.id !== "close-type-filter") showTypeFilter();
 });
 
+// Изменено 10.02 [
 function showTypeFilter() {
     closeOtherMenuFilter();
 
@@ -1379,6 +1386,7 @@ function showTypeFilter() {
 
     addAllTypes();
 }
+// ]
 
 function closeTypeFilter() {
     type_menu.style.display = 'none';
@@ -1506,6 +1514,7 @@ tag_filter.addEventListener('click', (event) => {
     if (event.target.id !== "close-tag-filter") showTagFilter();
 });
 
+// Изменено 10.02 [
 function showTagFilter() {
     closeOtherMenuFilter();
 
@@ -1519,6 +1528,7 @@ function showTagFilter() {
 
     addAllTags();
 }
+// ]
 
 function closeTagFilter() {
     tag_menu.style.display = 'none';
