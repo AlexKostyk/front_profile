@@ -53,6 +53,7 @@
     gap: 24px;
 }
 
+/* Исправлено 09.02 [ */
 .current-plan-border {
     display: flex;
     flex-direction: column;
@@ -64,7 +65,9 @@
     border-radius: 8px;
     gap: 16px;
     border: 1px solid var(--downloaded-text-color);
+    background-color: var(--border-backgroung-color);
 }
+/* ] */
 
 .bold-title {
     color: var(--basic-main-text-color);
@@ -78,10 +81,12 @@
     margin-bottom: 20px;
 }
 
+/* Исправлено 09.02 [ */
 #current-plan-info {
     min-width: 294px;
-    border-top: 1px solid var(--downloaded-text-color);
+    border-top: 1px solid white;
 }
+/* ] */
 
 #current-plan-info ul {
     margin: 40px 24px 0 40px;

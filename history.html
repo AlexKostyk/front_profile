@@ -179,46 +179,67 @@
             
             <!-- Скрытое меню actions -->
 
-            <!-- Исправлено: Actions подгрузка img в ховере [ -->
+            <!-- Исправлено 09.02 [ -->
             <div id="actions-menu" class="action-element" style="display: none;">
-                <div class="action-menu-point actions_menu_text download-summary action-element">
-                    <img class="place-img action-element download-summary" src="./imgs/download.png" alt="Download icon">
-                    <img class="hover-img action-element download-summary" src="./imgs/download_hover.png" alt="Download icon">
-                    <p class="action-element download-summary">Download Summary</p>
-                </div>
-                <div class="action-menu-point actions_menu_text copy-to-clipboard action-element">
-                    <img class="place-img action-element copy-to-clipboard" src="./imgs/content_copy.png" alt="Copy icon">
-                    <img class="hover-img action-element copy-to-clipboard" src="./imgs/content_copy_hover.png" alt="Copy icon">
-                    <p class="action-element copy-to-clipboard">Copy to Clipboard</p>
-                </div>
-                <div id="edit-tag-container" class="action-menu-point actions_menu_text edit-tag action-element">
-                    <div id="edit-tag-text-container" class="action-element">
-                        <img class="place-img action-element edit-tag"src="./imgs/shoppingmode.png" alt="shoppingmode icon">
-                        <img class="hover-img action-element edit-tag"src="./imgs/shoppingmode_hover.png" alt="shoppingmode icon">
-                        <p class="action-element edit-tag">Edit tag</p>
+                <div class="rombus"></div>
+                <div id="actions-menu-border" class="shadow-border action-element">
+                    <div class="action-menu-point actions_menu_text copy-to-clipboard action-element">
+                        <img class="place-img action-element copy-to-clipboard" src="./imgs/content_copy.png" alt="Copy icon">
+                        <img class="hover-img action-element copy-to-clipboard" src="./imgs/content_copy_hover.png" alt="Copy icon">
+                        <p class="action-element copy-to-clipboard">Copy to Clipboard</p>
                     </div>
-                </div>
-                <div class="action-menu-point actions_menu_text action-delete-text delete action-element">
-                    <img class="action-element delete" src="./imgs/delete.png" alt="Delete icon">
-                    <p class="action-element delete">Delete</p>
+                    <div id="edit-tag-container" class="action-menu-point actions_menu_text edit-tag action-element">
+                        <div id="edit-tag-text-container" class="action-element">
+                            <img class="place-img action-element edit-tag"src="./imgs/shoppingmode.png" alt="shoppingmode icon">
+                            <img class="hover-img action-element edit-tag"src="./imgs/shoppingmode_hover.png" alt="shoppingmode icon">
+                            <p class="action-element edit-tag">Edit tag</p>
+                        </div>
+                    </div>
+                    <div class="action-menu-point actions_menu_text action-delete-text delete action-element">
+                        <img class="action-element delete" src="./imgs/delete.png" alt="Delete icon">
+                        <p class="action-element delete">Delete</p>
+                    </div>
                 </div>
             </div>
             <!-- ] -->
 
+            <!-- Изменено 10.02 [ -->
             <!-- Скрытое окно подтверждения удаления -->
-            <div id="apply-delete-container" class="action-element" style="display: none;"> 
-                <p class="apply-delete-text action-element">Are you sure you want to delete this summary?</p>
-                <div class="action-element" id="apply-btns-container">
-                    <button id="apply-delete" class="action-element">Delete</button>
-                    <button id="cancel-delete" class="action-btn">Cancel</button>
+            <div id="apply-delete-container" class="action-element" style="display: none;">
+                <div class="rombus"></div>
+                <div id="apply-delete-border" class="shadow-border"> 
+                    <p class="apply-delete-text action-element">Are you sure you want to delete this summary?</p>
+                    <div class="action-element" id="apply-btns-container">
+                        <button id="apply-delete" class="action-element apply-filter-btn-text">Delete</button>
+                        <button id="cancel-delete" class="close-btn apply-filter-btn-text">Cancel</button>
+                    </div>
                 </div>
             </div>
+            <!-- ] -->
 
+            <!-- Изменено 10.02 [ -->
+            <div id="apply-delete-tag-container" class="action-element" style="display: none;">
+                <div class="rombus"></div> 
+                <div id="apply-delete-tag-border" class="shadow-border"> 
+                    <p class="apply-delete-text action-element">Are you sure you want to delete this tag?</p>
+                    <div class="action-element" id="apply-tag-btns-container">
+                        <button id="apply-delete-tag" class="action-element apply-filter-btn-text">Delete</button>
+                        <button id="cancel-delete-tag" class="close-btn apply-filter-btn-text">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ] -->
+
+            <!-- Изменено 10.02 [ -->
             <!-- Скрытые элементы подтверждения копирования и загрузки -->
             <div id="info-copy-download" style="display: none;">
-                <img class="action-element delete" src="./imgs/check_large.png" alt="Download icon">
-                <p id="text-info-copy-download"></p>
+                <div class="rombus"></div>
+                <div id="info-copy-download-border" class="shadow-border">
+                    <img class="action-element delete" src="./imgs/check_large.png" alt="Download icon">
+                    <p id="text-info-copy-download"></p>
+                </div>
             </div>
+            <!-- ] -->
 
             <!-- Скрытое меню new tag -->
             <div id="new-tag-menu" class="action-element" style="display: none;">
@@ -236,7 +257,9 @@
                     <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(4, '#535F63')"><div class="tag-dots action-element" style="background-color: #535F63;"></div>Dark Grey</div>
                     <div class="tag-color tag-container tag-text action-element" onclick="changeNewTagColor(5, '#C1C8CC')"><div class="tag-dots action-element" style="background-color: #C1C8CC;"></div>Light Grey</div>
                 </div>
-                <button id="apply-new-tag" class="action-btn action-element">Create</button>
+                <!-- Изменено 10.02 [ -->
+                <button id="apply-new-tag" class="action-element">Create</button>
+                <!-- ] -->
             </div>
 
             <!-- Скрытое меню copy -->
@@ -245,105 +268,118 @@
                 <p id="copy-all" class="copy-menu-text">Copy all</p>
             </div>
 
-        <!-- Исправлено 30.01 [ -->
+            <!-- Исправлено 10.02 [ -->
             <!-- Скрытое меню фильтра по дате -->
             <div id="request-date-menu" class="filter-menu" style="display: none;">
-                <div class="filter-header">
-                    <h2>Request Date</h2>
-                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()">
+                <div class="rombus left-position-rombus"></div>
+                <div class="filter-border shadow-border">
+                    <div class="filter-header">
+                        <h2>Request Date</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeDateFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('date')">Include</button>
+                        <button id="exclude-date-btn" class="filtr-btn-text" onclick="excludeSwitch('date')">Exclude</button>
+                    </div>
+
+                    <div id="from-datepicker-container"></div>
+
+                    <div id="to-datepicker-container"></div>
+                    <button class="apply-filter-btn apply-filter-btn-text" onclick="applyFilter('date')">Apply</button>
                 </div>
-                <hr>
-                <div class="switch-btns-container">
-                    <button id="include-date-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('date')">Include</button>
-                    <button id="exclude-date-btn" class="filtr-btn-text" onclick="excludeSwitch('date')">Exclude</button>
-                </div>
-
-                <div id="from-datepicker-container"></div>
-
-                <div id="to-datepicker-container"></div>
-
-                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('date')">Apply</button>
             </div>
+            <!-- ] -->
 
+            <!-- Исправлено 10.02 [ -->
              <!-- Скрытое меню фильтра по стороне -->
              <div id="side-menu" class="filter-menu" style="display: none;">
-                <div class="filter-header">
-                    <h2>Side</h2>
-                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()">
-                </div>
-                <hr>
-                <div class="switch-btns-container">
-                    <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('side')">Include</button>
-                    <button id="exclude-side-btn" class="filtr-btn-text" onclick="excludeSwitch('side')">Exclude</button>
-                </div>
+                <div class="rombus left-position-rombus"></div>
+                <div class="filter-border shadow-border">
+                    <div class="filter-header">
+                        <h2>Side</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeSideFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-side-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('side')">Include</button>
+                        <button id="exclude-side-btn" class="filtr-btn-text" onclick="excludeSwitch('side')">Exclude</button>
+                    </div>
 
-                <div class="search-filter-container">
-                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
-                    <input type="text" id="input-search-sides" class="search-filter-input card-text" placeholder="Search side">
-                </div>
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-sides" class="search-filter-input card-text" placeholder="Search side">
+                    </div>
 
-                <div class="side-filter-block">
-                    <p class="bold-title side-header-filter">Side 1</p>
-                    <ul id="side1-filter-ul"></ul>
-                </div>
+                    <div class="side-filter-block">
+                        <p class="bold-title side-header-filter">Side 1</p>
+                        <ul id="side1-filter-ul" class="card-text"></ul>
+                    </div>
 
-                <div class="side-filter-block">
-                    <p class="bold-title side-header-filter">Side 2</p>
-                    <ul id="side2-filter-ul"></ul>
+                    <div class="side-filter-block">
+                        <p class="bold-title side-header-filter">Side 2</p>
+                        <ul id="side2-filter-ul" class="card-text"></ul>
+                    </div>
+                    <button class="apply-filter-btn apply-filter-btn-text" onclick="applyFilter('side')">Apply</button>
                 </div>
-
-                <button class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('side')">Apply</button>
             </div>
+            <!-- ] -->
 
+            <!-- Исправлено 10.02 [ -->
             <!-- Скрытое меню фильтра по типу -->
             <div id="type-menu" class="filter-menu" style="display: none;">
-                <div class="filter-header">
-                    <h2>Contract Type</h2>
-                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()">
-                </div>
-                <hr>
-                <div class="switch-btns-container">
-                    <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('type')">Include</button>
-                    <button id="exclude-type-btn" class="filtr-btn-text" onclick="excludeSwitch('type')">Exclude</button>
-                </div>
+                <div class="rombus left-position-rombus"></div>
+                <div class="filter-border shadow-border">
+                    <div class="filter-header">
+                        <h2>Contract Type</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTypeFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-type-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('type')">Include</button>
+                        <button id="exclude-type-btn" class="filtr-btn-text" onclick="excludeSwitch('type')">Exclude</button>
+                    </div>
 
-                <div class="search-filter-container">
-                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
-                    <input type="text" id="input-search-type" class="search-filter-input card-text" placeholder="Search type">
-                </div>
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-type" class="search-filter-input card-text" placeholder="Search type">
+                    </div>
 
-                <div class="type-filter-block">
-                    <ul id="type-filter-ul"></ul>
+                    <div class="type-filter-block">
+                        <ul id="type-filter-ul" class="card-text"></ul>
+                    </div>
+                    <button class="apply-filter-btn apply-filter-btn-text" onclick="applyFilter('type')">Apply</button>
                 </div>
-
-                <button id="apply-type-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('type')">Apply</button>
             </div>
-
+            <!-- ] -->
+            
+            <!-- Исправлено 10.02 [ -->
             <!-- Скрытое меню фильтра по тегу -->
             <div id="tag-menu" class="filter-menu" style="display: none;">
-                <div class="filter-header">
-                    <h2>Tag</h2>
-                    <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()">
-                </div>
-                <hr>
-                <div class="switch-btns-container">
-                    <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('tag')">Include</button>
-                    <button id="exclude-tag-btn" class="filtr-btn-text" onclick="excludeSwitch('tag')">Exclude</button>
-                </div>
+                <div class="rombus left-position-rombus"></div>
+                <div class="filter-border shadow-border">
+                    <div class="filter-header">
+                        <h2>Tag</h2>
+                        <img id="filter-close-icon" src="./imgs/filter-close.png" alt="Close icon" onclick="closeTagFilter()">
+                    </div>
+                    <hr>
+                    <div class="switch-btns-container">
+                        <button id="include-tag-btn" class="filtr-btn-text active-switch-btn" onclick="includeSwitch('tag')">Include</button>
+                        <button id="exclude-tag-btn" class="filtr-btn-text" onclick="excludeSwitch('tag')">Exclude</button>
+                    </div>
 
-                <div class="search-filter-container">
-                    <img class="search-icon" src="./imgs/search.png" alt="Search icon">
-                    <input type="text" id="input-search-tag" class="search-filter-input card-text" placeholder="Search tag">
-                </div>
+                    <div class="search-filter-container">
+                        <img class="search-icon" src="./imgs/search.png" alt="Search icon">
+                        <input type="text" id="input-search-tag" class="search-filter-input card-text" placeholder="Search tag">
+                    </div>
 
-                <!-- Исправлено 07.02 [ -->
-                <div class="tag-filter-block">
-                    <ul id="tag-filter-ul" class="link-small"></ul>
+                    <div class="tag-filter-block">
+                        <ul id="tag-filter-ul" class="link-small"></ul>
+                    </div>
+                    <button class="apply-filter-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
                 </div>
-                <!-- ] -->
-
-                <button id="apply-tag-btn" class="apply-filter-btn action-btn apply-filter-btn-text" onclick="applyFilter('tag')">Apply</button>
             </div>
+            <!-- ] -->
 
         <!-- ] -->
 

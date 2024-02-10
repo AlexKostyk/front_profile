@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     markFirsElement();
 });
 
+// Изменено 10.02 [
 function markFirsElement() {
     let first_row = document.getElementsByClassName("expandable-row")[0];
 
@@ -131,7 +132,7 @@ function markFirsElement() {
 
     setTimeout(function() {
         first_row.classList.remove("expandable-first-row");
-    }, 3000);
+    }, 10000);
 
     function clickCloseMark() {
         first_row.classList.remove("expandable-first-row");
@@ -140,6 +141,7 @@ function markFirsElement() {
 
     document.addEventListener('click', clickCloseMark);
 }
+// ]
 
 // функция для получения информации о подписке у пользователя
 function getLimitData() {
@@ -153,7 +155,6 @@ function getLimitData() {
     updateLimitData();
 }
 
-// Исправлено 31.01 [
 function updateLimitData() {
     limit_plan_text.innerHTML = plan_text;
     limit_date_text.innerHTML = date_text;
@@ -169,8 +170,6 @@ function updateLimitData() {
         resp_inf_container.style.display = 'flex';
     }
 }
-// ]
-
 
 // функция для получения количества запросов у пользователя
 function getRequestLimit(){
@@ -559,21 +558,6 @@ function downloadResponseFile() {
     download_file_btn.style.display = 'none';
     file_downloaded_container.style.display = 'flex';
 
-    // // Создаем объект Blob с содержимым файла
-    // const blob = new Blob([user_file], { type: user_file.type });
-
-    // // Создаем элемент <a> для скачивания файла
-    // const a = document.createElement('a');
-    // a.href = URL.createObjectURL(blob);
-    // a.download = user_file.name;
-
-    // // Добавляем элемент <a> в документ и эмулируем клик для начала загрузки
-    // document.body.appendChild(a);
-    // a.click();
-
-    // // Удаляем элемент <a> после завершения скачивания
-    // document.body.removeChild(a);
-
     setTimeout(function() {
         file_downloaded_container.style.display = 'none';
         download_file_btn.style.display = 'block';
@@ -628,7 +612,6 @@ function makeTextToClipboard() {
     return text;
 }
 
-// Исправлено: отображение ошибки лоадера [
 function loaderError() {
     let error_container = document.getElementById("error-container");
     summarize_container.style.display = 'none';
@@ -636,4 +619,3 @@ function loaderError() {
     history_container.style.display = 'none';
     error_container.style.display = 'flex';
 }
-// ]

@@ -46,20 +46,24 @@ body {
     margin-bottom: 50px;
 }
 
+/* Исправлено 09.02 [ */
 #history-header {
-    margin: 32px 0 32px 24px;
+    margin: 32px 0 0 24px;
 }
+/* ] */
 
 #table-container {
     margin-left: 16px;
 }
 
+/* Исправлено 09.02 [ */
 #sorting-container {
     display: flex;
     align-items: center;
-    margin-left: 8px;
+    margin: 32px 0 0 8px;
     width: 1160px;
 }
+/* ] */
 
 #filter-container {
     display: flex;
@@ -199,13 +203,15 @@ body {
     max-width: 254px;
 }
 
+/* Исправлено 09.02 [ -8px*/
 #history_table th:nth-child(5), #history_table td:nth-child(5) {
-    max-width: 146px;
+    max-width: 140px;
 }
 
 #history_table th:nth-child(6), #history_table td:nth-child(6) {
-    max-width: 58px;
+    max-width: 64px;
 }
+/* ] */
 
 #history_table tbody td {
     padding: 16px 10px 16px 0;
@@ -240,17 +246,19 @@ body {
 
 /* ] ] */
 
+/* Исправлено 09.02 [ */
 #empty-history-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
-    margin-top: 52px;
+    gap: 16px;
+    margin-top: 0px;
     margin-left: 307px;
 
     width: 600px;
     height: 215px;
 }
+/* ] */
 
 .info-cell {
     border: none;
@@ -272,27 +280,33 @@ body {
     border-bottom: none;
 }
 
+/* Исправлено 09.02 [ */
 .expandable-first-row {
-    border: 1px solid var(--neon-elements-hover-or-click-color);
+    /* border: 1px solid var(--neon-elements-hover-or-click-color); */
+    background-color: #E4DFF280;
     border-radius: 8px;
 }
 
 .expandable-first-row td {
-    border-top: 1px solid var(--neon-elements-hover-or-click-color);
-    border-bottom: 1px solid var(--neon-elements-hover-or-click-color);
+    /* border-top: 1px solid var(--neon-elements-hover-or-click-color);
+    border-bottom: 1px solid var(--neon-elements-hover-or-click-color); */
+    background-color: #E4DFF280;
 }
 
 .expandable-first-row td:first-child {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    border-left: 1px solid var(--neon-elements-hover-or-click-color);
+    /* border-left: 1px solid var(--neon-elements-hover-or-click-color); */
+    background-color: #E4DFF280;
 }
 
 .expandable-first-row td:last-child {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    border-right: 1px solid var(--neon-elements-hover-or-click-color);
+    /* border-right: 1px solid var(--neon-elements-hover-or-click-color); */
+    background-color: #E4DFF280;
 }
+/* ] */
 
 #info-container {
     overflow: hidden;
@@ -383,13 +397,16 @@ body {
 }
 /* ] */
 
-/* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки [ */
+/* Исправлено 09.02 [ */
 .action-container {
     display: flex;
     align-items: center;
     width: fit-content;
-    gap: 12px;
-    padding: 0 0 0 6px;
+    /* gap: 14px; */
+}
+
+#actions-download {
+    margin-left: 12px;
 }
 /* ] */
 
@@ -423,23 +440,33 @@ body {
     color: var(--thin-line-color);
 }
 
+/* Изменено 10.02 [ */
 #actions-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
     width: 198px;
-    min-height: 167px;
-    padding: 19px 24px;
+    min-height: 143px;
 
     position: absolute;
     right: 0;
     top: 0;
 
+    padding: 15px 0 0 0;
+}
+
+#actions-menu-border {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 19px 24px;
+
+    width: 100%;
+    min-height: 128px;
+
     border-radius: 8px;
     background-color: #FFFFFF;
-    box-shadow: 1px 1px 13px 0px #042A4A1A;
 }
+/* ] */
 
 .action-menu-point {
     display: flex;
@@ -553,12 +580,14 @@ body {
     background-repeat: no-repeat;
 }
 
+/* Изменено 10.02 [ */
 #request-date-menu {
-    width: 320px;
-    height: 670px;
-    padding: 60px 20px 0 32px;
-    background-image: url(../imgs/back-request-date-filter.png);
+    width: 272px;
+    min-height: 567px;
+
+    padding: 15px 0 0 0;
 }
+/* ] */
 
 .filter-header {
     display: flex;
@@ -683,14 +712,30 @@ abbr[title] {
     border-radius: 0 !important;
 }
 
+/* Исправлено 09.02 [ */
 .apply-filter-btn {
     width: 66px;
     height: 27px;
     padding: 6px 16px;
     border-radius: 4px;
+    margin-top: 10px;
+    margin-left: 70%;
 
-    margin: auto 18px 38px auto;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+
+    background-color: var(--main-border-btn-color);
+    color: white;
 }
+
+.apply-filter-btn:hover,
+.apply-filter-btn:active {
+    background-color: var(--additional-accent-color);
+    color: white;
+    border: none;
+}
+/* ] */
 
 .highlighted-date {
     background-color: var(--basic-back) !important;
@@ -726,16 +771,19 @@ abbr[title] {
     color: var(--secondary-text-and-elements-color) !important;
 }
 
+/* Исправлено 09.02 [ */
 .active-filter {
-    background-color: var(--neon-elements-hover-or-click-color);
+    background-color: var(--main-accent-color);
 }
+/* ] */
 
+/* Исправлено 10.02 [ */
 #side-menu {
-    width: 320px;
-    height: 670px;
-    padding: 60px 20px 0 32px;
-    background-image: url(../imgs/back-request-date-filter.png);
+    width: 272px;
+    min-height: 100px;
+    padding: 15px 0 0 0;
 }
+/* ] */
 
 .side-filter-block {
     display: flex;
@@ -779,20 +827,20 @@ abbr[title] {
 }
 
 .side-filter-block {
-    margin: 20px 10px 0 0;
+    margin: 20px 10px 0 8px;
 }
 
 .filter-menu ul {
     list-style-type: none;
 }
 
-/* Исправлено 07.02 [ */
+/* Исправлено 09.02 [ */
 .filter-menu ul li {
     position: relative;    
 
     padding: 5px 0 0 10px;
     margin: 2px 0 2px 0;
-    width: 250px;
+    width: 240px;
     height: 30px;
     border-radius: 4px;
 
@@ -819,32 +867,25 @@ abbr[title] {
     margin-left: 10px;
 }
 
+/* Изменено 10.02 [ */
 #type-menu {
-    width: 340px;
-    height: 420px;
-    padding: 40px 20px 0 41px;
-    background-image: url(../imgs/back-type-filter.png);
+    width: 272px;
+    min-height: 100px;
+    padding: 15px 0 0 0;
 }
-
-#apply-type-btn {
-    margin: auto 20px 28px auto;
-}
+/* ] */
 
 #type-menu ul li {
     display: flex;
     align-items: center;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 8px;
 }
 
+/* Изменено 10.02 [ */
 #tag-menu {
-    width: 340px;
-    height: 535px;
-    padding: 55px 20px 0 41px;
-    background-image: url(../imgs/back-tag-filter.png);
-}
-
-#apply-tag-btn {
-    margin: auto 20px 40px auto;
+    width: 272px;
+    min-height: 100px;
+    padding: 15px 0 0 0;
 }
 
 #tag-menu ul li {
@@ -852,6 +893,7 @@ abbr[title] {
     align-items: center;
     padding: 0 0 0 10px;
 }
+/* ] */
 
 .filtered-tag {
     display: flex;
@@ -991,6 +1033,7 @@ abbr[title] {
     cursor: pointer;
 }
 
+/* Изменено 10.02 */
 #apply-new-tag {
     font-family: Inter;
     font-size: 12px;
@@ -1005,7 +1048,22 @@ abbr[title] {
     border-radius: 4px;
 
     margin-left: 94px;
+
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+
+    background-color: var(--main-border-btn-color);
+    color: white;
 }
+
+#apply-new-tag:hover,
+#apply-new-tag:active {
+    background-color: var(--additional-accent-color);
+    color: white;
+    border: none;
+}
+/* ] */
 
 .selected-new-tag {
     background-color: var(--hr-scrol-color);
@@ -1022,23 +1080,18 @@ abbr[title] {
     color: var(--error-text-color);
 }
 
+/* Изменено 10.02 [ */
 #apply-delete-container {
-    width: 198px;
+    width: 192px;
     height: 107px;
-    border-radius: 8px;
-    background-color: #FFFFFF;
-    box-shadow: 1px 1px 13px 0px #042A4A1A;
 
     position: absolute;
     right: 0;
     top: 0;
 
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    padding: 16px 21px;
+    padding: 15px 0 0 0;
 }
+/* ] */
 
 .apply-delete-text {
     font-family: Inter;
@@ -1077,14 +1130,6 @@ abbr[title] {
     border: 1px solid var(--main-border-btn-color);
     background-color: transparent;
     color: var(--main-border-btn-color);
-
-    font-family: Inter;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 15px;
-    letter-spacing: 0em;
-    text-align: left;
-
     cursor: pointer;
 }
 
@@ -1097,21 +1142,72 @@ abbr[title] {
 }
 /* ] */
 
+/* Изменено 10.02 [ */
+#apply-delete-tag-container {
+    width: 192px;
+    height: 107px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    padding: 15px 0 0 0;
+}
+
+#apply-tag-btns-container {
+    display: flex;
+    gap: 12px;
+}
+
+#apply-delete-tag {
+    width: 70px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+
+    border: 1px solid var(--main-border-btn-color);
+    background-color: transparent;
+    color: var(--main-border-btn-color);
+    cursor: pointer;
+}
+
+#apply-delete-tag:hover,
+#apply-delete-tag:active {
+    border: none;
+    background-color: var(--error-text-color);
+    color: #FFFFFF;
+}
+
+#cancel-delete-tag {
+    width: 73px;
+    height: 27px;
+    padding: 6px 16px;
+    border-radius: 4px;
+}
+/* ] */
+
 #info-copy-download {
     position: absolute;
     right: 0;
     top: 0;
 
+    padding: 15px 0 0 0;
+}
+
+/* Изменено 10.02 [ */
+#info-copy-download-border {
+    position: relative;
     display: flex;
     align-items: center;
     height: 56px;
+    width: 100%;
     border-radius: 8px;
-    padding: 11px 24px;
-    gap: 12px;
+    padding: 11px 20px;
+    gap: 5px;
 
     background-color: #FFFFFF;
-    box-shadow: 1px 1px 13px 0px #042A4A1A;
 }
+/* ] */
 
 #text-info-copy-download {
     font-family: Inter;
@@ -1124,12 +1220,14 @@ abbr[title] {
 
 /* Исправление: Добавить к трем точкам круглый сероватый  ховер, раздвинуть сами иконки[ */
 
+/* Исправлено 09.02 [ */
 #actions-dots-container {
     padding-top: 5px;
     height: 22px;
-    width: 16px;
-    margin: 0 auto;
+    width: 14px;
+    margin-left: 6px;
 }
+/* ] */
 
 #actions-dots-container:hover {
     border-radius: 8px;
@@ -1150,3 +1248,104 @@ abbr[title] {
     flex-direction: column;
     align-items: center;
 }
+
+/* Изменено 10.02 [ */
+.rombus {
+    width: 18px;
+    height: 18px;
+
+    top: 6px;
+    right: 20px;
+    position: absolute;
+    
+    background-color: white;
+
+    transform: rotate(45deg);
+
+    box-shadow: 1px 1px 13px 0px #042A4A1A;
+
+    z-index: 0;
+}
+
+.left-position-rombus {
+    left: 25px
+}
+
+#apply-delete-border {
+    width: 198px;
+    height: 107px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px 21px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+.shadow-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 1px 1px 13px 0px #042A4A1A;
+    z-index: -1; 
+}
+
+#apply-delete-tag-border {
+    width: 198px;
+    height: 107px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px 21px;
+
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+.filter-border {
+    position: relative;
+
+    border-radius: 8px;
+    background-color: white;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 21px 8px;
+}
+
+.close-btn {
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+
+    background-color: var(--main-border-btn-color);
+    color: white;
+}
+
+.close-btn:hover,
+.close-btn:active {
+    background-color: var(--additional-accent-color);
+    color: white;
+    border: none;
+}
+
+.type-filter-block {
+    margin: 18px 8px 0 8px;
+}
+
+.tag-filter-block {
+    margin: 18px 8px 0 8px;
+}
+/* ] */

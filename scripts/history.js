@@ -69,19 +69,33 @@ let history_data = [
     { requestDate: new Date(2023, 9, 21, 19, 6), side1: 'FedEx', side2: 'Gnnpowder Kinnisvara Oii', contractType: 'Shipping Service Contract', tag: 'Shipping', actions:'', info},
 ];
 
+// Изменено 10.02 [
+let tag_list = [];
+// ]
+
 // Форматированный список истории
 let format_data = [];
 
 let filtered_data = [];
 
+// Изменено 10.02 [
 document.addEventListener('DOMContentLoaded', function() {
     getHistoryData();
+
+    getTagList();
 
     initCalend();
 
     // при пустой history_data
     if (history_data.length === 0) showEmptyHistory();
 });
+// ]
+
+function getTagList() {
+    // Получаем уникальное множество тегов с сервера
+
+    tag_list = [{tag: 'Employers', color: 'red'}, {tag: 'Office', color: 'red'}, {tag: 'Shipping', color: 'red'}, {tag: 'Something', color: 'red'}, {tag: 'That', color: 'red'}];
+}
 
 function getHistoryData() {
     // Получаем данные истории с сервера
@@ -89,26 +103,7 @@ function getHistoryData() {
     // форматируем данные, заменяя '
     history_data = escapeSingleQuotes(history_data);
     sortTable('requestDate');
-
-    // markFirsElement();
 }
-
-// function markFirsElement() {
-//     let first_row = document.getElementsByClassName("expandable-row")[0];
-
-//     first_row.classList.add("expandable-first-row");
-
-//     setTimeout(function() {
-//         first_row.classList.remove("expandable-first-row");
-//     }, 3000);
-
-//     function clickCloseMark() {
-//         first_row.classList.remove("expandable-first-row");
-//         document.removeEventListener('click', clickCloseMark);
-//     }
-
-//     document.addEventListener('click', clickCloseMark);
-// }
 
 function escapeSingleQuotes(data) {
     if (typeof data === 'string') {
@@ -147,6 +142,7 @@ function formatDate(item) {
     }
 }
 
+// Изменено 10.02 [
 function fillTable(data) {
     let tableBody = document.getElementById('table-body');
     tableBody.innerHTML = '';
@@ -159,7 +155,6 @@ function fillTable(data) {
 
         // применяем класс expandable-row к строке для обозначения, что она раскрываема
         row.classList.add('expandable-row');
-
 
         for (const key in item) {
             if (key !== 'info'){
@@ -181,6 +176,7 @@ function fillTable(data) {
 
                     wrapImage = images.wrapImage;
                     dotsImage = images.divContainer;
+                    downloadImage = images.downloadImage;
                 } else {
                     cell.textContent = item[key];
                 }
@@ -192,7 +188,7 @@ function fillTable(data) {
         // слушатель событий click к строке
         row.addEventListener('click', () => toggleInfo(row, item, wrapImage, dotsImage));
         dotsImage.addEventListener('click', () => showActionMenu(item));
-
+        downloadImage.addEventListener('click', () => downloadContract(event.clientX - 225 + window.scrollX, event.clientY + 15 + window.scrollY, item));
         tableBody.appendChild(row);
 
         // элемент для отображения полного описания после строки
@@ -204,6 +200,14 @@ function fillTable(data) {
         tableBody.appendChild(infoRow);
     });
 }
+// ]
+
+// Изменено 10.02 [
+function downloadContract(coordX, coordY, contract) {
+    // загрузка контракта выбранного клиентом с сервера
+    showUserInfo("The file has been downloaded", coordX, coordY, 255);
+}
+// ]
 
 function addTag(cell, tag, color) {
     let flexContainer = document.createElement('div');
@@ -222,14 +226,22 @@ function addTag(cell, tag, color) {
     cell.appendChild(flexContainer);
 }
 
+// Исправлено 09.02 [
 function addActions(cell) {
     let flexContainer = document.createElement('div');
     flexContainer.classList.add('action-container');
 
     let wrapImage = document.createElement('img');
+    wrapImage.id = 'actions-wrap';
     wrapImage.src = './imgs/wrap.png';
     wrapImage.alt = 'Wrap icon';
     flexContainer.appendChild(wrapImage);
+
+    let downloadImage = document.createElement('img');
+    downloadImage.id = 'actions-download';
+    downloadImage.src = './imgs/download-contract.png';
+    downloadImage.alt = 'Download icon';
+    flexContainer.appendChild(downloadImage);
 
     let divContainer = document.createElement('div');
     divContainer.id = 'actions-dots-container';
@@ -244,8 +256,9 @@ function addActions(cell) {
 
     cell.appendChild(flexContainer);
 
-    return { wrapImage, divContainer };
+    return { wrapImage, downloadImage, divContainer };
 }
+// ]
 
 function sortTable(column) {
     let search_data = history_data.slice(0);
@@ -363,10 +376,12 @@ function showEmptyHistory() {
 
 // Функция для отображения или скрытия полного описания
 function toggleInfo(row, item, wrapImage) {
-    if (event.target.id === 'actions-dots' || event.target.id === 'actions-dots-container') {
+    // Изменено 10.02 [
+    if (event.target.id === 'actions-dots' || event.target.id === 'actions-dots-container' || event.target.id === 'actions-download') {
         // Если это dotsImage, ничего не делаем
         return;
     }
+    // ]
 
     if (row.classList.contains('processing')) {
         // Если у строки установлен временный класс processing, то нажатие блокируется
@@ -393,8 +408,6 @@ function toggleInfo(row, item, wrapImage) {
     infoContainer.innerHTML = '';
     infoContainer.appendChild(infoDiv);
 
-// Исправлено: Саммари истории обрезается у длинных контрактов [
-
     // Переключаем класс для управления анимацией
     if (infoRow.classList.contains('expanded')) {
         infoContainer.style.height = infoDiv.clientHeight + 'px';
@@ -412,8 +425,6 @@ function toggleInfo(row, item, wrapImage) {
         
         infoContainer.style.height = infoDiv.clientHeight + 'px';
     }
-
-// ]
 }
 
 
@@ -524,10 +535,13 @@ function createInfoMarkup(item) {
 // ]
 
 function showActionMenu(curr_element) {
+    // Изменено 10.02 [
     let actionsMenu = document.getElementById('actions-menu');
     let tag_container = document.getElementById("edit-tag-container");
     let apply_delete_container = document.getElementById("apply-delete-container");
+    let apply_delete_tag_container = document.getElementById("apply-delete-tag-container");
     let edit_tag_open = 0;
+    // ]
 
     tag_container.style.height = "24px";
 
@@ -536,10 +550,11 @@ function showActionMenu(curr_element) {
     let coordY = event.clientY + 20 + window.scrollY;
     actionsMenu.style.position = 'absolute';
     actionsMenu.style.left = `${coordX}px`;
-    actionsMenu.style.top = `${coordY}px`;
+    actionsMenu.style.top = `${coordY - 5}px`;
 
     actionsMenu.style.display = 'flex';
 
+    // Изменено 10.02 [
     function clickHandler() {
         if (event.target.id !== "actions-dots"&&
             event.target.id !== "actions-dots-container"&&
@@ -549,17 +564,10 @@ function showActionMenu(curr_element) {
             document.removeEventListener('click', clickHandler);
         }
 
-        if (event.target.classList.contains("download-summary")) {
-            showInfoCopDow("The file has been downloaded", coordX, coordY, 265);
-
-            actionsMenu.style.display = 'none';
-            document.removeEventListener('click', clickHandler);
-        }
-
         if (event.target.classList.contains("copy-to-clipboard")) {
             let text = makeAllText(curr_element);
             makeCopy(text);
-            showInfoCopDow("Copied to the clipboard", coordX, coordY, 225);
+            showUserInfo("Copied to the clipboard", coordX - 28, coordY - 5, 225);
 
             actionsMenu.style.display = 'none';
             document.removeEventListener('click', clickHandler);
@@ -571,7 +579,7 @@ function showActionMenu(curr_element) {
 
             apply_delete_container.style.position = 'absolute';
             apply_delete_container.style.left = `${coordX}px`;
-            apply_delete_container.style.top = `${coordY}px`;
+            apply_delete_container.style.top = `${coordY - 5}px`;
             apply_delete_container.style.display = 'flex';
 
             document.addEventListener('click', clickDelete);
@@ -589,6 +597,8 @@ function showActionMenu(curr_element) {
 
                 history_data = history_data.filter(existingItem => !isObjectEqual(existingItem, curr_element));
                 filterPipe();
+
+                showUserInfo("Summary has been deleted", coordX - 58, coordY - 5, 250);
             }
 
             if (event.target.id === "cancel-delete"){
@@ -598,8 +608,6 @@ function showActionMenu(curr_element) {
         }
 
         if (event.target.classList.contains("edit-tag")) {
-            let tag_arr = [...new Set(history_data.map(item => item.tag))];
-
             // Получаем все элементы span внутри tag_container и преобразуем их в массив
             let spanElements = Array.from(tag_container.querySelectorAll("span"));
 
@@ -608,19 +616,56 @@ function showActionMenu(curr_element) {
                 tag_container.removeChild(span);
             });
 
-            // Исправлено 07.02 [
-            tag_arr.forEach(item => {
-                if (item != '') {
-                let spanElement = document.createElement("span");
-                spanElement.innerHTML = `<div class="tag-dots" style="background-color: ${getTagColor(item)};"></div><p>${item}</p>`;
-                spanElement.classList.add('action-element');
-                tag_container.appendChild(spanElement);
+            // Изменено 10.02 [
+            tag_list.forEach(item => {
+                if (item.tag != '') {
+                    let spanElement = document.createElement("span");
+                    spanElement.innerHTML = `<div class="tag-dots" style="background-color: ${item.color};"></div><p>${item.tag}</p>`;
+                    spanElement.classList.add('action-element');
+                    tag_container.appendChild(spanElement);
 
-                spanElement.addEventListener('click', function() {
-                    updateHistoryData(getTagColor(item), item);
-                });
+                    spanElement.addEventListener('click', function() {
+                        updateHistoryData(item.color, item.tag);
+                    });
+
+                    spanElement.addEventListener('contextmenu', function() {
+                        event.preventDefault();
+                        deleteTag(item.tag, item.color);
+                    });
                 }
             });
+
+            function deleteTag(tag, color) {
+                actionsMenu.style.display = 'none';
+                document.removeEventListener('click', clickHandler);
+
+                apply_delete_tag_container.style.position = 'absolute';
+                apply_delete_tag_container.style.left = `${coordX}px`;
+                apply_delete_tag_container.style.top = `${coordY - 5}px`;
+                apply_delete_tag_container.style.display = 'flex';
+
+                function clickDeleteTag() { 
+                    if (!event.target.classList.contains("action-element")) {
+                        apply_delete_tag_container.style.display = 'none';
+                        document.removeEventListener('click', clickDeleteTag);
+                    }
+        
+                    if (event.target.id === "apply-delete-tag"){
+                        apply_delete_tag_container.style.display = 'none';
+                        document.removeEventListener('click', clickDeleteTag);
+
+                        deleteTagHistory(tag, color);
+                        deleteTagList(tag, color);
+
+                        showUserInfo("Tag has been deleted", coordX - 58, coordY - 5, 250);
+                        
+                        filterPipe();
+                    }
+                }
+
+                document.addEventListener('click', clickDeleteTag);
+            }
+
             // ]
 
             function updateHistoryData(color, tag) {
@@ -662,7 +707,12 @@ function showActionMenu(curr_element) {
                         document.removeEventListener('click', clickNewTag);
                     }
 
+                    // Изменено 10.02 [
                     if (event.target.id === "apply-new-tag") {
+                        let tag_arr = tag_list.map(function(item) {
+                            return item.tag;
+                        });
+
                         if (new_tag_input.value === '') {
                             new_tag_error.innerText = 'The tag name is not defined';
                         } else if (new_tag_color === null) {
@@ -673,8 +723,10 @@ function showActionMenu(curr_element) {
                             new_tag_menu.style.display = 'none';
                             document.removeEventListener('click', clickNewTag);
                             updateHistoryData(new_tag_color, new_tag_input.value);
+                            addTagList(new_tag_input.value, new_tag_color);
                         }
                     }
+                    // ]
                 }
 
                 document.addEventListener('click', clickNewTag);
@@ -693,13 +745,43 @@ function showActionMenu(curr_element) {
             
         }
     }
+    // ]
 
     document.addEventListener('click', clickHandler);
 }
 
-function showInfoCopDow(text, coordX, coordY, width) {
+// Изменено 10.02 [
+function addTagList(tag, color){
+    let new_tag = {tag: tag, color: color};
+    tag_list.push(new_tag);
+
+    // Данные о новом шаблоне тега отправляются на сервер
+}
+
+function deleteTagList(tag, color) {
+    tag_list = tag_list.filter(function(item) {
+        return item.tag !== tag;
+    });
+
+    // Данные об удалении соответвующего шаблона тега с его названием отправляются на сервер
+}
+
+function deleteTagHistory(tag, color) {
+    history_data.forEach(function(item) {
+        if (item.tag === tag) {
+            item.tag = '';
+        }
+    });
+
+    // Данные об удалении соответвующего тега с его названием отправлются на сервер
+}
+// ]
+
+// Изменено 10.02 [
+function showUserInfo(text, coordX, coordY, width) {
     let info_text = document.getElementById("text-info-copy-download");
     let info_text_container = document.getElementById("info-copy-download");
+    let stop_timeout = 1;
 
     info_text_container.style.width = width + 'px';
     info_text.innerText = text;
@@ -710,16 +792,24 @@ function showInfoCopDow(text, coordX, coordY, width) {
     info_text_container.style.display = 'flex';
 
     setTimeout(function() {
-        info_text_container.style.display = 'none';
+        if (stop_timeout) {
+            info_text_container.style.display = 'none';
+        }
     }, 3000);
 
     function clickCloseInfo() {
-        info_text_container.style.display = 'none';
-        document.removeEventListener('click', clickCloseInfo);
+        if (event.target.id !== "actions-download" && 
+        event.target.id !== "apply-delete" && 
+        event.target.id !== "apply-delete-tag") {
+            info_text_container.style.display = 'none';
+            document.removeEventListener('click', clickCloseInfo);
+            stop_timeout = 0;
+        }
     }
 
     document.addEventListener('click', clickCloseInfo);
 }
+// ]
 
 function clearAllColors() {
     let tag_color_btn = document.getElementsByClassName("tag-color");
@@ -973,8 +1063,8 @@ function highlightDateRange() {
 function showDateFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 50 + window.scrollX;
-    let coordY = event.clientY + window.scrollY;
+    let coordX = event.clientX - 30 + window.scrollX;
+    let coordY = event.clientY + 20 + window.scrollY;
     date_filter_menu.style.position = 'absolute';
     date_filter_menu.style.left = `${coordX}px`;
     date_filter_menu.style.top = `${coordY}px`;
@@ -1073,8 +1163,8 @@ side_filter.addEventListener('click', (event) => {
 function showSideFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 50 + window.scrollX;
-    let coordY = event.clientY + window.scrollY;
+    let coordX = event.clientX - 30 + window.scrollX;
+    let coordY = event.clientY + 20 + window.scrollY;
     side_menu.style.position = 'absolute';
     side_menu.style.left = `${coordX}px`;
     side_menu.style.top = `${coordY}px`;
@@ -1279,8 +1369,8 @@ type_filter.addEventListener('click', (event) => {
 function showTypeFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 60 + window.scrollX;
-    let coordY = event.clientY + 15 + + window.scrollY;
+    let coordX = event.clientX - 30 + window.scrollX;
+    let coordY = event.clientY + 20 + + window.scrollY;
     type_menu.style.position = 'absolute';
     type_menu.style.left = `${coordX}px`;
     type_menu.style.top = `${coordY}px`;
@@ -1419,8 +1509,8 @@ tag_filter.addEventListener('click', (event) => {
 function showTagFilter() {
     closeOtherMenuFilter();
 
-    let coordX = event.clientX - 55 + window.scrollX;
-    let coordY = event.clientY + 5 + window.scrollY;
+    let coordX = event.clientX - 30 + window.scrollX;
+    let coordY = event.clientY + 20 + window.scrollY;
     tag_menu.style.position = 'absolute';
     tag_menu.style.left = `${coordX}px`;
     tag_menu.style.top = `${coordY}px`;

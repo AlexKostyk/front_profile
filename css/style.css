@@ -3,7 +3,7 @@
 
     /* Accent */
     --main-accent-color: #c7ff6c; /* neon */ /* Цвет шкалы */
-    --accent-and-details-color: #003a4c; /* sea */
+    --accent-and-details-color: #003a4e; /* sea */
     --additional-accent-color: #b5a4de; /* lilac */
 
     /* Basic */
@@ -263,6 +263,7 @@ hr {
     margin-left: auto;
 }
 
+/* Исправлено 09.02 [ */
 /* Стиль кнопок на бордах */
 .secondary-btn{
     width: 180px;
@@ -275,21 +276,14 @@ hr {
 
     cursor: pointer;
 
-    border: 1px solid var(--main-border-btn-color);
+    border: 1px solid var(--accent-and-details-color);
     background-color: transparent;
-    color: var(--main-border-btn-color);
+    color: var(--accent-and-details-color);
 }
 
-/* Стиль при наведении курсора */
-.secondary-btn:hover {
-    background-color: var(--additional-accent-color);
-    color: var(--border-backgroung-color);
-    border: none;
-}
-
-/* Стиль при нажатии кнопки */
+.secondary-btn:hover,
 .secondary-btn:active {
-    background-color: var(--additional-accent-color);
+    background-color: var(--accent-and-details-color);
     color: var(--border-backgroung-color);
     border: none;
 }
@@ -313,19 +307,14 @@ hr {
 
     cursor: pointer;
 
-    background-color: var(--main-border-btn-color);
+    background-color: var(--accent-and-details-color);
     color: var(--border-backgroung-color);
 }
 
-.action-btn:hover{
-    background-color: var(--additional-accent-color);
-    color: var(--main-border-btn-color);
-    border: none;
-}
-
+.action-btn:hover,
 .action-btn:active{
-    background-color: var(--additional-accent-color);
-    color: var(--main-border-btn-color);
+    background-color: var(--neon-elements-hover-or-click-color);
+    color: var(--accent-and-details-color);
     border: none;
 }
 
@@ -335,6 +324,8 @@ hr {
     background-color: var(--thin-line-color);
     color: var(--dark-gray-text-color);
 }
+
+/* ] */
 
 #summarize-btn {
     margin-top: 24px;
